@@ -3,7 +3,7 @@
 // =====================================================
 
 // Reemplazar por la URL real de tu backend cuando publiques /pilot/catalog
-const API_BASE = "https:/fruti-api-y5uz.onrender.com/";
+const API_BASE = "https://fruti-api-y5uz.onrender.com";
 
 // Si el backend todavía no está listo, esto permite seguir probando la UX.
 const FALLBACK_CATALOG = [
