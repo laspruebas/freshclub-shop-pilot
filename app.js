@@ -113,6 +113,12 @@ function updateSubmitButton() {
   }
 }
 
+function formatQty(qty) {
+  if (qty === 0) return "0";
+  if (qty < 1) return (qty * 1000) + " g";
+  return qty + " kg";
+}
+
 function changeQty(productId, delta) {
   const current = cart[productId] || 0;
   const next = Math.max(0, current + delta);
@@ -120,7 +126,7 @@ function changeQty(productId, delta) {
 
   const qtyEl = document.getElementById(`qty-${productId}`);
   if (qtyEl) {
-    qtyEl.textContent = String(next);
+    qtyEl.textContent = formatQty(next);
   }
 
   updateSubmitButton();
