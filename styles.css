@@ -1,0 +1,162 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f6f6f6;
+  color: #1f1f1f;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #ffffff;
+  min-height: 100vh;
+  padding-bottom: 92px;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #ffffff;
+  border-bottom: 1px solid #ececec;
+  padding: 16px;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.main {
+  padding: 12px 16px 16px;
+}
+
+.status {
+  min-height: 20px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.status.ok {
+  color: #1b7f3b;
+}
+
+.status.error {
+  color: #b42318;
+}
+
+.catalog {
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  padding: 14px;
+  background: #ffffff;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.card-meta {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.qty-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.qty-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #d8d8d8;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.qty-btn:active {
+  transform: scale(0.98);
+}
+
+.qty-value {
+  min-width: 24px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.empty {
+  border: 1px dashed #d8d8d8;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  color: #666666;
+  background: #fafafa;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid #ececec;
+  backdrop-filter: blur(6px);
+}
+
+.cta {
+  width: min(448px, calc(100% - 24px));
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  background: #1f1f1f;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.cta:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
