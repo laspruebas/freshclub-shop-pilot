@@ -179,6 +179,8 @@ function renderCatalog(items) {
   });
 }
 
+const STEP = 0.5;
+
 catalogEl.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
@@ -189,11 +191,11 @@ catalogEl.addEventListener("click", (event) => {
   if (!productId || !action) return;
 
   if (action === "plus") {
-    changeQty(productId, 1);
+    changeQty(productId, STEP);
   }
 
   if (action === "minus") {
-    changeQty(productId, -1);
+    changeQty(productId, -STEP);
   }
 });
 
