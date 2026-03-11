@@ -1,15 +1,28 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="es">
 <head>
-  <title>Fresh Club Pilot</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fresh Club | Pedido</title>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">Fresh Club</div>
+      <div class="subtitle">Elegí tus productos</div>
+    </header>
 
-<body style="font-family: Arial; text-align:center; margin-top:60px;">
+    <main class="main">
+      <section id="status" class="status"></section>
+      <section id="catalog" class="catalog"></section>
+    </main>
 
-<h1>Fresh Club Pilot</h1>
+    <footer class="footer">
+      <button id="submitBtn" class="cta">Confirmar pedido</button>
+    </footer>
+  </div>
 
-<p>La página de pedidos se está preparando.</p>
-
+  <script src="./app.js"></script>
 </body>
 </html>
