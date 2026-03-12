@@ -360,6 +360,20 @@ const diversityText =
     <div style="margin-top:12px;">
       Ya podés volver a WhatsApp.
     </div>
+    
+    <div style="margin-top:16px;">
+      <a href="https://wa.me/5491139495554"
+         style="
+           display:inline-block;
+           background:#25D366;
+           color:white;
+           padding:10px 16px;
+           border-radius:8px;
+           text-decoration:none;
+           font-weight:600;
+         ">
+         Volver a WhatsApp
+      </a>
   </div>
 `;   
 
