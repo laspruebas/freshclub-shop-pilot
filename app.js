@@ -358,7 +358,7 @@ const diversityText =
     }
 
     <div style="margin-top:12px;">
-      Ya estamos procesando la compra.
+      Ya estamos procesando tu compra.
     </div>
     
     <div style="margin-top:16px;">
