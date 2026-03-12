@@ -309,71 +309,79 @@ const diversityText =
     ? `<div style="margin-top:4px;">${data.fruti_insight.products_count} familias de frutas y verduras agregadas</div>`
     : "";
 
- catalogEl.innerHTML = `
-  <div class="empty">
-    <div><strong>Pedido recibido</strong></div>
-    <div style="margin-top:8px;">${insightMessage}</div>
+catalogEl.innerHTML = `
+  <div class="order-success">
 
-    ${totalPortionsText}
-    ${diversityText}
-
-    ${
-      weekly?.target_portions_week != null &&
-      weekly?.weekly_score != null &&
-      weekly?.progress_percent != null
-        ? `
-      <div style="margin-top:16px;text-align:left;">
-        <div style="font-weight:700;margin-bottom:8px;">
-          Estado de tu hogar esta semana
-        </div>
-
-        <div>
-          ${insight.household_total_portions} / ${weekly.target_portions_week} porciones
-        </div>
-
-        <div style="margin-top:6px;">
-          ${weekly.fruti_level || ""}
-        </div>
-
-        <div>
-          FRUTI score: ${weekly.weekly_score}
-        </div>
-
-        ${
-          weekly.distinct_veg_categories != null
-            ? `<div>Diversidad vegetal: ${weekly.distinct_veg_categories} categorías</div>`
-            : ""
-        }
-
-        <div style="margin-top:10px;background:#eee;height:10px;border-radius:6px;overflow:hidden;">
-          <div style="width:${Math.min(100, weekly.progress_percent)}%;background:#1f1f1f;height:10px;"></div>
-        </div>
-
-        <div style="margin-top:4px;">
-          ${weekly.progress_percent}%
-        </div>
-      </div>
-      `
-        : ""
-    }
-
-    <div style="margin-top:12px;">
-      Ya estamos procesando tu compra.
+    <div class="order-status">
+      ✔ Pedido enviado
     </div>
-    
-    <div style="margin-top:16px;">
-      <a href="https://wa.me/5491139495554"
-         style="
-           display:inline-block;
-           background:#25D366;
-           color:white;
-           padding:10px 16px;
-           border-radius:8px;
-           text-decoration:none;
-           font-weight:600;
-         ">
-         Volver a WhatsApp
+
+    <div class="fruti-card">
+      <h3 class="fruti-card-title">Tu impacto FRUTI</h3>
+
+      <p class="fruti-main">
+        Esta compra suma <strong>${insight.order_portions ?? 0}</strong> porciones
+      </p>
+
+      <p class="fruti-weekly">
+        Tu hogar lleva esta semana
+        <strong>${Math.round(insight.household_total_portions ?? 0)}</strong> porciones
+      </p>
+
+      <p class="fruti-diversity">
+        +${insight.products_count ?? 0} familias de frutas y verduras
+      </p>
+
+      ${
+        weekly?.target_portions_week != null &&
+        weekly?.weekly_score != null &&
+        weekly?.progress_percent != null
+          ? `
+        <div class="fruti-weekly-block">
+          <div class="fruti-weekly-title">
+            Estado de tu hogar esta semana
+          </div>
+
+          <div class="fruti-weekly-progress">
+            ${Math.round(insight.household_total_portions ?? 0)} / ${weekly.target_portions_week} porciones
+          </div>
+
+          <div class="fruti-level">
+            ${weekly.fruti_level || ""}
+          </div>
+
+          <div class="fruti-score">
+            FRUTI score: ${weekly.weekly_score}
+          </div>
+
+          ${
+            weekly.distinct_veg_categories != null
+              ? `<div class="fruti-diversity-detail">Diversidad vegetal: ${weekly.distinct_veg_categories} categorías</div>`
+              : ""
+          }
+
+          <div class="fruti-progress-bar">
+            <div class="fruti-progress-fill" style="width:${Math.min(100, weekly.progress_percent)}%;"></div>
+          </div>
+
+          <div class="fruti-progress-label">
+            ${weekly.progress_percent}%
+          </div>
+        </div>
+        `
+          : ""
+      }
+    </div>
+
+    <div class="whatsapp-cta">
+      <a
+        href="https://wa.me/5491139495554"
+        class="whatsapp-button"
+      >
+        Volver a WhatsApp
       </a>
+    </div>
+
   </div>
 `;   
 
