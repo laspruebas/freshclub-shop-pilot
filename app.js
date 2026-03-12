@@ -287,6 +287,9 @@ async function submitOrder() {
   return;
 }
 
+const insight = data?.fruti_insight || {};
+const weekly = insight?.weekly_state || {};
+    
 const insightMessage =
   data?.fruti_insight?.message ||
   "Pedido recibido. Ya podés volver a WhatsApp.";
@@ -306,16 +309,61 @@ const diversityText =
     ? `<div style="margin-top:4px;">${data.fruti_insight.products_count} productos distintos</div>`
     : "";
 
-catalogEl.innerHTML = `
+ catalogEl.innerHTML = `
   <div class="empty">
     <div><strong>Pedido recibido</strong></div>
     <div style="margin-top:8px;">${insightMessage}</div>
+
     ${orderPortionsText}
     ${totalPortionsText}
     ${diversityText}
-    <div style="margin-top:12px;">Ya podés volver a WhatsApp.</div>
+
+    ${
+      weekly?.target_portions_week != null &&
+      weekly?.weekly_score != null &&
+      weekly?.progress_percent != null
+        ? `
+      <div style="margin-top:16px;text-align:left;">
+        <div style="font-weight:700;margin-bottom:8px;">
+          Estado de tu hogar esta semana
+        </div>
+
+        <div>
+          ${insight.household_total_portions} / ${weekly.target_portions_week} porciones
+        </div>
+
+        <div style="margin-top:6px;">
+          ${weekly.fruti_level || ""}
+        </div>
+
+        <div>
+          FRUTI score: ${weekly.weekly_score}
+        </div>
+
+        ${
+          weekly.distinct_veg_categories != null
+            ? `<div>Diversidad vegetal: ${weekly.distinct_veg_categories} categorías</div>`
+            : ""
+        }
+
+        <div style="margin-top:10px;background:#eee;height:10px;border-radius:6px;overflow:hidden;">
+          <div style="width:${Math.min(100, weekly.progress_percent)}%;background:#1f1f1f;height:10px;"></div>
+        </div>
+
+        <div style="margin-top:4px;">
+          ${weekly.progress_percent}%
+        </div>
+      </div>
+      `
+        : ""
+    }
+
+    <div style="margin-top:12px;">
+      Ya podés volver a WhatsApp.
+    </div>
   </div>
-`;
+`;   
+
   } catch (error) {
     console.error("Error creating order:", error);
     setStatus("No se pudo crear la orden.", "error");
