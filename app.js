@@ -280,7 +280,9 @@ async function submitOrder() {
 
     const data = await response.json();
 
-    setStatus("Pedido recibido.", "ok");
+    setStatus("Pedido enviado.", "ok");
+    submitBtn.textContent = "Pedido enviado";
+    submitBtn.disabled = true;
 
     if (data.redirect_url) {
   window.location.href = data.redirect_url;
@@ -385,6 +387,8 @@ catalogEl.innerHTML = `
   </div>
 `;   
 
+submitBtn.style.display = "none";
+    
   } catch (error) {
     console.error("Error creating order:", error);
     setStatus("No se pudo crear la orden.", "error");
