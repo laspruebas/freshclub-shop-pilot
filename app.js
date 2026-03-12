@@ -358,7 +358,7 @@ const diversityText =
     }
 
     <div style="margin-top:12px;">
-      Ya podés volver a WhatsApp.
+      Ya estamos procesando la compra.
     </div>
     
     <div style="margin-top:16px;">
