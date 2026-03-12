@@ -283,16 +283,39 @@ async function submitOrder() {
     setStatus("Pedido recibido.", "ok");
 
     if (data.redirect_url) {
-      window.location.href = data.redirect_url;
-      return;
-    }
+  window.location.href = data.redirect_url;
+  return;
+}
 
-    catalogEl.innerHTML = `
-      <div class="empty">
-        Pedido recibido.<br />
-        Ya podés volver a WhatsApp.
-      </div>
-    `;
+const insightMessage =
+  data?.fruti_insight?.message ||
+  "Pedido recibido. Ya podés volver a WhatsApp.";
+
+const orderPortionsText =
+  data?.fruti_insight?.order_portions != null
+    ? `<div style="margin-top:8px;"><strong>${data.fruti_insight.order_portions}</strong> porciones en esta compra</div>`
+    : "";
+
+const totalPortionsText =
+  data?.fruti_insight?.household_total_portions != null
+    ? `<div style="margin-top:4px;"><strong>${data.fruti_insight.household_total_portions}</strong> porciones acumuladas en el hogar</div>`
+    : "";
+
+const diversityText =
+  data?.fruti_insight?.products_count != null
+    ? `<div style="margin-top:4px;">${data.fruti_insight.products_count} productos distintos</div>`
+    : "";
+
+catalogEl.innerHTML = `
+  <div class="empty">
+    <div><strong>Pedido recibido</strong></div>
+    <div style="margin-top:8px;">${insightMessage}</div>
+    ${orderPortionsText}
+    ${totalPortionsText}
+    ${diversityText}
+    <div style="margin-top:12px;">Ya podés volver a WhatsApp.</div>
+  </div>
+`;
   } catch (error) {
     console.error("Error creating order:", error);
     setStatus("No se pudo crear la orden.", "error");
