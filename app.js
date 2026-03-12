@@ -301,7 +301,7 @@ const orderPortionsText =
 
 const totalPortionsText =
   data?.fruti_insight?.household_total_portions != null
-    ? `<div style="margin-top:4px;"><strong>${data.fruti_insight.household_total_portions}</strong> porciones acumuladas en el hogar</div>`
+    ? `<div style="margin-top:4px;">Tu hogar lleva <strong>${Math.round(insight.household_total_portions)}</strong> porciones esta semana</div>`
     : "";
 
 const diversityText =
