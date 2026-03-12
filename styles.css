@@ -160,3 +160,97 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.order-success {
+  margin-top: 20px;
+}
+
+.order-status {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 16px;
+}
+
+.fruti-card {
+  border: 1px dashed #d9d9d9;
+  border-radius: 16px;
+  padding: 24px 20px;
+  background: #fafafa;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.fruti-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  color: #222;
+}
+
+.fruti-main,
+.fruti-weekly,
+.fruti-diversity,
+.fruti-level,
+.fruti-score,
+.fruti-diversity-detail,
+.fruti-progress-label,
+.fruti-weekly-progress {
+  margin: 8px 0;
+  color: #333;
+  line-height: 1.4;
+}
+
+.fruti-main {
+  font-size: 18px;
+}
+
+.fruti-weekly {
+  font-size: 17px;
+}
+
+.fruti-diversity {
+  font-size: 16px;
+}
+
+.fruti-weekly-block {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.fruti-weekly-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.fruti-progress-bar {
+  margin-top: 12px;
+  height: 10px;
+  background: #e9e9e9;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fruti-progress-fill {
+  height: 10px;
+  background: #1f1f1f;
+  border-radius: 999px;
+}
+
+.whatsapp-cta {
+  margin-top: 16px;
+}
+
+.whatsapp-button {
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  background: #25D366;
+  color: white;
+  padding: 14px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  text-align: center;
+}
