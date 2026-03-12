@@ -306,7 +306,7 @@ const totalPortionsText =
 
 const diversityText =
   data?.fruti_insight?.products_count != null
-    ? `<div style="margin-top:4px;">${data.fruti_insight.products_count} productos distintos</div>`
+    ? `<div style="margin-top:4px;">${data.fruti_insight.products_count} familias de frutas y verduras agregadas</div>`
     : "";
 
  catalogEl.innerHTML = `
@@ -314,7 +314,6 @@ const diversityText =
     <div><strong>Pedido recibido</strong></div>
     <div style="margin-top:8px;">${insightMessage}</div>
 
-    ${orderPortionsText}
     ${totalPortionsText}
     ${diversityText}
 
