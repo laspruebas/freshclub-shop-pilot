@@ -78,7 +78,8 @@ const FALLBACK_CATALOG = [
 // =====================================================
 
 const params = new URLSearchParams(window.location.search);
-const householdId = params.get("household_id");
+const token = params.get("t");
+let householdId = params.get("household_id");
 
 const statusEl = document.getElementById("status");
 const catalogEl = document.getElementById("catalog");
@@ -208,6 +209,31 @@ catalogEl.addEventListener("click", (event) => {
 // =====================================================
 // API
 // =====================================================
+
+async function resolveSessionFromToken() {
+  if (householdId || !token) {
+    return;
+  }
+
+  const response = await fetch(`${API_BASE}/fruti/session-validate?t=${encodeURIComponent(token)}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Session validate HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  if (!data?.household_id) {
+    throw new Error("Session token did not return household_id");
+  }
+
+  householdId = data.household_id;
+}
 
 async function loadCatalog() {
   try {
@@ -403,11 +429,22 @@ submitBtn.style.display = "none";
 
 submitBtn.addEventListener("click", submitOrder);
 
-if (!householdId) {
-  setStatus("Abrí este link desde WhatsApp con household_id válido.", "error");
-} else {
-  setStatus(`Hogar detectado: ${householdId}`);
+async function initApp() {
+  try {
+    await resolveSessionFromToken();
+
+    if (!householdId) {
+      setStatus("Abrí este link desde WhatsApp con una sesión válida.", "error");
+      return;
+    }
+
+    setStatus(`Hogar detectado: ${householdId}`);
+    updateSubmitButton();
+    loadCatalog();
+  } catch (error) {
+    console.error("Error resolving session:", error);
+    setStatus("No se pudo validar la sesión del pedido.", "error");
+  }
 }
 
-updateSubmitButton();
-loadCatalog();
+initApp();
