@@ -412,7 +412,7 @@ catalogEl.innerHTML = `
 
     <div class="whatsapp-cta">
       <a
-        href="https://wa.me/5491139495554"
+        href="${whatsappReturnUrl}"
         class="whatsapp-button"
       >
         Volver a WhatsApp
