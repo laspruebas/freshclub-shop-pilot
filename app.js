@@ -317,6 +317,15 @@ async function submitOrder() {
 
 const insight = data?.fruti_insight || {};
 const weekly = insight?.weekly_state || {};
+
+const orderId = data?.order_id || "";
+
+const whatsappReturnText = orderId
+  ? `FRESHCLUB_ORDER_DONE:${orderId}`
+  : "FRESHCLUB_ORDER_DONE";
+
+const whatsappReturnUrl =
+  `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
     
 const insightMessage =
   data?.fruti_insight?.message ||
