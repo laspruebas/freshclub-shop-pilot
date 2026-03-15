@@ -81,12 +81,6 @@ const params = new URLSearchParams(window.location.search);
 const token = params.get("t");
 let householdId = null;
 
-if (token) {
-  const res = await fetch(`${API_BASE}/fruti/session-validate?t=${token}`);
-  const session = await res.json();
-  householdId = session.household_id;
-}
-
 const statusEl = document.getElementById("status");
 const catalogEl = document.getElementById("catalog");
 const submitBtn = document.getElementById("submitBtn");
@@ -446,6 +440,24 @@ submitBtn.style.display = "none";
     submitBtn.disabled = false;
     updateSubmitButton();
   }
+}
+
+async function resolveSessionFromToken() {
+  if (!token) return;
+
+  const res = await fetch(`${API_BASE}/fruti/session-validate?t=${encodeURIComponent(token)}`);
+
+  if (!res.ok) {
+    throw new Error("Invalid session");
+  }
+
+  const session = await res.json();
+
+  if (!session?.household_id) {
+    throw new Error("Session did not return household_id");
+  }
+
+  householdId = session.household_id;
 }
 
 // =====================================================
