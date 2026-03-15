@@ -2,10 +2,8 @@
 // CONFIG
 // =====================================================
 
-// Reemplazar por la URL real de tu backend cuando publiques /pilot/catalog
 const API_BASE = "https://fruti-api-y5uz.onrender.com";
 
-// Si el backend todavía no está listo, esto permite seguir probando la UX.
 const FALLBACK_CATALOG = [
   {
     product_id: "e78d5f1c-9524-4cc2-a71b-fd3e1c55256f",
@@ -88,6 +86,8 @@ const submitBtn = document.getElementById("submitBtn");
 let catalog = [];
 const cart = {};
 
+const STEP = 0.5;
+
 // =====================================================
 // HELPERS
 // =====================================================
@@ -116,8 +116,8 @@ function updateSubmitButton() {
 
 function formatQty(qty) {
   if (qty === 0) return "0";
-  if (qty < 1) return (qty * 1000) + " g";
-  return qty + " kg";
+  if (qty < 1) return `${qty * 1000} g`;
+  return `${qty} kg`;
 }
 
 function changeQty(productId, delta) {
@@ -186,8 +186,6 @@ function renderCatalog(items) {
   });
 }
 
-const STEP = 0.5;
-
 catalogEl.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
@@ -215,12 +213,15 @@ async function resolveSessionFromToken() {
     return;
   }
 
-  const response = await fetch(`${API_BASE}/fruti/session-validate?t=${encodeURIComponent(token)}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
+  const response = await fetch(
+    `${API_BASE}/fruti/session-validate?t=${encodeURIComponent(token)}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     }
-  });
+  );
 
   if (!response.ok) {
     throw new Error(`Session validate HTTP ${response.status}`);
@@ -311,153 +312,116 @@ async function submitOrder() {
     submitBtn.disabled = true;
 
     if (data.redirect_url) {
-  window.location.href = data.redirect_url;
-  return;
-}
+      window.location.href = data.redirect_url;
+      return;
+    }
 
-const insight = data?.fruti_insight || {};
-const weekly = insight?.weekly_state || {};
+    const insightMessage =
+      data?.fruti_insight?.message ||
+      "Pedido recibido. Ya podés volver a WhatsApp.";
 
-const orderId = data?.order_id || "";
+    const dash = data?.fruti_insight?.dash_v1 || {};
 
-const whatsappReturnText = orderId
-  ? `FRESHCLUB_ORDER_DONE:${orderId}`
-  : "FRESHCLUB_ORDER_DONE";
+    const weeklyPortions = dash?.household_total_portions_week ?? 0;
+    const targetWeek = dash?.target_portions_week ?? 0;
+    const progressPercent = dash?.progress_percent ?? 0;
+    const frutiLevelLabel = dash?.fruti_level_label ?? "Sin nivel";
+    const weeklyScore = dash?.weekly_score ?? 0;
+    const portionsToNext = dash?.portions_to_next_level ?? 0;
 
-const whatsappReturnUrl =
-  `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
-    
-const insightMessage =
-  data?.fruti_insight?.message ||
-  "Pedido recibido. Ya podés volver a WhatsApp.";
+    const orderId = data?.order_id || "";
 
-const dash = data?.fruti_insight?.dash_v1;
+    const whatsappReturnText = orderId
+      ? `FRESHCLUB_ORDER_DONE:${orderId}`
+      : "FRESHCLUB_ORDER_DONE";
 
-const weeklyPortions = dash?.household_total_portions_week;
-const targetWeek = dash?.target_portions_week;
-const progressPercent = dash?.progress_percent;
-const frutiLevelLabel = dash?.fruti_level_label;
-const weeklyScore = dash?.weekly_score;
-const portionsToNext = dash?.portions_to_next_level;
-    
-const orderPortionsText =
-  data?.fruti_insight?.order_portions != null
-    ? `<div style="margin-top:8px;"><strong>${data.fruti_insight.order_portions}</strong> porciones en esta compra</div>`
-    : "";
+    const whatsappReturnUrl =
+      `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
 
-const totalPortionsText =
-  data?.fruti_insight?.household_total_portions != null
-    ? `<div style="margin-top:4px;">Tu hogar lleva <strong>${Math.round(insight.household_total_portions)}</strong> porciones esta semana</div>`
-    : "";
+    catalogEl.innerHTML = `
+      <div class="empty">
 
-const diversityText =
-  data?.fruti_insight?.products_count != null
-    ? `<div style="margin-top:4px;">${data.fruti_insight.products_count} familias de frutas y verduras agregadas</div>`
-    : "";
+        <div style="font-size:20px;font-weight:600;margin-bottom:6px;">
+          🍎 Bienvenidos a FRUTI
+        </div>
 
-catalogEl.innerHTML = `
-<div class="empty">
+        <div style="margin-bottom:16px;">
+          Esta semana empezaron a medir la alimentación de su hogar.
+        </div>
 
-  <div style="font-size:20px;font-weight:600;margin-bottom:6px;">
-    🍎 Bienvenidos a FRUTI
-  </div>
+        <div style="margin-top:10px;font-weight:600;">
+          Impacto de la compra
+        </div>
 
-  <div style="margin-bottom:16px;">
-    Esta semana empezaron a medir la alimentación de su hogar.
-  </div>
+        <div style="margin-top:6px;">
+          ${insightMessage}
+        </div>
 
-  <div style="margin-top:10px;font-weight:600;">
-    Impacto de la compra
-  </div>
+        <div style="margin-top:12px;font-weight:600;">
+          Progreso semanal
+        </div>
 
-  <div style="margin-top:6px;">
-    ${insightMessage}
-  </div>
+        <div style="margin-top:4px;">
+          ${Math.round(weeklyPortions)} / ${Math.round(targetWeek)} porciones
+        </div>
 
-  <div style="margin-top:12px;font-weight:600;">
-    Progreso semanal
-  </div>
+        <div style="margin-top:8px;background:#eee;border-radius:6px;height:10px;">
+          <div style="
+            width:${progressPercent}%;
+            background:#4CAF50;
+            height:10px;
+            border-radius:6px;">
+          </div>
+        </div>
 
-  <div style="margin-top:4px;">
-    ${Math.round(weeklyPortions)} / ${Math.round(targetWeek)} porciones
-  </div>
+        <div style="margin-top:16px;font-weight:600;">
+          Estado de tu hogar
+        </div>
 
-  <div style="margin-top:8px;background:#eee;border-radius:6px;height:10px;">
-    <div style="
-      width:${progressPercent}%;
-      background:#4CAF50;
-      height:10px;
-      border-radius:6px;">
-    </div>
-  </div>
+        <div style="margin-top:4px;">
+          ${frutiLevelLabel} — FRUTI score ${Math.round(weeklyScore)}
+        </div>
 
-  <div style="margin-top:16px;font-weight:600;">
-    Estado de tu hogar
-  </div>
+        <div style="margin-top:16px;font-weight:600;">
+          Próximo objetivo
+        </div>
 
-  <div style="margin-top:4px;">
-    ${frutiLevelLabel} — FRUTI score ${Math.round(weeklyScore)}
-  </div>
+        <div style="margin-top:4px;">
+          Para mejorar el semáforo esta semana tu hogar necesita sumar:
+        </div>
 
-  <div style="margin-top:16px;font-weight:600;">
-    Próximo objetivo
-  </div>
+        <div style="margin-top:4px;font-weight:600;">
+          +${Math.round(portionsToNext)} porciones
+        </div>
 
-  <div style="margin-top:4px;">
-    Para mejorar el semáforo esta semana tu hogar necesita sumar:
-  </div>
+        <div style="margin-top:18px;">
+          Cada compra mejora la alimentación de tu familia.
+        </div>
 
-  <div style="margin-top:4px;font-weight:600;">
-    +${Math.round(portionsToNext)} porciones
-  </div>
+        <div style="margin-top:20px;">
+          <a href="${whatsappReturnUrl}"
+             style="
+               display:inline-block;
+               background:#25D366;
+               color:white;
+               padding:10px 16px;
+               border-radius:8px;
+               text-decoration:none;
+               font-weight:600;">
+             Volver a WhatsApp
+          </a>
+        </div>
 
-  <div style="margin-top:18px;">
-    Cada compra mejora la alimentación de tu familia.
-  </div>
+      </div>
+    `;
 
-  <div style="margin-top:20px;">
-    <a href="${whatsappReturnUrl}"
-       style="
-         display:inline-block;
-         background:#25D366;
-         color:white;
-         padding:10px 16px;
-         border-radius:8px;
-         text-decoration:none;
-         font-weight:600;">
-       Volver a WhatsApp
-    </a>
-  </div>
-
-</div>
-`; 
-
-submitBtn.style.display = "none";
-    
+    submitBtn.style.display = "none";
   } catch (error) {
     console.error("Error creating order:", error);
     setStatus("No se pudo crear la orden.", "error");
     submitBtn.disabled = false;
     updateSubmitButton();
   }
-}
-
-async function resolveSessionFromToken() {
-  if (!token) return;
-
-  const res = await fetch(`${API_BASE}/fruti/session-validate?t=${encodeURIComponent(token)}`);
-
-  if (!res.ok) {
-    throw new Error("Invalid session");
-  }
-
-  const session = await res.json();
-
-  if (!session?.household_id) {
-    throw new Error("Session did not return household_id");
-  }
-
-  householdId = session.household_id;
 }
 
 // =====================================================
@@ -477,7 +441,7 @@ async function initApp() {
 
     setStatus(`Hogar detectado: ${householdId}`);
     updateSubmitButton();
-    loadCatalog();
+    await loadCatalog();
   } catch (error) {
     console.error("Error resolving session:", error);
     setStatus("No se pudo validar la sesión del pedido.", "error");
