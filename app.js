@@ -79,7 +79,13 @@ const FALLBACK_CATALOG = [
 
 const params = new URLSearchParams(window.location.search);
 const token = params.get("t");
-let householdId = params.get("household_id");
+let householdId = null;
+
+if (token) {
+  const res = await fetch(`${API_BASE}/fruti/session-validate?t=${token}`);
+  const session = await res.json();
+  householdId = session.household_id;
+}
 
 const statusEl = document.getElementById("status");
 const catalogEl = document.getElementById("catalog");
