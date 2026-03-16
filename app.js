@@ -346,7 +346,8 @@ async function submitOrder() {
     }
 
     const data = await response.json();
-
+    console.log("FRUTI ORDER RESPONSE", data);
+    
     setStatus("Pedido enviado.", "ok");
     submitBtn.textContent = "Pedido enviado";
     submitBtn.disabled = true;
