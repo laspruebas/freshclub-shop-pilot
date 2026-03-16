@@ -119,6 +119,46 @@ function formatQty(qty) {
   if (qty < 1) return `${qty * 1000} g`;
   return `${qty} kg`;
 }
+function roundToHalf(value) {
+  return Math.round(Number(value || 0) * 2) / 2;
+}
+
+function formatHalf(value) {
+  const rounded = roundToHalf(value);
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderTagList(items = []) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return `<div style="color:#6b7280;">Sin datos todavía.</div>`;
+  }
+
+  return items
+    .map((item) => `
+      <span style="
+        display:inline-block;
+        margin:0 8px 8px 0;
+        padding:8px 12px;
+        background:#f3f4f6;
+        border:1px solid #e5e7eb;
+        border-radius:999px;
+        font-size:14px;
+        color:#374151;
+      ">
+        ${escapeHtml(item)}
+      </span>
+    `)
+    .join("");
+}
 
 function changeQty(productId, delta) {
   const current = cart[productId] || 0;
@@ -316,18 +356,44 @@ async function submitOrder() {
       return;
     }
 
-    const insightMessage =
-      data?.fruti_insight?.message ||
-      "Pedido recibido. Ya podés volver a WhatsApp.";
-
     const dash = data?.fruti_insight?.dash_v1 || {};
 
-    const weeklyPortions = dash?.household_total_portions_week ?? 0;
-    const targetWeek = dash?.target_portions_week ?? 0;
-    const progressPercent = dash?.progress_percent ?? 0;
-    const frutiLevelLabel = dash?.fruti_level_label ?? "Sin nivel";
-    const weeklyScore = dash?.weekly_score ?? 0;
-    const portionsToNext = dash?.portions_to_next_level ?? 0;
+    const portions =
+      dash?.portions ??
+      dash?.portions_of_order ??
+      dash?.order_portions ??
+      0;
+
+    const distinctCategoriesInOrder =
+      dash?.distinct_categories_in_order ??
+      dash?.distinct_categories_order ??
+      0;
+
+    const orderCategories =
+      dash?.order_categories ??
+      dash?.categories_in_order ??
+      [];
+
+    const daysEquivalentForHousehold =
+      dash?.days_equivalent_for_household ??
+      dash?.days_equivalent ??
+      0;
+
+    const distinctCategoriesWeek =
+      dash?.distinct_categories_week ??
+      0;
+
+    const weekCategories =
+      dash?.week_categories ??
+      dash?.categories_week ??
+      orderCategories ??
+      [];
+
+    const suggestedItems =
+      dash?.suggested_missing_categories_products ??
+      dash?.suggested_missing_categories ??
+      dash?.suggested_products ??
+      [];
 
     const orderId = data?.order_id || "";
 
@@ -338,63 +404,135 @@ async function submitOrder() {
     const whatsappReturnUrl =
       `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
 
-    catalogEl.innerHTML = `
-      <div class="empty">
+        catalogEl.innerHTML = `
+      <div class="empty" style="
+        max-width:720px;
+        margin:24px auto;
+        background:#fff;
+        border:1px solid #e8e8e8;
+        border-radius:16px;
+        padding:24px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.04);
+        color:#1f2937;
+        line-height:1.45;
+        text-align:left;
+      ">
 
-        <div style="font-size:20px;font-weight:600;margin-bottom:6px;">
-          🍎 Bienvenidos a FRUTI
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
+         🍎 Bienvenidos a FRUTI
         </div>
 
-        <div style="margin-bottom:16px;">
-          Esta semana empezaron a medir la alimentación de su hogar.
+        <div style="margin-bottom:20px;color:#4b5563;">
+          Hoy tu hogar comenzó a medir su alimentación.
         </div>
 
-        <div style="margin-top:10px;font-weight:600;">
-          Impacto de la compra
+        <div style="margin-top:10px;font-weight:700;font-size:17px;">
+          Impacto de tus compras
         </div>
 
-        <div style="margin-top:6px;">
-          ${insightMessage}
+        <div style="margin-top:8px;color:#4b5563;">
+          Medimos <strong>cantidad y diversidad</strong> de frutas y verduras.
         </div>
 
-        <div style="margin-top:12px;font-weight:600;">
-          Progreso semanal
+        <div style="
+          margin-top:12px;
+          padding:14px 16px;
+          background:#f7faf7;
+          border:1px solid #dbead8;
+          border-radius:12px;
+          font-size:18px;
+          font-weight:700;
+        ">
+          ${Math.round(portions)} porciones · ${distinctCategoriesInOrder} categorías
         </div>
 
-        <div style="margin-top:4px;">
-          ${Math.round(weeklyPortions)} / ${Math.round(targetWeek)} porciones
+        <div style="margin-top:12px;">
+          ${renderTagList(orderCategories)}
         </div>
 
-        <div style="margin-top:8px;background:#eee;border-radius:6px;height:10px;">
-          <div style="
-            width:${progressPercent}%;
-            background:#4CAF50;
-            height:10px;
-            border-radius:6px;">
-          </div>
+        <div style="margin-top:24px;font-weight:700;font-size:17px;">
+          Tu índice FRUTI
         </div>
 
-        <div style="margin-top:16px;font-weight:600;">
-          Estado de tu hogar
+        <div style="margin-top:8px;color:#4b5563;">
+          Es tu primera compra registrada.
         </div>
 
-        <div style="margin-top:4px;">
-          ${frutiLevelLabel} — FRUTI score ${Math.round(weeklyScore)}
+        <div style="margin-top:4px;color:#4b5563;">
+          Con tus próximas compras recibirás tu <strong>índice FRUTI</strong>.
         </div>
 
-        <div style="margin-top:16px;font-weight:600;">
-          Próximo objetivo
+        <div style="margin-top:24px;font-weight:700;font-size:17px;">
+          Desafío de esta semana
         </div>
 
-        <div style="margin-top:4px;">
-          Para mejorar el semáforo esta semana tu hogar necesita sumar:
+        <div style="margin-top:8px;color:#4b5563;">
+          Esta compra aporta frutas y verduras para aproximadamente:
         </div>
 
-        <div style="margin-top:4px;font-weight:600;">
-          +${Math.round(portionsToNext)} porciones
+        <div style="
+          margin-top:12px;
+          padding:14px 16px;
+          background:#f9fafb;
+          border:1px solid #e5e7eb;
+          border-radius:12px;
+          font-size:18px;
+          font-weight:700;
+        ">
+          ${formatHalf(daysEquivalentForHousehold)} días para tu hogar
         </div>
 
-        <div style="margin-top:18px;">
+        <div style="margin-top:18px;color:#4b5563;">
+          Tu hogar consumió:
+        </div>
+
+        <div style="
+          margin-top:8px;
+          padding:14px 16px;
+          background:#f9fafb;
+          border:1px solid #e5e7eb;
+          border-radius:12px;
+          font-size:18px;
+          font-weight:700;
+        ">
+          ${distinctCategoriesWeek} categorías de alimentos
+        </div>
+
+        <div style="margin-top:12px;">
+          ${renderTagList(weekCategories)}
+        </div>
+
+        <div style="margin-top:18px;color:#4b5563;">
+          Meta saludable:
+        </div>
+
+        <div style="
+          margin-top:8px;
+          padding:14px 16px;
+          background:#fff9ed;
+          border:1px solid #f3dfb2;
+          border-radius:12px;
+          font-size:18px;
+          font-weight:700;
+        ">
+          5 categorías por semana
+        </div>
+
+        ${
+          suggestedItems.length > 0
+            ? `
+              <div style="margin-top:18px;color:#4b5563;">
+                En tu próxima compra podrías sumar:
+              </div>
+
+              <div style="margin-top:12px;">
+                ${renderTagList(suggestedItems)}
+              </div>
+            `
+            : ""
+        }
+
+        <div style="margin-top:22px;color:#4b5563;">
           Cada compra mejora la alimentación de tu familia.
         </div>
 
