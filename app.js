@@ -346,7 +346,6 @@ async function submitOrder() {
     }
 
     const data = await response.json();
-    alert(JSON.stringify(data, null, 2));
     
     setStatus("Pedido enviado.", "ok");
     submitBtn.textContent = "Pedido enviado";
