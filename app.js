@@ -446,12 +446,15 @@ async function submitOrder() {
           line-height:1.45;
           text-align:left;
         ">
-
-        <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
-         🍎 Bienvenidos a FRUTI
+    
+          <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
+            🍎 Bienvenidos a FRUTI
+          </div>
+    
+          ...
+    
         </div>
-        ...
-    ` ;
+      `;
     }, 1200);
 
         <div style="margin-bottom:20px;color:#4b5563;">
