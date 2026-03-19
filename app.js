@@ -460,7 +460,7 @@ async function submitOrder() {
     const whatsappReturnUrl =
       `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
 
-    setTimeout(() => {
+   
       catalogEl.innerHTML = `
         <div class="empty" style="
           max-width:720px;
