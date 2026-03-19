@@ -561,8 +561,8 @@ async function submitOrder() {
         </div>
       </div>
     `;
-  }, 2000);
-}, 3000);
+  }, 2500);
+}, 3500);
 
     if (data.redirect_url) {
       window.location.href = data.redirect_url;
