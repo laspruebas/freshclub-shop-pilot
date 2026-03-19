@@ -376,7 +376,7 @@ async function submitOrder() {
   try {
     submitBtn.disabled = true;
     submitBtn.textContent = "Enviando...";
-    setStatus("Enviando pedido...");
+  
 
     const response = await fetch(`${API_BASE}/pilot/orders`, {
       method: "POST",
