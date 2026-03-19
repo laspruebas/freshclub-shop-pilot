@@ -478,7 +478,6 @@ async function submitOrder() {
           <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
             🍎 Bienvenidos a FRUTI
           </div>
-        </div>
      
         <div style="margin-bottom:20px;color:#4b5563;">
           Hoy tu hogar comenzó a medir su alimentación.
