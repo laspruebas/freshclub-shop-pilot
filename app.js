@@ -450,9 +450,6 @@ async function submitOrder() {
           <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
             🍎 Bienvenidos a FRUTI
           </div>
-    
-          ...
-    
         </div>
       `;
     }, 1200);
