@@ -4,6 +4,17 @@
 
 const API_BASE = "https://fruti-api-y5uz.onrender.com";
 
+const PRODUCT_COLORS = {
+  Banana: "#facc15",
+  Cebolla: "#a855f7",
+  Manzana: "#ef4444",
+  Naranja: "#fb923c",
+  Papa: "#eab308",
+  Pimiento: "#ef4444",
+  Tomate: "#ef4444",
+  Zanahoria: "#f97316"
+};
+
 const FALLBACK_CATALOG = [
   {
     product_id: "e78d5f1c-9524-4cc2-a71b-fd3e1c55256f",
@@ -245,27 +256,29 @@ function renderCatalog(items) {
   items.forEach((item) => {
     const card = document.createElement("div");
     card.className = "card";
-
-card.innerHTML = `
-  <div class="card-top">
-    <div>
-      <h2 class="card-title">${item.name}</h2>
-      <div class="card-meta">${item.price_label} / ${item.unit}</div>
-    </div>
-  </div>
-
-  <div style="
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:12px;
-  ">
-
-    <div>
-      <div style="font-weight:700;font-size:18px;" id="total-${item.product_id}">
-        $0
+    
+    const color = PRODUCT_COLORS[item.name] || "#e5e7eb";
+    card.style.borderLeft = `3px solid ${color}`;
+        
+    card.innerHTML = `
+      <div class="card-top">
+        <div>
+          <h2 class="card-title">${item.name}</h2>
+          <div class="card-meta">${item.price_label} / ${item.unit}</div>
+        </div>
       </div>
-    </div>
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-top:12px;
+      ">
+      <div>
+        <div style="font-weight:700;font-size:18px;" id="total-${item.product_id}">
+          $0
+        </div>
+      </div>
 
     <div id="controls-${item.product_id}">
       <button
