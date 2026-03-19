@@ -167,7 +167,7 @@ function changeQty(productId, delta) {
 
   const qtyEl = document.getElementById(`qty-${productId}`);
   if (qtyEl) {
-    qtyEl.textContent = next;
+    qtyEl.textContent = `${next} kg`;
   }
   const product = catalog.find(p => p.product_id === productId);
   const total = product ? product.price * next : 0;
