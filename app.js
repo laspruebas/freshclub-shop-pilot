@@ -479,7 +479,7 @@ async function submitOrder() {
       ">
 
         <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
-          🍎 Bienvenidos a FRUTI
+          🍎 Bienvenidos a Fruti
         </div>
 
         <div style="margin-bottom:20px;color:#4b5563;">
@@ -598,7 +598,7 @@ async function submitOrder() {
 
         <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
           <a href="https://wa.me/?text=${encodeURIComponent(
-            `Mirá mi reporte FRUTI 🥦🍎\n\nEstoy mejorando la alimentación de mi hogar.\n\nSumate: https://fruti.vercel.app`
+            `Mirá mi reporte Fruti 🥦🍎\n\nEstoy mejorando la alimentación de mi hogar.\n\nSumate: https://fruti.vercel.app`
           )}"
             style="
               display:inline-block;
