@@ -432,7 +432,7 @@ async function submitOrder() {
     const whatsappReturnUrl =
       `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
 
-    
+    setTimeout(() => {
       catalogEl.innerHTML = `
         <div class="empty" style="
           max-width:720px;
@@ -451,8 +451,7 @@ async function submitOrder() {
             🍎 Bienvenidos a FRUTI
           </div>
         </div>
-      `;
-
+     
         <div style="margin-bottom:20px;color:#4b5563;">
           Hoy tu hogar comenzó a medir su alimentación.
         </div>
@@ -583,7 +582,8 @@ async function submitOrder() {
 
       </div>
     `;
-
+    }, 1200);
+      
     submitBtn.style.display = "none";
   } catch (error) {
     console.error("Error creating order:", error);
