@@ -167,8 +167,16 @@ function changeQty(productId, delta) {
 
   const qtyEl = document.getElementById(`qty-${productId}`);
   if (qtyEl) {
-    qtyEl.textContent = formatQty(next);
+    qtyEl.textContent = next;
   }
+  const product = catalog.find(p => p.product_id === productId);
+  const total = product ? product.price * next : 0;
+
+  const totalEl = document.getElementById(`total-${productId}`);
+  if (totalEl) {
+    totalEl.textContent = `$${Math.round(total)}`;
+  }
+  
 
   updateSubmitButton();
 }
@@ -194,34 +202,52 @@ function renderCatalog(items) {
     const card = document.createElement("div");
     card.className = "card";
 
-    card.innerHTML = `
-      <div class="card-top">
-        <div>
-          <h2 class="card-title">${item.name}</h2>
-          <div class="card-meta">${item.price_label} / ${item.unit}</div>
-        </div>
+card.innerHTML = `
+  <div class="card-top">
+    <div>
+      <h2 class="card-title">${item.name}</h2>
+      <div class="card-meta">${item.price_label} / ${item.unit}</div>
+    </div>
+  </div>
+
+  <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:12px;
+  ">
+
+    <div>
+      <div style="font-size:13px;color:#6b7280;">
+        0 kg
+      </div>
+      <div style="font-weight:700;font-size:18px;" id="total-${item.product_id}">
+        $0
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button
+        class="qty-btn"
+        type="button"
+        data-action="minus"
+        data-id="${item.product_id}"
+      >−</button>
+
+      <div id="qty-${item.product_id}" style="min-width:30px;text-align:center;">
+        0
       </div>
 
-      <div class="qty-row">
-        <button
-          class="qty-btn"
-          type="button"
-          data-action="minus"
-          data-id="${item.product_id}"
-          aria-label="Restar ${item.name}"
-        >−</button>
+      <button
+        class="qty-btn"
+        type="button"
+        data-action="plus"
+        data-id="${item.product_id}"
+      >+</button>
+    </div>
 
-        <div class="qty-value" id="qty-${item.product_id}">0</div>
-
-        <button
-          class="qty-btn"
-          type="button"
-          data-action="plus"
-          data-id="${item.product_id}"
-          aria-label="Sumar ${item.name}"
-        >+</button>
-      </div>
-    `;
+  </div>
+`;
 
     catalogEl.appendChild(card);
   });
