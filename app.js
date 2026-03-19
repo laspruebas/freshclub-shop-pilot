@@ -594,23 +594,36 @@ async function submitOrder() {
           Cada compra mejora la alimentación de tu familia.
         </div>
 
-        <div style="margin-top:20px;">
-          <a href="${whatsappReturnUrl}"
-             style="
-               display:inline-block;
-               background:#25D366;
-               color:white;
-               padding:10px 16px;
-               border-radius:8px;
-               text-decoration:none;
-               font-weight:600;">
-             Volver a WhatsApp
-          </a>
-        </div>
+        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
 
+          <a href="https://wa.me/?text=${encodeURIComponent(
+            `Mirá mi reporte FRUTI 🥦🍎\n\nEstoy mejorando la alimentación de mi hogar.\n\nSumate: https://fruti.vercel.app`
+          )}"
+            style="
+             display:inline-block;
+             background:#25D366;
+             color:white;
+             padding:10px 16px;
+             border-radius:8px;
+             text-decoration:none;
+             font-weight:600;">
+           Compartir mi progreso
+        </a>
+    
+        <a href="${whatsappReturnUrl}"
+           style="
+             display:inline-block;
+             background:#f3f4f6;
+             color:#111827;
+             padding:10px 16px;
+             border-radius:8px;
+             text-decoration:none;
+             font-weight:600;">
+           Volver a WhatsApp
+             </a>
+           </div>
       </div>
     `;
-    }
       
     submitBtn.style.display = "none";
   } catch (error) {
