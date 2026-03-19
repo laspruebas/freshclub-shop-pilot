@@ -243,7 +243,7 @@ catalogEl.addEventListener("click", (event) => {
     changeQty(productId, -STEP);
   }
 });
-  function renderPreparingReport() {
+function renderPreparingReport() {
   catalogEl.innerHTML = `
     <div class="empty" style="
       max-width:720px;
@@ -253,11 +253,11 @@ catalogEl.addEventListener("click", (event) => {
     ">
 
       <div style="font-size:22px;font-weight:700;margin-bottom:10px;">
-        Pedido generado
+        Preparando tu reporte
       </div>
 
       <div style="color:#4b5563;margin-bottom:20px;">
-        Preparando tu reporte personalizado...
+        Estamos analizando tu compra.
       </div>
 
       <div class="fruit-bounce">
@@ -265,7 +265,25 @@ catalogEl.addEventListener("click", (event) => {
         <span>🥬</span>
         <span>🥕</span>
       </div>
+    </div>
+  `;
+}
 
+function renderOrderConfirmed() {
+  catalogEl.innerHTML = `
+    <div class="empty" style="
+      max-width:720px;
+      margin:40px auto;
+      text-align:center;
+      color:#1f2937;
+    ">
+      <div style="font-size:24px;font-weight:700;margin-bottom:10px;">
+        ¡Listo!
+      </div>
+
+      <div style="color:#4b5563;">
+        Tu pedido fue generado correctamente.
+      </div>
     </div>
   `;
 }
