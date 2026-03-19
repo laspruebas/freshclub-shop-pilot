@@ -105,10 +105,17 @@ function getSelectedItemsCount() {
 }
 
 function updateSubmitButton() {
-  const count = getSelectedItemsCount();
+  let total = 0;
 
-  if (count > 0) {
-    submitBtn.textContent = `Confirmar pedido (${count})`;
+  Object.entries(cart).forEach(([id, qty]) => {
+    const product = catalog.find(p => p.product_id === id);
+    if (product) {
+      total += product.price * qty;
+    }
+  });
+
+  if (total > 0) {
+    submitBtn.textContent = `Confirmar $${Math.round(total)}`;
   } else {
     submitBtn.textContent = "Confirmar pedido";
   }
