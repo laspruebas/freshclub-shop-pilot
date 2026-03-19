@@ -397,88 +397,27 @@ async function submitOrder() {
     submitBtn.disabled = true;
     
     setTimeout(() => {
-      renderPreparingReport();
-    
-      setTimeout(() => {
-        catalogEl.innerHTML = `
-          <div>TEST</div>
-        `;
-      }, 1200);
-    
-    }, 900);
+  renderPreparingReport();
 
-    if (data.redirect_url) {
-      window.location.href = data.redirect_url;
-      return;
-    }
+  setTimeout(() => {
+    catalogEl.innerHTML = `
+      <div class="empty" style="
+        max-width:720px;
+        margin:24px auto;
+        background:#fff;
+        border:1px solid #e8e8e8;
+        border-radius:16px;
+        padding:24px;
+        box-shadow:0 2px 10px rgba(0,0,0,0.04);
+        color:#1f2937;
+        line-height:1.45;
+        text-align:left;
+      ">
 
-    const dash = data?.fruti_insight?.dash_v1 || {};
+        <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
+          🍎 Bienvenidos a FRUTI
+        </div>
 
-    const portions =
-      dash?.portions ??
-      dash?.portions_of_order ??
-      dash?.order_portions ??
-      0;
-
-    const distinctCategoriesInOrder =
-      dash?.distinct_categories_in_order ??
-      dash?.distinct_categories_order ??
-      0;
-
-    const orderCategories =
-      dash?.order_categories ??
-      dash?.categories_in_order ??
-      [];
-
-    const daysEquivalentForHousehold =
-      dash?.days_equivalent_for_household ??
-      dash?.days_equivalent ??
-      0;
-
-    const distinctCategoriesWeek =
-      dash?.distinct_categories_week ??
-      0;
-
-    const weekCategories =
-      dash?.week_categories ??
-      dash?.categories_week ??
-      orderCategories ??
-      [];
-
-    const suggestedItems =
-      dash?.suggested_missing_categories_products ??
-      dash?.suggested_missing_categories ??
-      dash?.suggested_products ??
-      [];
-
-    const orderId = data?.order_id || "";
-
-    const whatsappReturnText = orderId
-      ? `FRESHCLUB_ORDER_DONE:${orderId}`
-      : "FRESHCLUB_ORDER_DONE";
-
-    const whatsappReturnUrl =
-      `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
-
-   
-      catalogEl.innerHTML = `
-        <div class="empty" style="
-          max-width:720px;
-          margin:24px auto;
-          background:#fff;
-          border:1px solid #e8e8e8;
-          border-radius:16px;
-          padding:24px;
-          box-shadow:0 2px 10px rgba(0,0,0,0.04);
-          color:#1f2937;
-          line-height:1.45;
-          text-align:left;
-        ">
-    
-          <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
-            🍎 Bienvenidos a FRUTI
-          </div>
-     
         <div style="margin-bottom:20px;color:#4b5563;">
           Hoy tu hogar comenzó a medir su alimentación.
         </div>
@@ -594,37 +533,90 @@ async function submitOrder() {
         </div>
 
         <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-
           <a href="https://wa.me/?text=${encodeURIComponent(
             `Mirá mi reporte FRUTI 🥦🍎\n\nEstoy mejorando la alimentación de mi hogar.\n\nSumate: https://fruti.vercel.app`
           )}"
             style="
-             display:inline-block;
-             background:#25D366;
-             color:white;
-             padding:10px 16px;
-             border-radius:8px;
-             text-decoration:none;
-             font-weight:600;">
-           Compartir mi progreso
-        </a>
-    
-        <a href="${whatsappReturnUrl}"
-           style="
-             display:inline-block;
-             background:#f3f4f6;
-             color:#111827;
-             padding:10px 16px;
-             border-radius:8px;
-             text-decoration:none;
-             font-weight:600;">
-           Volver a WhatsApp
-             </a>
-           </div>
+              display:inline-block;
+              background:#25D366;
+              color:white;
+              padding:10px 16px;
+              border-radius:8px;
+              text-decoration:none;
+              font-weight:600;">
+            Compartir mi progreso
+          </a>
+
+          <a href="${whatsappReturnUrl}"
+            style="
+              display:inline-block;
+              background:#f3f4f6;
+              color:#111827;
+              padding:10px 16px;
+              border-radius:8px;
+              text-decoration:none;
+              font-weight:600;">
+            Volver a WhatsApp
+          </a>
+        </div>
       </div>
     `;
+  }, 1200);
+}, 900);
+
+    if (data.redirect_url) {
+      window.location.href = data.redirect_url;
+      return;
+    }
+
+    const dash = data?.fruti_insight?.dash_v1 || {};
+
+    const portions =
+      dash?.portions ??
+      dash?.portions_of_order ??
+      dash?.order_portions ??
+      0;
+
+    const distinctCategoriesInOrder =
+      dash?.distinct_categories_in_order ??
+      dash?.distinct_categories_order ??
+      0;
+
+    const orderCategories =
+      dash?.order_categories ??
+      dash?.categories_in_order ??
+      [];
+
+    const daysEquivalentForHousehold =
+      dash?.days_equivalent_for_household ??
+      dash?.days_equivalent ??
+      0;
+
+    const distinctCategoriesWeek =
+      dash?.distinct_categories_week ??
+      0;
+
+    const weekCategories =
+      dash?.week_categories ??
+      dash?.categories_week ??
+      orderCategories ??
+      [];
+
+    const suggestedItems =
+      dash?.suggested_missing_categories_products ??
+      dash?.suggested_missing_categories ??
+      dash?.suggested_products ??
+      [];
+
+    const orderId = data?.order_id || "";
+
+    const whatsappReturnText = orderId
+      ? `FRESHCLUB_ORDER_DONE:${orderId}`
+      : "FRESHCLUB_ORDER_DONE";
+
+    const whatsappReturnUrl =
+      `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
       
-    submitBtn.style.display = "none";
   } catch (error) {
     console.error("Error creating order:", error);
     setStatus("No se pudo crear la orden.", "error");
