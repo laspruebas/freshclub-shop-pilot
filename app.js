@@ -401,7 +401,7 @@ async function submitOrder() {
     
       setTimeout(() => {
         catalogEl.innerHTML = `
-          ...dashboard completo...
+          <div>TEST</div>
         `;
       }, 1200);
     
