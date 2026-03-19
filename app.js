@@ -292,12 +292,16 @@ catalogEl.addEventListener("click", (event) => {
 
   if (!productId || !action) return;
 
+  if (action === "add") {
+    changeQty(productId, 1);
+  }
+
   if (action === "plus") {
-    changeQty(productId, STEP);
+    changeQty(productId, 1);
   }
 
   if (action === "minus") {
-    changeQty(productId, -STEP);
+    changeQty(productId, -1);
   }
 });
 function renderPreparingReport() {
