@@ -432,7 +432,7 @@ async function submitOrder() {
     const whatsappReturnUrl =
       `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
 
-    setTimeout(() => {
+    
       catalogEl.innerHTML = `
         <div class="empty" style="
           max-width:720px;
@@ -452,7 +452,6 @@ async function submitOrder() {
           </div>
         </div>
       `;
-    }, 1200);
 
         <div style="margin-bottom:20px;color:#4b5563;">
           Hoy tu hogar comenzó a medir su alimentación.
