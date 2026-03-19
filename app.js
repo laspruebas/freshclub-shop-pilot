@@ -218,9 +218,6 @@ card.innerHTML = `
   ">
 
     <div>
-      <div style="font-size:13px;color:#6b7280;">
-        0 kg
-      </div>
       <div style="font-weight:700;font-size:18px;" id="total-${item.product_id}">
         $0
       </div>
