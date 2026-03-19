@@ -391,10 +391,21 @@ async function submitOrder() {
 
     const data = await response.json();
     
-    renderPreparingReport();
+    renderOrderConfirmed();
     submitBtn.style.display = "none";
     submitBtn.textContent = "Pedido enviado";
     submitBtn.disabled = true;
+    
+    setTimeout(() => {
+      renderPreparingReport();
+    
+      setTimeout(() => {
+        catalogEl.innerHTML = `
+          ...dashboard completo...
+        `;
+      }, 1200);
+    
+    }, 900);
 
     if (data.redirect_url) {
       window.location.href = data.redirect_url;
