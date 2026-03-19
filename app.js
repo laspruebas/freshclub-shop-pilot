@@ -315,7 +315,7 @@ function renderPreparingReport() {
     ">
 
       <div style="font-size:22px;font-weight:700;margin-bottom:10px;">
-        Preparando tu reporte
+        Preparando tu reporte Fruti
       </div>
 
       <div style="color:#4b5563;margin-bottom:20px;">
