@@ -182,6 +182,7 @@ function renderEmpty(message) {
 }
 
 function renderCatalog(items) {
+  document.getElementById("header").style.display = "block";
   if (!items || items.length === 0) {
     renderEmpty("No hay productos disponibles por ahora.");
     return;
