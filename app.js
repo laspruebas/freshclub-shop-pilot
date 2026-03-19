@@ -610,7 +610,7 @@ async function submitOrder() {
 
       </div>
     `;
-    }, 1200);
+    }
       
     submitBtn.style.display = "none";
   } catch (error) {
