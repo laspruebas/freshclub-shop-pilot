@@ -169,7 +169,7 @@ function renderTagList(items = []) {
 
 function changeQty(productId, delta) {
   const current = cart[productId] || 0;
-  const next = Math.max(0, current + delta);
+  const next = Math.max(0, current + (delta * STEP));
   cart[productId] = next;
 
   const qtyEl = document.getElementById(`qty-${productId}`);
@@ -230,28 +230,17 @@ card.innerHTML = `
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:10px;">
+    <div id="controls-${item.product_id}">
       <button
-        class="qty-btn"
+        class="add-btn"
         type="button"
-        data-action="minus"
+        data-action="add"
         data-id="${item.product_id}"
-      >−</button>
-
-      <div id="qty-${item.product_id}" style="min-width:30px;text-align:center;">
-        0
-      </div>
-
-      <button
-        class="qty-btn"
-        type="button"
-        data-action="plus"
-        data-id="${item.product_id}"
-      >+</button>
+      >
+        + Agregar
+      </button>
     </div>
-
-  </div>
-`;
+    `;
 
     catalogEl.appendChild(card);
   });
