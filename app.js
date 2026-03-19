@@ -562,7 +562,7 @@ async function submitOrder() {
       </div>
     `;
   }, 1200);
-}, 900);
+}, 1900);
 
     if (data.redirect_url) {
       window.location.href = data.redirect_url;
