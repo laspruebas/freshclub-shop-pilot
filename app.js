@@ -242,6 +242,33 @@ catalogEl.addEventListener("click", (event) => {
   if (action === "minus") {
     changeQty(productId, -STEP);
   }
+
+  function renderPreparingReport() {
+  catalogEl.innerHTML = `
+    <div class="empty" style="
+      max-width:720px;
+      margin:40px auto;
+      text-align:center;
+      color:#1f2937;
+    ">
+
+      <div style="font-size:22px;font-weight:700;margin-bottom:10px;">
+        Pedido generado
+      </div>
+
+      <div style="color:#4b5563;margin-bottom:20px;">
+        Preparando tu reporte personalizado...
+      </div>
+
+      <div class="fruit-bounce">
+        <span>🍎</span>
+        <span>🥬</span>
+        <span>🥕</span>
+      </div>
+
+    </div>
+  `;
+}
 });
 
 // =====================================================
@@ -268,7 +295,7 @@ async function resolveSessionFromToken() {
   }
 
   const data = await response.json();
-
+  
   if (!data?.household_id) {
     throw new Error("Session token did not return household_id");
   }
@@ -347,7 +374,8 @@ async function submitOrder() {
 
     const data = await response.json();
     
-    setStatus("Pedido enviado.", "ok");
+    renderPreparingReport();
+    submitBtn.style.display = "none";
     submitBtn.textContent = "Pedido enviado";
     submitBtn.disabled = true;
 
