@@ -245,6 +245,7 @@ catalogEl.addEventListener("click", (event) => {
   }
 });
 function renderPreparingReport() {
+  document.getElementById("header").style.display = "none";
   catalogEl.innerHTML = `
     <div class="empty" style="
       max-width:720px;
@@ -271,6 +272,7 @@ function renderPreparingReport() {
 }
 
 function renderOrderConfirmed() {
+  document.getElementById("header").style.display = "none";
   catalogEl.innerHTML = `
     <div class="empty" style="
       max-width:720px;
