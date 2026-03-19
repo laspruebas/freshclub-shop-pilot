@@ -432,23 +432,27 @@ async function submitOrder() {
     const whatsappReturnUrl =
       `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
 
-        catalogEl.innerHTML = `
-      <div class="empty" style="
-        max-width:720px;
-        margin:24px auto;
-        background:#fff;
-        border:1px solid #e8e8e8;
-        border-radius:16px;
-        padding:24px;
-        box-shadow:0 2px 10px rgba(0,0,0,0.04);
-        color:#1f2937;
-        line-height:1.45;
-        text-align:left;
-      ">
+    setTimeout(() => {
+      catalogEl.innerHTML = `
+        <div class="empty" style="
+          max-width:720px;
+          margin:24px auto;
+          background:#fff;
+          border:1px solid #e8e8e8;
+          border-radius:16px;
+          padding:24px;
+          box-shadow:0 2px 10px rgba(0,0,0,0.04);
+          color:#1f2937;
+          line-height:1.45;
+          text-align:left;
+        ">
 
         <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
          🍎 Bienvenidos a FRUTI
         </div>
+        ...
+    ` ;
+    }, 1200);
 
         <div style="margin-bottom:20px;color:#4b5563;">
           Hoy tu hogar comenzó a medir su alimentación.
