@@ -242,7 +242,7 @@ catalogEl.addEventListener("click", (event) => {
   if (action === "minus") {
     changeQty(productId, -STEP);
   }
-
+});
   function renderPreparingReport() {
   catalogEl.innerHTML = `
     <div class="empty" style="
@@ -269,7 +269,6 @@ catalogEl.addEventListener("click", (event) => {
     </div>
   `;
 }
-});
 
 // =====================================================
 // API
