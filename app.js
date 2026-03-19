@@ -401,6 +401,7 @@ async function submitOrder() {
   renderPreparingReport();
 
   setTimeout(() => {
+    document.getElementById("header").style.display = "none";
     catalogEl.innerHTML = `
       <div class="empty" style="
         max-width:720px;
