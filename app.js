@@ -171,7 +171,44 @@ function changeQty(productId, delta) {
   const current = cart[productId] || 0;
   const next = Math.max(0, current + (delta * STEP));
   cart[productId] = next;
-
+  const controlsEl = document.getElementById(`controls-${productId}`);
+  
+  if (controlsEl) {
+    if (next === 0) {
+      controlsEl.innerHTML = `
+        <button
+          class="add-btn"
+          type="button"
+          data-action="add"
+          data-id="${productId}"
+        >
+          + Agregar
+        </button>
+      `;
+    } else {
+      controlsEl.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;">
+          <button
+            class="qty-btn"
+            type="button"
+            data-action="minus"
+            data-id="${productId}"
+          >−</button>
+  
+          <div id="qty-${productId}" style="min-width:40px;text-align:center;">
+            ${next} kg
+          </div>
+  
+          <button
+            class="qty-btn"
+            type="button"
+            data-action="plus"
+            data-id="${productId}"
+          >+</button>
+        </div>
+      `;
+    }
+  }
   const qtyEl = document.getElementById(`qty-${productId}`);
   if (qtyEl) {
     qtyEl.textContent = `${next} kg`;
