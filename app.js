@@ -486,12 +486,12 @@ function renderDashboardFromApi(data, orderId) {
     : `<div style="margin-top:8px;color:#6b7280;">Sin datos todavía.</div>`;
 
   const suggestionsHtml = suggestions.length > 0
-    ? suggestions.map((item) => `
-        <div style="margin-top:6px;font-size:16px;color:#1f2937;">
-          ${item}
-        </div>
-      `).join("")
-    : `<div style="margin-top:8px;color:#6b7280;">Todavía no hay sugerencias para mostrar.</div>`;
+  ? suggestions.map((item) => `
+      <div style="margin-top:6px;font-size:16px;color:#1f2937;">
+        ${item.emoji || ""} ${item.product || item.label || ""}
+      </div>
+    `).join("")
+  : "";
 
   catalogEl.innerHTML = `
     <div class="empty" style="
@@ -630,18 +630,34 @@ function renderDashboardFromApi(data, orderId) {
       </div>
 
       <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-        <a href="${whatsappReturnUrl}"
+
+        <a href="https://wa.me/?text=${encodeURIComponent(
+          `🍎 Empecé a mejorar la alimentación de mi hogar con FRUTI\n\n${portionsLabel}`
+        )}"
            style="
              display:inline-block;
-             background:#25D366;
+             background:#16a34a;
              color:white;
              padding:10px 16px;
              border-radius:8px;
              text-decoration:none;
              font-weight:600;">
-           Seguir en WhatsApp
+           Compartir resultado
         </a>
-      </div>
+
+        <a href="${whatsappReturnUrl}"
+           style="
+             display:inline-block;
+             background:#f3f4f6;
+             color:#111827;
+             padding:10px 16px;
+             border-radius:8px;
+             text-decoration:none;
+             font-weight:600;">
+             Volver a WhatsApp
+         </a>
+        
+        </div>
 
     </div>
   `;
