@@ -424,6 +424,229 @@ async function loadCatalog() {
   }
 }
 
+async function loadOrderDashboard(orderId) {
+  const response = await fetch(`${API_BASE}/pilot/orders/${orderId}/dashboard`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Dashboard HTTP ${response.status}`);
+  }
+
+  return await response.json();
+}
+
+function renderDashboardFromApi(data, orderId) {
+  const welcome = data?.welcome || {};
+  const purchase = data?.purchase || {};
+  const impact = data?.impact || {};
+  const week = data?.week || {};
+  const nextStep = data?.next_step || {};
+  const footer = data?.footer || {};
+  const flags = data?.flags || {};
+
+  const title = welcome?.title || "🍎 Bienvenidos a FRUTI";
+  const subtitle = welcome?.subtitle || "";
+
+  const purchaseTitle = purchase?.title || "Tu compra de hoy";
+  const portionsLabel = purchase?.portions_label || "";
+  const purchaseCategories = Array.isArray(purchase?.categories) ? purchase.categories : [];
+
+  const impactTitle = impact?.title || "Tu impacto";
+  const daysEquivalentLabel = impact?.days_equivalent_label || "";
+
+  const weekTitle = week?.title || "Tu semana";
+  const weeklyTargetCategories = week?.weekly_target_categories ?? null;
+  const weeklyProgressLabel = week?.weekly_progress_label || "";
+
+  const nextStepTitle = nextStep?.title || "Para seguir mejorando";
+  const suggestions = Array.isArray(nextStep?.suggestions) ? nextStep.suggestions : [];
+
+  const footerMessage = footer?.message || "";
+
+  const isFirstOrder = Boolean(flags?.is_first_order);
+  const showIndex = Boolean(flags?.show_index);
+
+  const whatsappReturnText = orderId
+    ? `FRESHCLUB_ORDER_DONE:${orderId}`
+    : "FRESHCLUB_ORDER_DONE";
+
+  const whatsappReturnUrl =
+    `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
+
+  const categoriesHtml = purchaseCategories.length > 0
+    ? purchaseCategories.map((cat) => `
+        <div style="margin-top:6px;font-size:16px;color:#1f2937;">
+          ${cat.emoji || ""} ${cat.label || ""}
+        </div>
+      `).join("")
+    : `<div style="margin-top:8px;color:#6b7280;">Sin datos todavía.</div>`;
+
+  const suggestionsHtml = suggestions.length > 0
+    ? suggestions.map((item) => `
+        <div style="margin-top:6px;font-size:16px;color:#1f2937;">
+          ${item}
+        </div>
+      `).join("")
+    : `<div style="margin-top:8px;color:#6b7280;">Todavía no hay sugerencias para mostrar.</div>`;
+
+  catalogEl.innerHTML = `
+    <div class="empty" style="
+      max-width:720px;
+      margin:24px auto;
+      background:#fff;
+      border:1px solid #e8e8e8;
+      border-radius:16px;
+      padding:24px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.04);
+      color:#1f2937;
+      line-height:1.45;
+      text-align:left;
+    ">
+
+      <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
+        ${title}
+      </div>
+
+      <div style="margin-bottom:20px;color:#4b5563;">
+        ${subtitle}
+      </div>
+
+      <div style="margin-top:10px;font-weight:700;font-size:17px;">
+        ${purchaseTitle}
+      </div>
+
+      <div style="margin-top:12px;color:#4b5563;">
+        Sumaste:
+      </div>
+
+      <div style="
+        margin-top:8px;
+        padding:14px 16px;
+        background:#f7faf7;
+        border:1px solid #dbead8;
+        border-radius:12px;
+        font-size:18px;
+        font-weight:700;
+      ">
+        ${portionsLabel}
+      </div>
+
+      <div style="margin-top:18px;color:#4b5563;">
+        Incluye:
+      </div>
+
+      <div style="margin-top:8px;">
+        ${categoriesHtml}
+      </div>
+
+      ${
+        isFirstOrder && !showIndex
+          ? `
+            <div style="margin-top:24px;font-weight:700;font-size:17px;">
+              Tu índice FRUTI
+            </div>
+
+            <div style="margin-top:8px;color:#4b5563;">
+              Es tu primera compra registrada.
+            </div>
+
+            <div style="margin-top:4px;color:#4b5563;">
+              Con tus próximas compras recibirás tu <strong>índice FRUTI</strong>.
+            </div>
+          `
+          : ""
+      }
+
+      <div style="margin-top:24px;font-weight:700;font-size:17px;">
+        ${impactTitle}
+      </div>
+
+      <div style="margin-top:12px;color:#4b5563;">
+        Esto equivale a:
+      </div>
+
+      <div style="
+        margin-top:8px;
+        padding:14px 16px;
+        background:#f9fafb;
+        border:1px solid #e5e7eb;
+        border-radius:12px;
+        font-size:18px;
+        font-weight:700;
+      ">
+        ${daysEquivalentLabel}
+      </div>
+
+      <div style="margin-top:24px;font-weight:700;font-size:17px;">
+        ${weekTitle}
+      </div>
+
+      <div style="margin-top:12px;color:#4b5563;">
+        Para una alimentación saludable se recomienda:
+      </div>
+
+      <div style="
+        margin-top:8px;
+        padding:14px 16px;
+        background:#fff9ed;
+        border:1px solid #f3dfb2;
+        border-radius:12px;
+        font-size:18px;
+        font-weight:700;
+      ">
+        ${weeklyTargetCategories} tipos de vegetales por semana
+      </div>
+
+      <div style="margin-top:18px;color:#4b5563;">
+        Hoy llevás:
+      </div>
+
+      <div style="
+        margin-top:8px;
+        padding:14px 16px;
+        background:#f9fafb;
+        border:1px solid #e5e7eb;
+        border-radius:12px;
+        font-size:18px;
+        font-weight:700;
+      ">
+        ${weeklyProgressLabel}
+      </div>
+
+      <div style="margin-top:24px;font-weight:700;font-size:17px;">
+        ${nextStepTitle}
+      </div>
+
+      <div style="margin-top:12px;">
+        ${suggestionsHtml}
+      </div>
+
+      <div style="margin-top:22px;color:#4b5563;">
+        ${footerMessage}
+      </div>
+
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="${whatsappReturnUrl}"
+           style="
+             display:inline-block;
+             background:#25D366;
+             color:white;
+             padding:10px 16px;
+             border-radius:8px;
+             text-decoration:none;
+             font-weight:600;">
+           Seguir en WhatsApp
+        </a>
+      </div>
+
+    </div>
+  `;
+}
+
 async function submitOrder() {
   if (!householdId) {
     setStatus("Falta household_id en la URL.", "error");
@@ -451,7 +674,6 @@ async function submitOrder() {
   try {
     submitBtn.disabled = true;
     submitBtn.textContent = "Enviando...";
-  
 
     const response = await fetch(`${API_BASE}/pilot/orders`, {
       method: "POST",
@@ -466,242 +688,41 @@ async function submitOrder() {
     }
 
     const data = await response.json();
-    
+
+    const orderId = data?.order_id || "";
+
+    if (!orderId) {
+      throw new Error("Order created without order_id");
+    }
+
     renderOrderConfirmed();
     submitBtn.style.display = "none";
     submitBtn.textContent = "Pedido enviado";
     submitBtn.disabled = true;
-    
+
     setTimeout(() => {
-  renderPreparingReport();
+      renderPreparingReport();
 
-  setTimeout(() => {
-    document.getElementById("header").style.display = "none";
-    catalogEl.innerHTML = `
-      <div class="empty" style="
-        max-width:720px;
-        margin:24px auto;
-        background:#fff;
-        border:1px solid #e8e8e8;
-        border-radius:16px;
-        padding:24px;
-        box-shadow:0 2px 10px rgba(0,0,0,0.04);
-        color:#1f2937;
-        line-height:1.45;
-        text-align:left;
-      ">
-
-        <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
-          🍎 Bienvenidos a Fruti
-        </div>
-
-        <div style="margin-bottom:20px;color:#4b5563;">
-          Hoy tu hogar comenzó a medir su alimentación.
-        </div>
-
-        <div style="margin-top:10px;font-weight:700;font-size:17px;">
-          Impacto de tus compras
-        </div>
-
-        <div style="margin-top:8px;color:#4b5563;">
-          Medimos <strong>cantidad y diversidad</strong> de frutas y verduras.
-        </div>
-
-        <div style="
-          margin-top:12px;
-          padding:14px 16px;
-          background:#f7faf7;
-          border:1px solid #dbead8;
-          border-radius:12px;
-          font-size:18px;
-          font-weight:700;
-        ">
-          ${Math.round(portions)} porciones · ${distinctCategoriesInOrder} categorías
-        </div>
-
-        <div style="margin-top:12px;">
-          ${renderTagList(orderCategories)}
-        </div>
-
-        <div style="margin-top:24px;font-weight:700;font-size:17px;">
-          Tu índice FRUTI
-        </div>
-
-        <div style="margin-top:8px;color:#4b5563;">
-          Es tu primera compra registrada.
-        </div>
-
-        <div style="margin-top:4px;color:#4b5563;">
-          Con tus próximas compras recibirás tu <strong>índice FRUTI</strong>.
-        </div>
-
-        <div style="margin-top:24px;font-weight:700;font-size:17px;">
-          Desafío de esta semana
-        </div>
-
-        <div style="margin-top:8px;color:#4b5563;">
-          Esta compra aporta frutas y verduras para aproximadamente:
-        </div>
-
-        <div style="
-          margin-top:12px;
-          padding:14px 16px;
-          background:#f9fafb;
-          border:1px solid #e5e7eb;
-          border-radius:12px;
-          font-size:18px;
-          font-weight:700;
-        ">
-          ${formatHalf(daysEquivalentForHousehold)} días para tu hogar
-        </div>
-
-        <div style="margin-top:18px;color:#4b5563;">
-          Tu hogar consumió:
-        </div>
-
-        <div style="
-          margin-top:8px;
-          padding:14px 16px;
-          background:#f9fafb;
-          border:1px solid #e5e7eb;
-          border-radius:12px;
-          font-size:18px;
-          font-weight:700;
-        ">
-          ${distinctCategoriesWeek} categorías de alimentos
-        </div>
-
-        <div style="margin-top:12px;">
-          ${renderTagList(weekCategories)}
-        </div>
-
-        <div style="margin-top:18px;color:#4b5563;">
-          Meta saludable:
-        </div>
-
-        <div style="
-          margin-top:8px;
-          padding:14px 16px;
-          background:#fff9ed;
-          border:1px solid #f3dfb2;
-          border-radius:12px;
-          font-size:18px;
-          font-weight:700;
-        ">
-          5 categorías por semana
-        </div>
-
-        ${
-          suggestedItems.length > 0
-            ? `
-              <div style="margin-top:18px;color:#4b5563;">
-                En tu próxima compra podrías sumar:
-              </div>
-
-              <div style="margin-top:12px;">
-                ${renderTagList(suggestedItems)}
-              </div>
-            `
-            : ""
+      setTimeout(async () => {
+        try {
+          const dashboardData = await loadOrderDashboard(orderId);
+          renderDashboardFromApi(dashboardData, orderId);
+        } catch (error) {
+          console.error("Error loading dashboard:", error);
+          setStatus("No se pudo cargar el dashboard.", "error");
         }
+      }, 2500);
 
-        <div style="margin-top:22px;color:#4b5563;">
-          Cada compra mejora la alimentación de tu familia.
-        </div>
+    }, 1500);
 
-        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-          <a href="https://wa.me/?text=${encodeURIComponent(
-            `Mirá mi reporte Fruti 🥦🍎\n\nEstoy mejorando la alimentación de mi hogar.\n\nSumate: https://fruti.vercel.app`
-          )}"
-            style="
-              display:inline-block;
-              background:#25D366;
-              color:white;
-              padding:10px 16px;
-              border-radius:8px;
-              text-decoration:none;
-              font-weight:600;">
-            Compartir mi progreso
-          </a>
-
-          <a href="${whatsappReturnUrl}"
-            style="
-              display:inline-block;
-              background:#f3f4f6;
-              color:#111827;
-              padding:10px 16px;
-              border-radius:8px;
-              text-decoration:none;
-              font-weight:600;">
-            Volver a WhatsApp
-          </a>
-        </div>
-      </div>
-    `;
-  }, 2500);
-}, 3500);
-
-    if (data.redirect_url) {
-      window.location.href = data.redirect_url;
-      return;
-    }
-
-    const dash = data?.fruti_insight?.dash_v1 || {};
-
-    const portions =
-      dash?.portions ??
-      dash?.portions_of_order ??
-      dash?.order_portions ??
-      0;
-
-    const distinctCategoriesInOrder =
-      dash?.distinct_categories_in_order ??
-      dash?.distinct_categories_order ??
-      0;
-
-    const orderCategories =
-      dash?.order_categories ??
-      dash?.categories_in_order ??
-      [];
-
-    const daysEquivalentForHousehold =
-      dash?.days_equivalent_for_household ??
-      dash?.days_equivalent ??
-      0;
-
-    const distinctCategoriesWeek =
-      dash?.distinct_categories_week ??
-      0;
-
-    const weekCategories =
-      dash?.week_categories ??
-      dash?.categories_week ??
-      orderCategories ??
-      [];
-
-    const suggestedItems =
-      dash?.suggested_missing_categories_products ??
-      dash?.suggested_missing_categories ??
-      dash?.suggested_products ??
-      [];
-
-    const orderId = data?.order_id || "";
-
-    const whatsappReturnText = orderId
-      ? `FRESHCLUB_ORDER_DONE:${orderId}`
-      : "FRESHCLUB_ORDER_DONE";
-
-    const whatsappReturnUrl =
-      `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
-      
   } catch (error) {
     console.error("Error creating order:", error);
     setStatus("No se pudo crear la orden.", "error");
     submitBtn.disabled = false;
     updateSubmitButton();
   }
-}
-
+}    
+    
 // =====================================================
 // INIT
 // =====================================================
