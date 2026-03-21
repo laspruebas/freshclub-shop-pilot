@@ -247,8 +247,7 @@ submitBtn.addEventListener("click", submitHouseholdMembers);
 
 async function initHouseholdPage() {
   try {
-    // await resolveSessionFromToken();   // 👈 comentar
-    householdId = "test";                // 👈 agregar
+    await resolveSessionFromToken();
 
     if (!householdId) {
       setStatus("Abrí este link desde WhatsApp con una sesión válida.", "error");
