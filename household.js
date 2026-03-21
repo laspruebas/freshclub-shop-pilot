@@ -1,1 +1,266 @@
+// =====================================================
+// CONFIG
+// =====================================================
 
+const API_BASE = "https://fruti-api-y5uz.onrender.com";
+
+// Cambiar solo si back te pasa otra ruta
+const HOUSEHOLD_MEMBERS_ENDPOINT = `${API_BASE}/pilot/household-members`;
+
+const WHATSAPP_RETURN_URL = "https://wa.me/5491139495554";
+
+// =====================================================
+// STATE
+// =====================================================
+
+const params = new URLSearchParams(window.location.search);
+const token = params.get("t");
+
+let householdId = null;
+
+const statusEl = document.getElementById("status");
+const catalogEl = document.getElementById("catalog");
+const submitBtn = document.getElementById("submitBtn");
+
+const ageGroups = [
+  {
+    id: "toddler",
+    label: "2 a 5 años",
+    value: "toddler"
+  },
+  {
+    id: "child",
+    label: "6 a 12 años",
+    value: "child"
+  },
+  {
+    id: "teen",
+    label: "13 a 18 años",
+    value: "teen"
+  },
+  {
+    id: "adult",
+    label: "Adulto",
+    value: "adult"
+  }
+];
+
+const counts = {
+  toddler: 0,
+  child: 0,
+  teen: 0,
+  adult: 0
+};
+
+// =====================================================
+// HELPERS
+// =====================================================
+
+function setStatus(message, type = "") {
+  statusEl.textContent = message || "";
+  statusEl.className = "status";
+  if (type) statusEl.classList.add(type);
+}
+
+function getTotalMembers() {
+  return Object.values(counts).reduce((acc, qty) => acc + qty, 0);
+}
+
+function updateSubmitButton() {
+  const total = getTotalMembers();
+
+  if (total > 0) {
+    submitBtn.textContent = `Confirmar hogar (${total})`;
+  } else {
+    submitBtn.textContent = "Confirmar hogar";
+  }
+}
+
+function changeQty(ageGroup, delta) {
+  const current = counts[ageGroup] || 0;
+  const next = Math.max(0, current + delta);
+  counts[ageGroup] = next;
+
+  const qtyEl = document.getElementById(`qty-${ageGroup}`);
+  if (qtyEl) {
+    qtyEl.textContent = String(next);
+  }
+
+  updateSubmitButton();
+}
+
+function buildMembersPayload() {
+  const members = [];
+
+  Object.entries(counts).forEach(([age_group, qty]) => {
+    for (let i = 0; i < qty; i += 1) {
+      members.push({ age_group });
+    }
+  });
+
+  return members;
+}
+
+// =====================================================
+// RENDER
+// =====================================================
+
+function renderAgeGroups(items) {
+  catalogEl.innerHTML = "";
+
+  items.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div>
+          <h2 class="card-title">${item.label}</h2>
+        </div>
+      </div>
+
+      <div class="qty-row">
+        <button
+          class="qty-btn"
+          type="button"
+          data-action="minus"
+          data-id="${item.id}"
+          aria-label="Restar ${item.label}"
+        >−</button>
+
+        <div class="qty-value" id="qty-${item.id}">0</div>
+
+        <button
+          class="qty-btn"
+          type="button"
+          data-action="plus"
+          data-id="${item.id}"
+          aria-label="Sumar ${item.label}"
+        >+</button>
+      </div>
+    `;
+
+    catalogEl.appendChild(card);
+  });
+}
+
+catalogEl.addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+
+  const ageGroup = button.dataset.id;
+  const action = button.dataset.action;
+
+  if (!ageGroup || !action) return;
+
+  if (action === "plus") {
+    changeQty(ageGroup, 1);
+  }
+
+  if (action === "minus") {
+    changeQty(ageGroup, -1);
+  }
+});
+
+// =====================================================
+// API
+// =====================================================
+
+async function resolveSessionFromToken() {
+  if (householdId || !token) return;
+
+  const response = await fetch(
+    `${API_BASE}/fruti/session-validate?t=${encodeURIComponent(token)}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(`Session validate HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  if (!data?.household_id) {
+    throw new Error("Session token did not return household_id");
+  }
+
+  householdId = data.household_id;
+}
+
+async function submitHouseholdMembers() {
+  if (!householdId) {
+    setStatus("Falta household_id en la URL.", "error");
+    return;
+  }
+
+  const members = buildMembersPayload();
+
+  if (members.length === 0) {
+    setStatus("Elegí al menos una persona.", "error");
+    return;
+  }
+
+  const payload = {
+    household_id: householdId,
+    members
+  };
+
+  try {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Guardando...";
+    setStatus("");
+
+    const response = await fetch(HOUSEHOLD_MEMBERS_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Household members HTTP ${response.status}`);
+    }
+
+    await response.json();
+
+    window.location.href = WHATSAPP_RETURN_URL;
+  } catch (error) {
+    console.error("Error saving household members:", error);
+    setStatus("No se pudieron guardar los datos del hogar.", "error");
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Confirmar hogar";
+    updateSubmitButton();
+  }
+}
+
+// =====================================================
+// INIT
+// =====================================================
+
+submitBtn.addEventListener("click", submitHouseholdMembers);
+
+async function initHouseholdPage() {
+  try {
+    await resolveSessionFromToken();
+
+    if (!householdId) {
+      setStatus("Abrí este link desde WhatsApp con una sesión válida.", "error");
+      return;
+    }
+
+    renderAgeGroups(ageGroups);
+    updateSubmitButton();
+    setStatus("");
+  } catch (error) {
+    console.error("Error resolving session:", error);
+    setStatus("No se pudo validar la sesión.", "error");
+  }
+}
+
+initHouseholdPage();
