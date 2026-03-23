@@ -66,8 +66,10 @@ function updateSubmitButton() {
 
   if (total > 0) {
     submitBtn.textContent = `Confirmar hogar (${total})`;
+    submitBtn.disabled = false;
   } else {
     submitBtn.textContent = "Confirmar hogar";
+    submitBtn.disabled = true;
   }
 }
 
