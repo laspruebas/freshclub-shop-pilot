@@ -72,13 +72,32 @@ function updateSubmitButton() {
 }
 
 function changeQty(ageGroup, delta) {
-  const current = counts[ageGroup] || 0;
+  const current = household[ageGroup] || 0;
   const next = Math.max(0, current + delta);
-  counts[ageGroup] = next;
+  household[ageGroup] = next;
 
-  const qtyEl = document.getElementById(`qty-${ageGroup}`);
-  if (qtyEl) {
-    qtyEl.textContent = String(next);
+  const controlsEl = document.getElementById(`controls-${ageGroup}`);
+  if (!controlsEl) return;
+
+  if (next === 0) {
+    controlsEl.innerHTML = `
+      <button
+        class="add-btn"
+        type="button"
+        data-action="add"
+        data-id="${ageGroup}"
+      >
+        Agregar +
+      </button>
+    `;
+  } else {
+    controlsEl.innerHTML = `
+      <div class="qty-row">
+        <button class="qty-btn" data-action="minus" data-id="${ageGroup}">−</button>
+        <div class="qty-value">${next}</div>
+        <button class="qty-btn" data-action="plus" data-id="${ageGroup}">+</button>
+      </div>
+    `;
   }
 
   updateSubmitButton();
@@ -113,28 +132,18 @@ function renderAgeGroups(items) {
           <h2 class="card-title">${item.label}</h2>
         </div>
       </div>
-
-      <div class="qty-row">
+    
+      <div id="controls-${item.id}">
         <button
-          class="qty-btn"
+          class="add-btn"
           type="button"
-          data-action="minus"
+          data-action="add"
           data-id="${item.id}"
-          aria-label="Restar ${item.label}"
-        >−</button>
-
-        <div class="qty-value" id="qty-${item.id}">0</div>
-
-        <button
-          class="qty-btn"
-          type="button"
-          data-action="plus"
-          data-id="${item.id}"
-          aria-label="Sumar ${item.label}"
-        >+</button>
+        >
+          Agregar +
+        </button>
       </div>
     `;
-
     catalogEl.appendChild(card);
   });
 }
