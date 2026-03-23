@@ -106,8 +106,8 @@ function changeQty(ageGroup, delta) {
 function buildMembersPayload() {
   const members = [];
 
-  Object.entries(counts).forEach(([age_group, qty]) => {
-    for (let i = 0; i < qty; i += 1) {
+  Object.entries(household).forEach(([age_group, qty]) => {
+    for (let i = 0; i < qty; i++) {
       members.push({ age_group });
     }
   });
