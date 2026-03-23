@@ -45,12 +45,7 @@ const ageGroups = [
   }
 ];
 
-const counts = {
-  toddler: 0,
-  child: 0,
-  teen: 0,
-  adult: 0
-};
+const household = {};
 
 // =====================================================
 // HELPERS
