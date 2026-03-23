@@ -58,7 +58,7 @@ function setStatus(message, type = "") {
 }
 
 function getTotalMembers() {
-  return Object.values(counts).reduce((acc, qty) => acc + qty, 0);
+  return Object.values(household).reduce((acc, qty) => acc + qty, 0);
 }
 
 function updateSubmitButton() {
@@ -157,10 +157,14 @@ catalogEl.addEventListener("click", (event) => {
 
   if (!ageGroup || !action) return;
 
+  if (action === "add") {
+  changeQty(ageGroup, 1);
+  }
+  
   if (action === "plus") {
     changeQty(ageGroup, 1);
   }
-
+  
   if (action === "minus") {
     changeQty(ageGroup, -1);
   }
