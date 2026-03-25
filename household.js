@@ -135,7 +135,7 @@ function renderAgeGroups(items) {
         </div>
       </div>
     
-      <div id="controls-${item.id}" style="margin-top:8px;display:flex;justify-content:flex-end;">
+      <div id="controls-${item.id}">
         <button
           class="add-btn"
           type="button"
