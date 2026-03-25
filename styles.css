@@ -315,3 +315,29 @@ body {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+#catalog .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 170px;
+}
+
+#catalog .card-top {
+  margin-bottom: 12px;
+}
+
+#catalog [id^="controls-"] {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 44px;
+}
+
+.qty-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
