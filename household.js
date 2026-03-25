@@ -274,7 +274,14 @@ async function submitHouseholdMembers() {
 
     await response.json();
 
-    window.location.href = WHATSAPP_RETURN_URL;
+    const catalogUrl = `https://fruti.vercel.app/?t=${token}`;
+    
+    const whatsappText = encodeURIComponent(
+      `Listo. Ya registramos tu hogar ✅\n\nYa podés hacer tu pedido 👇\n${catalogUrl}`
+    );
+    
+    window.location.href = `https://wa.me/5491139495554?text=${whatsappText}`;
+
   } catch (error) {
     console.error("Error saving household members:", error);
     setStatus("No se pudieron guardar los datos del hogar.", "error");
