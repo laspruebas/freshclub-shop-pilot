@@ -217,8 +217,8 @@ async function submitHouseholdMembers() {
 
   const payload = {
     household_id: householdId,
-    members
-  };
+    members_age_groups: members.map(m => m.age_group)
+  }
 
   try {
     submitBtn.disabled = true;
