@@ -79,27 +79,47 @@ function changeQty(ageGroup, delta) {
   household[ageGroup] = next;
 
   const controlsEl = document.getElementById(`controls-${ageGroup}`);
-  if (!controlsEl) return;
 
-  if (next === 0) {
-    controlsEl.innerHTML = `
-      <button
-        class="add-btn"
-        type="button"
-        data-action="add"
-        data-id="${ageGroup}"
-      >
-        Agregar +
-      </button>
-    `;
-  } else {
-    controlsEl.innerHTML = `
-      <div class="qty-row">
-        <button class="qty-btn" data-action="minus" data-id="${ageGroup}">−</button>
-        <div class="qty-value">${next}</div>
-        <button class="qty-btn" data-action="plus" data-id="${ageGroup}">+</button>
-      </div>
-    `;
+  if (controlsEl) {
+    if (next === 0) {
+      controlsEl.innerHTML = `
+        <button
+          class="add-btn"
+          type="button"
+          data-action="add"
+          data-id="${ageGroup}"
+        >
+          + Agregar
+        </button>
+      `;
+    } else {
+      controlsEl.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;">
+          <button
+            class="qty-btn"
+            type="button"
+            data-action="minus"
+            data-id="${ageGroup}"
+          >−</button>
+
+          <div id="qty-${ageGroup}" style="min-width:24px;text-align:center;font-size:16px;font-weight:700;">
+            ${next}
+          </div>
+
+          <button
+            class="qty-btn"
+            type="button"
+            data-action="plus"
+            data-id="${ageGroup}"
+          >+</button>
+        </div>
+      `;
+    }
+  }
+
+  const qtyEl = document.getElementById(`qty-${ageGroup}`);
+  if (qtyEl) {
+    qtyEl.textContent = `${next}`;
   }
 
   updateSubmitButton();
