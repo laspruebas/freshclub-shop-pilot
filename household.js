@@ -122,6 +122,11 @@ function buildMembersPayload() {
 // =====================================================
 
 function renderAgeGroups(items) {
+  if (!items || items.length === 0) {
+    renderEmpty("No hay opciones disponibles por ahora.");
+    return;
+  }
+
   catalogEl.innerHTML = "";
 
   items.forEach((item) => {
@@ -134,18 +139,28 @@ function renderAgeGroups(items) {
           <h2 class="card-title">${item.label}</h2>
         </div>
       </div>
-    
-      <div id="controls-${item.id}">
-        <button
-          class="add-btn"
-          type="button"
-          data-action="add"
-          data-id="${item.id}"
-        >
-          Agregar +
-        </button>
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-top:12px;
+      ">
+        <div></div>
+
+        <div id="controls-${item.id}">
+          <button
+            class="add-btn"
+            type="button"
+            data-action="add"
+            data-id="${item.id}"
+          >
+            + Agregar
+          </button>
+        </div>
       </div>
     `;
+
     catalogEl.appendChild(card);
   });
 }
