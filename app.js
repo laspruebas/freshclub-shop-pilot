@@ -584,7 +584,7 @@ function renderDashboardFromApi(response, orderId) {
              border-radius:8px;
              text-decoration:none;
              font-weight:600;">
-          WhatsApp
+          Volver a WhatsApp
         </a>
       </div>
 
