@@ -445,7 +445,10 @@ async function loadOrderDashboard(orderId) {
 }
 
 function renderDashboardFromApi(response, orderId) {
+  console.log("renderDashboardFromApi response", response);
+
   const dash = response.dash_v1;
+  console.log("dash", dash);
 
   const header = dash.header;
   const message1 = dash.message_1;
@@ -701,14 +704,13 @@ async function submitOrder() {
       setTimeout(async () => {
         try {
           const dashboardData = await loadOrderDashboard(orderId);
+          console.log("dashboardData", dashboardData);
           renderDashboardFromApi(dashboardData, orderId);
         } catch (error) {
           console.error("Error loading dashboard:", error);
           setStatus("No se pudo cargar el dashboard.", "error");
         }
       }, 2500);
-
-    }, 1500);
 
   } catch (error) {
     console.error("Error creating order:", error);
