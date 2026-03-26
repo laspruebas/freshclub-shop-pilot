@@ -465,10 +465,10 @@ function renderDashboardFromApi(data, orderId) {
   const portionsLabel = purchase?.portions_label || "";
   const purchaseCategories = Array.isArray(purchase?.categories) ? purchase.categories : [];
 
-  const impactTitle = impact?.title || "Tu impacto";
-  const daysEquivalentLabel = impact?.days_equivalent_label || "";
+  /*const impactTitle = impact?.title || "Tu impacto";
+  const daysEquivalentLabel = impact?.days_equivalent_label || "";*/
 
-  const weekTitle = week?.title || "Tu semana";
+  const weekTitle = week?.title || "Así viene tu semana";
   const weeklyTargetCategories = week?.weekly_target_categories ?? null;
   const weeklyProgressLabel = week?.weekly_progress_label || "";
 
