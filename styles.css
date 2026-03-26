@@ -330,3 +330,7 @@ body {
 .add-btn:active {
   transform: scale(0.98);
 }
+
+#household .card-top {
+  margin-bottom: 4px;
+}
