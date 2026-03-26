@@ -546,7 +546,7 @@ function renderDashboardFromApi(data, orderId) {
       </div>
 
       <div style="margin-top:18px;color:#4b5563;">
-        Incluye:
+        Elegiste:
       </div>
 
       <div style="margin-top:8px;">
