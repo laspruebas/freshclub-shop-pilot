@@ -485,7 +485,7 @@ function renderDashboardFromApi(data, orderId) {
     : "FRESHCLUB_ORDER_DONE";
 
   const whatsappReturnUrl =
-    `https://wa.me/5491139495554?text=${encodeURIComponent(whatsappReturnText)}`;
+    `https://wa.me/14155238886?text=${encodeURIComponent(whatsappReturnText)}`;
 
   const categoriesHtml = purchaseCategories.length > 0
     ? purchaseCategories.map((cat) => `
