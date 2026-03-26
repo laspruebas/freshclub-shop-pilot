@@ -261,12 +261,22 @@ function renderCatalog(items) {
     
         
     card.innerHTML = `
-      <div class="card-top">
-        <div>
-          <h2 class="card-title">${item.name}</h2>
-          <div class="card-meta">${item.price_label} / ${item.unit}</div>
-        </div>
-      </div>
+<div class="card-top">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div style="
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background:${color};
+      flex-shrink:0;
+    "></div>
+
+    <div>
+      <h2 class="card-title">${item.name}</h2>
+      <div class="card-meta">${item.price_label} / ${item.unit}</div>
+    </div>
+  </div>
+</div>
 
       <div style="
         display:flex;
