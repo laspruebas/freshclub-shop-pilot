@@ -471,22 +471,6 @@ function renderDashboardFromApi(response, orderId) {
     `)
     .join("");
 
-  const firstOrderHtml = flags.show_first_order_message
-    ? `
-      <div style="margin-top:24px;font-weight:700;font-size:17px;">
-        Tu índice FRUTI
-      </div>
-
-      <div style="margin-top:8px;color:#4b5563;">
-        Es tu primera compra registrada.
-      </div>
-
-      <div style="margin-top:4px;color:#4b5563;">
-        Con tus próximas compras recibirás tu <strong>índice FRUTI</strong>.
-      </div>
-    `
-    : "";
-
   const whatsappReturnText = `FRESHCLUB_ORDER_DONE:${orderId}`;
   const whatsappReturnUrl =
     `https://wa.me/14155238886?text=${encodeURIComponent(whatsappReturnText)}`;
@@ -517,10 +501,6 @@ function renderDashboardFromApi(response, orderId) {
         ${purchase.title}
       </div>
 
-      <div style="margin-top:12px;color:#4b5563;">
-        Sumaste:
-      </div>
-
       <div style="
         margin-top:8px;
         padding:14px 16px;
@@ -532,23 +512,15 @@ function renderDashboardFromApi(response, orderId) {
       ">
         ${purchase.portions_label}
       </div>
-
-      <div style="margin-top:18px;color:#4b5563;">
-        Incluye:
-      </div>
+      
 
       <div style="margin-top:8px;">
         ${categoriesHtml}
       </div>
 
-      ${firstOrderHtml}
 
       <div style="margin-top:24px;font-weight:700;font-size:17px;">
         ${impact.title}
-      </div>
-
-      <div style="margin-top:12px;color:#4b5563;">
-        Esto equivale a:
       </div>
 
       <div style="
@@ -567,9 +539,6 @@ function renderDashboardFromApi(response, orderId) {
         ${week.title}
       </div>
 
-      <div style="margin-top:12px;color:#4b5563;">
-        Para una alimentación saludable se recomienda:
-      </div>
 
       <div style="
         margin-top:8px;
@@ -580,12 +549,6 @@ function renderDashboardFromApi(response, orderId) {
         font-size:18px;
         font-weight:700;
       ">
-        ${week.weekly_target_categories} tipos de vegetales por semana
-      </div>
-
-      <div style="margin-top:18px;color:#4b5563;">
-        Hoy llevás:
-      </div>
 
       <div style="
         margin-top:8px;
@@ -621,7 +584,7 @@ function renderDashboardFromApi(response, orderId) {
              border-radius:8px;
              text-decoration:none;
              font-weight:600;">
-          Volver a WhatsApp
+          WhatsApp
         </a>
       </div>
 
