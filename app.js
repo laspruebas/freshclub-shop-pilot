@@ -500,30 +500,33 @@ function renderDashboardFromApi(response, orderId) {
   `;
 
   const shareText = [
-  `🍎 ${header.title}`,
-  header.subtitle,
-  "",
-  `📦 ${message1.title}`,
-  message1.value,
-  "",
-  `🥗 ${message2.title}`,
-  ...message2.categories.map((cat) => `${cat.emoji} ${cat.label}`),
-  "",
-  `📊 ${message3.title}`,
-  message3.weekly_progress_label,
-  message3.weekly_message,
-  "",
-  `📌 ${moreInfo.title}`,
-  `Categorías: ${moreInfo.order_categories.join(", ")}`,
-  `Semana: ${moreInfo.weekly_categories_count} / ${moreInfo.weekly_categories_target}`,
-  `Porciones: ${moreInfo.weekly_portions} / ${moreInfo.weekly_target_portions}`,
-  `Impacto: ${moreInfo.days_equivalent_label}`,
-  "",
-  `💡 Sugerencias`,
-  ...moreInfo.suggested_products.map((item) => `${item.emoji} ${item.product}`),
-  "",
-  footer.message
-].join("\n");
+    `🍎 ${header.title}`,
+    header.subtitle,
+    "",
+    `📦 ${message1.title}`,
+    message1.value,
+    "",
+    `🥗 ${message2.title}`,
+    ...message2.categories.map((cat) => `${cat.emoji} ${cat.label}`),
+    "",
+    `📊 ${message3.title}`,
+    message3.weekly_progress_label,
+    message3.weekly_message,
+    "",
+    `📌 ${moreInfo.title}`,
+    `Categorías: ${moreInfo.order_categories.join(", ")}`,
+    `Semana: ${moreInfo.weekly_categories_count} / ${moreInfo.weekly_categories_target}`,
+    `Porciones: ${moreInfo.weekly_portions} / ${moreInfo.weekly_target_portions}`,
+    `Impacto: ${moreInfo.days_equivalent_label}`,
+    "",
+    `💡 Sugerencias`,
+    ...moreInfo.suggested_products.map((item) => `${item.emoji} ${item.product}`),
+    "",
+    footer.message
+  ].join("\n");
+
+  const whatsappShareUrl =
+    `https://wa.me/?text=${encodeURIComponent(shareText)}`;
 
   const whatsappReturnText = `FRESHCLUB_ORDER_DONE:${orderId}`;
   const whatsappReturnUrl =
@@ -637,14 +640,13 @@ function renderDashboardFromApi(response, orderId) {
              border-radius:8px;
              text-decoration:none;
              font-weight:600;">
-          Volver a WhatsApp
+          WhatsApp
         </a>
       </div>
 
     </div>
   `;
 }
-
 async function submitOrder() {
   if (!householdId) {
     setStatus("Falta household_id en la URL.", "error");
