@@ -634,13 +634,13 @@ function renderDashboardFromApi(response, orderId) {
         <a href="${whatsappReturnUrl}"
            style="
              display:inline-block;
-             background:#f3f4f6;
+             background:#16a34a;
              color:#111827;
              padding:10px 16px;
              border-radius:8px;
              text-decoration:none;
              font-weight:600;">
-          Voler a WhatsApp
+          Volver a WhatsApp
         </a>
       </div>
 
