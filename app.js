@@ -435,12 +435,7 @@ async function loadCatalog() {
 }
 
 async function loadOrderDashboard(orderId) {
-  const response = await fetch(`${API_BASE}/pilot/orders/${orderId}/dashboard`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
+  const response = await fetch(`${API_BASE}/pilot/orders/${orderId}/dashboard`);
 
   if (!response.ok) {
     throw new Error(`Dashboard HTTP ${response.status}`);
@@ -449,59 +444,52 @@ async function loadOrderDashboard(orderId) {
   return await response.json();
 }
 
-function renderDashboardFromApi(data, orderId) {
-  const welcome = data?.welcome || {};
-  const purchase = data?.purchase || {};
-  const impact = data?.impact || {};
-  const week = data?.week || {};
-  const nextStep = data?.next_step || {};
-  const footer = data?.footer || {};
-  const flags = data?.flags || {};
+function renderDashboardFromApi(response, orderId) {
+  const dash = response.dash_v1;
 
-  const title = welcome?.title || "🍎 Bienvenidos a FRUTI";
-  const subtitle = welcome?.subtitle || "";
+  const welcome = dash.welcome;
+  const purchase = dash.purchase;
+  const impact = dash.impact;
+  const week = dash.week;
+  const nextStep = dash.next_step;
+  const footer = dash.footer;
+  const flags = dash.flags;
 
-  const purchaseTitle = purchase?.title || "Hoy hiciste esto";
-  const portionsLabel = purchase?.portions_label || "";
-  const purchaseCategories = Array.isArray(purchase?.categories) ? purchase.categories : [];
+  const categoriesHtml = purchase.categories
+    .map((cat) => `
+      <div style="margin-top:6px;font-size:16px;color:#1f2937;">
+        ${cat.emoji} ${cat.label}
+      </div>
+    `)
+    .join("");
 
-  const impactTitle = impact?.title || "Tu impacto";
-  const daysEquivalentLabel = impact?.days_equivalent_label || "";
+  const suggestionsHtml = nextStep.suggestions
+    .map((item) => `
+      <div style="margin-top:6px;font-size:16px;color:#1f2937;">
+        ${item.emoji} ${item.product}
+      </div>
+    `)
+    .join("");
 
-  const weekTitle = week?.title || "Así viene tu semana";
-  const weeklyTargetCategories = week?.weekly_target_categories ?? null;
-  const weeklyProgressLabel = week?.weekly_progress_label || "";
+  const firstOrderHtml = flags.show_first_order_message
+    ? `
+      <div style="margin-top:24px;font-weight:700;font-size:17px;">
+        Tu índice FRUTI
+      </div>
 
-  const nextStepTitle = nextStep?.title || "Para seguir mejorando";
-  const suggestions = Array.isArray(nextStep?.suggestions) ? nextStep.suggestions : [];
+      <div style="margin-top:8px;color:#4b5563;">
+        Es tu primera compra registrada.
+      </div>
 
-  const footerMessage = footer?.message || "";
+      <div style="margin-top:4px;color:#4b5563;">
+        Con tus próximas compras recibirás tu <strong>índice FRUTI</strong>.
+      </div>
+    `
+    : "";
 
-  const isFirstOrder = Boolean(flags?.is_first_order);
-  const showIndex = Boolean(flags?.show_index);
-
-  const whatsappReturnText = orderId
-    ? `FRESHCLUB_ORDER_DONE:${orderId}`
-    : "FRESHCLUB_ORDER_DONE";
-
+  const whatsappReturnText = `FRESHCLUB_ORDER_DONE:${orderId}`;
   const whatsappReturnUrl =
     `https://wa.me/14155238886?text=${encodeURIComponent(whatsappReturnText)}`;
-
-  const categoriesHtml = purchaseCategories.length > 0
-    ? purchaseCategories.map((cat) => `
-        <div style="margin-top:6px;font-size:16px;color:#1f2937;">
-          ${cat.emoji || ""} ${cat.label || ""}
-        </div>
-      `).join("")
-    : `<div style="margin-top:8px;color:#6b7280;">Sin datos todavía.</div>`;
-
-  const suggestionsHtml = suggestions.length > 0
-  ? suggestions.map((item) => `
-      <div style="margin-top:6px;font-size:16px;color:#1f2937;">
-        ${item.emoji || ""} ${item.product || item.label || ""}
-      </div>
-    `).join("")
-  : "";
 
   catalogEl.innerHTML = `
     <div class="empty" style="
@@ -518,15 +506,15 @@ function renderDashboardFromApi(data, orderId) {
     ">
 
       <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
-        ${title}
+        ${welcome.title}
       </div>
 
       <div style="margin-bottom:20px;color:#4b5563;">
-        ${subtitle}
+        ${welcome.subtitle}
       </div>
 
       <div style="margin-top:10px;font-weight:700;font-size:17px;">
-        ${purchaseTitle}
+        ${purchase.title}
       </div>
 
       <div style="margin-top:12px;color:#4b5563;">
@@ -542,41 +530,25 @@ function renderDashboardFromApi(data, orderId) {
         font-size:18px;
         font-weight:700;
       ">
-        ${portionsLabel}
+        ${purchase.portions_label}
       </div>
 
       <div style="margin-top:18px;color:#4b5563;">
-        Y elegiste
+        Incluye:
       </div>
 
       <div style="margin-top:8px;">
         ${categoriesHtml}
       </div>
 
-      ${
-        isFirstOrder && !showIndex
-          ? `
-            <div style="margin-top:24px;font-weight:700;font-size:17px;">
-              Tu índice FRUTI
-            </div>
-
-            <div style="margin-top:8px;color:#4b5563;">
-              Es tu primera compra registrada.
-            </div>
-
-            <div style="margin-top:4px;color:#4b5563;">
-              Con tus próximas compras recibirás tu <strong>índice FRUTI</strong>.
-            </div>
-          `
-          : ""
-      }
+      ${firstOrderHtml}
 
       <div style="margin-top:24px;font-weight:700;font-size:17px;">
-        ${impactTitle}
+        ${impact.title}
       </div>
 
       <div style="margin-top:12px;color:#4b5563;">
-        Esta compra aporta:
+        Esto equivale a:
       </div>
 
       <div style="
@@ -588,11 +560,11 @@ function renderDashboardFromApi(data, orderId) {
         font-size:18px;
         font-weight:700;
       ">
-        ${daysEquivalentLabel}
+        ${impact.days_equivalent_label}
       </div>
 
       <div style="margin-top:24px;font-weight:700;font-size:17px;">
-        ${weekTitle}
+        ${week.title}
       </div>
 
       <div style="margin-top:12px;color:#4b5563;">
@@ -608,7 +580,7 @@ function renderDashboardFromApi(data, orderId) {
         font-size:18px;
         font-weight:700;
       ">
-        ${weeklyTargetCategories} tipos de vegetales por semana
+        ${week.weekly_target_categories} tipos de vegetales por semana
       </div>
 
       <div style="margin-top:18px;color:#4b5563;">
@@ -624,11 +596,11 @@ function renderDashboardFromApi(data, orderId) {
         font-size:18px;
         font-weight:700;
       ">
-        ${weeklyProgressLabel}
+        ${week.weekly_progress_label}
       </div>
 
       <div style="margin-top:24px;font-weight:700;font-size:17px;">
-        ${nextStepTitle}
+        ${nextStep.title}
       </div>
 
       <div style="margin-top:12px;">
@@ -636,25 +608,10 @@ function renderDashboardFromApi(data, orderId) {
       </div>
 
       <div style="margin-top:22px;color:#4b5563;">
-        ${footerMessage}
+        ${footer.message}
       </div>
 
       <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-
-        <a href="https://wa.me/?text=${encodeURIComponent(
-          `🍎 Empecé a mejorar la alimentación de mi hogar con FRUTI\n\n${portionsLabel}`
-        )}"
-           style="
-             display:inline-block;
-             background:#16a34a;
-             color:white;
-             padding:10px 16px;
-             border-radius:8px;
-             text-decoration:none;
-             font-weight:600;">
-           Compartir resultado
-        </a>
-
         <a href="${whatsappReturnUrl}"
            style="
              display:inline-block;
@@ -664,10 +621,9 @@ function renderDashboardFromApi(data, orderId) {
              border-radius:8px;
              text-decoration:none;
              font-weight:600;">
-             Volver a WhatsApp
-         </a>
-        
-        </div>
+          Volver a WhatsApp
+        </a>
+      </div>
 
     </div>
   `;
