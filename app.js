@@ -576,7 +576,7 @@ function renderDashboardFromApi(data, orderId) {
       </div>
 
       <div style="margin-top:12px;color:#4b5563;">
-        Esto equivale a:
+        Esta compra aporta:
       </div>
 
       <div style="
