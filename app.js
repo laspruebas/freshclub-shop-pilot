@@ -461,7 +461,7 @@ function renderDashboardFromApi(data, orderId) {
   const title = welcome?.title || "🍎 Bienvenidos a FRUTI";
   const subtitle = welcome?.subtitle || "";
 
-  const purchaseTitle = purchase?.title || "Tu compra de hoy";
+  const purchaseTitle = purchase?.title || "Hoy hiciste esto";
   const portionsLabel = purchase?.portions_label || "";
   const purchaseCategories = Array.isArray(purchase?.categories) ? purchase.categories : [];
 
@@ -546,7 +546,7 @@ function renderDashboardFromApi(data, orderId) {
       </div>
 
       <div style="margin-top:18px;color:#4b5563;">
-        Elegiste:
+        Y elegiste
       </div>
 
       <div style="margin-top:8px;">
