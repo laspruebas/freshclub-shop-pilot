@@ -258,7 +258,7 @@ function renderCatalog(items) {
     card.className = "card";
     
     const color = PRODUCT_COLORS[item.name] || "#e5e7eb";
-    card.style.borderLeft = `3px solid ${color}`;
+    
         
     card.innerHTML = `
       <div class="card-top">
