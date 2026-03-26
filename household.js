@@ -19,7 +19,7 @@ const token = params.get("t");
 let householdId = null;
 
 const statusEl = document.getElementById("status");
-const catalogEl = document.getElementById("catalog");
+const catalogEl = document.getElementById("household");
 const submitBtn = document.getElementById("submitBtn");
 
 const ageGroups = [
