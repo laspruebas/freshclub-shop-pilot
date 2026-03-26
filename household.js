@@ -164,7 +164,7 @@ function renderAgeGroups(items) {
         display:flex;
         justify-content:space-between;
         align-items:center;
-        margin-top:12px;
+        margin-top:6px;
       ">
         <div></div>
 
