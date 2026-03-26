@@ -640,7 +640,7 @@ function renderDashboardFromApi(response, orderId) {
              border-radius:8px;
              text-decoration:none;
              font-weight:600;">
-          WhatsApp
+          Voler a WhatsApp
         </a>
       </div>
 
@@ -713,7 +713,7 @@ async function submitOrder() {
           setStatus("No se pudo cargar el dashboard.", "error");
         }
       }, 2500);
-
+    }, 1500);
   } catch (error) {
     console.error("Error creating order:", error);
     setStatus("No se pudo crear la orden.", "error");
