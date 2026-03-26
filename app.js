@@ -447,15 +447,14 @@ async function loadOrderDashboard(orderId) {
 function renderDashboardFromApi(response, orderId) {
   const dash = response.dash_v1;
 
-  const welcome = dash.welcome;
-  const purchase = dash.purchase;
-  const impact = dash.impact;
-  const week = dash.week;
-  const nextStep = dash.next_step;
+  const header = dash.header;
+  const message1 = dash.message_1;
+  const message2 = dash.message_2;
+  const message3 = dash.message_3;
+  const moreInfo = dash.more_info;
   const footer = dash.footer;
-  const flags = dash.flags;
 
-  const categoriesHtml = purchase.categories
+  const categoriesHtml = message2.categories
     .map((cat) => `
       <div style="margin-top:6px;font-size:16px;color:#1f2937;">
         ${cat.emoji} ${cat.label}
@@ -463,13 +462,42 @@ function renderDashboardFromApi(response, orderId) {
     `)
     .join("");
 
-  const suggestionsHtml = nextStep.suggestions
+  const suggestedProductsHtml = moreInfo.suggested_products
     .map((item) => `
       <div style="margin-top:6px;font-size:16px;color:#1f2937;">
         ${item.emoji} ${item.product}
       </div>
     `)
     .join("");
+
+  const detailsRowsHtml = `
+    <div style="margin-top:10px;font-size:15px;color:#374151;">
+      Categorías en tu compra: ${moreInfo.order_categories.join(", ")}
+    </div>
+
+    <div style="margin-top:10px;font-size:15px;color:#374151;">
+      Categorías de la semana: ${moreInfo.weekly_categories_count} / ${moreInfo.weekly_categories_target}
+    </div>
+
+    <div style="margin-top:10px;font-size:15px;color:#374151;">
+      Porciones de la semana: ${moreInfo.weekly_portions} / ${moreInfo.weekly_target_portions}
+    </div>
+
+    <div style="margin-top:10px;font-size:15px;color:#374151;">
+      Impacto estimado: ${moreInfo.days_equivalent_label}
+    </div>
+
+    <div style="margin-top:14px;font-size:15px;font-weight:600;color:#111827;">
+      Productos sugeridos
+    </div>
+
+    <div style="margin-top:6px;">
+      ${suggestedProductsHtml}
+    </div>
+  `;
+
+  const whatsappShareUrl =
+    `https://wa.me/?text=${encodeURIComponent(footer.message)}`;
 
   const whatsappReturnText = `FRESHCLUB_ORDER_DONE:${orderId}`;
   const whatsappReturnUrl =
@@ -490,15 +518,15 @@ function renderDashboardFromApi(response, orderId) {
     ">
 
       <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
-        ${welcome.title}
+        ${header.title}
       </div>
 
       <div style="margin-bottom:20px;color:#4b5563;">
-        ${welcome.subtitle}
+        ${header.subtitle}
       </div>
 
       <div style="margin-top:10px;font-weight:700;font-size:17px;">
-        ${purchase.title}
+        ${message1.title}
       </div>
 
       <div style="
@@ -510,17 +538,19 @@ function renderDashboardFromApi(response, orderId) {
         font-size:18px;
         font-weight:700;
       ">
-        ${purchase.portions_label}
+        ${message1.value}
       </div>
-      
+
+      <div style="margin-top:24px;font-weight:700;font-size:17px;">
+        ${message2.title}
+      </div>
 
       <div style="margin-top:8px;">
         ${categoriesHtml}
       </div>
 
-
       <div style="margin-top:24px;font-weight:700;font-size:17px;">
-        ${impact.title}
+        ${message3.title}
       </div>
 
       <div style="
@@ -532,49 +562,46 @@ function renderDashboardFromApi(response, orderId) {
         font-size:18px;
         font-weight:700;
       ">
-        ${impact.days_equivalent_label}
+        ${message3.weekly_progress_label}
       </div>
 
-      <div style="margin-top:24px;font-weight:700;font-size:17px;">
-        ${week.title}
+      <div style="margin-top:10px;font-size:15px;color:#374151;">
+        ${message3.weekly_message}
       </div>
 
-
-      <div style="
-        margin-top:8px;
-        padding:14px 16px;
-        background:#fff9ed;
-        border:1px solid #f3dfb2;
-        border-radius:12px;
-        font-size:18px;
-        font-weight:700;
-      ">
-
-      <div style="
-        margin-top:8px;
-        padding:14px 16px;
-        background:#f9fafb;
+      <details style="
+        margin-top:24px;
         border:1px solid #e5e7eb;
         border-radius:12px;
-        font-size:18px;
-        font-weight:700;
+        padding:14px 16px;
+        background:#fcfcfc;
       ">
-        ${week.weekly_progress_label}
-      </div>
+        <summary style="cursor:pointer;font-weight:700;font-size:16px;color:#111827;">
+          ${moreInfo.title}
+        </summary>
 
-      <div style="margin-top:24px;font-weight:700;font-size:17px;">
-        ${nextStep.title}
-      </div>
-
-      <div style="margin-top:12px;">
-        ${suggestionsHtml}
-      </div>
+        <div style="margin-top:12px;">
+          ${detailsRowsHtml}
+        </div>
+      </details>
 
       <div style="margin-top:22px;color:#4b5563;">
         ${footer.message}
       </div>
 
       <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="${whatsappShareUrl}"
+           style="
+             display:inline-block;
+             background:#16a34a;
+             color:white;
+             padding:10px 16px;
+             border-radius:8px;
+             text-decoration:none;
+             font-weight:600;">
+          Compartir reporte
+        </a>
+
         <a href="${whatsappReturnUrl}"
            style="
              display:inline-block;
@@ -584,7 +611,7 @@ function renderDashboardFromApi(response, orderId) {
              border-radius:8px;
              text-decoration:none;
              font-weight:600;">
-          Volver a WhatsApp
+          WhatsApp
         </a>
       </div>
 
