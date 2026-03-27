@@ -274,8 +274,8 @@ async function submitHouseholdMembers() {
 
     await response.json();
 
-    const triggerText = encodeURIComponent(`FRUTI_ONBOARDING_DONE:${token}`);
-    window.location.href = `https://wa.me/14155238886?text=${triggerText}`;
+    const whatsappDraftText = "Listo 👍";
+    const whatsappReturnUrl = `https://wa.me/14155238886?text=${encodeURIComponent(whatsappDraftText)}`;
 
   } catch (error) {
     console.error("Error saving household members:", error);
