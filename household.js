@@ -280,7 +280,7 @@ async function submitHouseholdMembers() {
       `Listo. Ya registramos tu hogar ✅\n\nYa podés hacer tu pedido 👇\n${catalogUrl}`
     );
     
-    window.location.href = `https://wa.me/5491139495554?text=${whatsappText}`;
+    window.location.href = `https://wa.me/14155238886?text=${whatsappText}`;
 
   } catch (error) {
     console.error("Error saving household members:", error);
