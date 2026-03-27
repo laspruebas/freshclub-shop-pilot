@@ -274,13 +274,8 @@ async function submitHouseholdMembers() {
 
     await response.json();
 
-    const catalogUrl = `https://fruti.vercel.app/?t=${token}`;
-    
-    const whatsappText = encodeURIComponent(
-      `Listo. Ya registramos tu hogar ✅\n\nYa podés hacer tu pedido 👇\n${catalogUrl}`
-    );
-    
-    window.location.href = `https://wa.me/14155238886?text=${whatsappText}`;
+    const triggerText = encodeURIComponent(`FRUTI_ONBOARDING_DONE:${token}`);
+    window.location.href = `https://wa.me/14155238886?text=${triggerText}`;
 
   } catch (error) {
     console.error("Error saving household members:", error);
