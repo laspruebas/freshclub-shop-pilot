@@ -635,7 +635,7 @@ function renderDashboardFromApi(response, orderId) {
            style="
              display:inline-block;
              background:#16a34a;
-             color:#111827;
+             color:white;
              padding:10px 16px;
              border-radius:8px;
              text-decoration:none;
