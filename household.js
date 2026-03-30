@@ -253,7 +253,7 @@ async function submitHouseholdMembers() {
   const payload = {
     household_id: householdId,
     members_age_groups: members.map(m => m.age_group)
-  }
+  };
 
   try {
     submitBtn.disabled = true;
@@ -272,10 +272,50 @@ async function submitHouseholdMembers() {
       throw new Error(`Household members HTTP ${response.status}`);
     }
 
-    await response.json();
+    const triggerText = async function submitHouseholdMembers() {
+  if (!householdId) {
+    setStatus("Falta household_id en la URL.", "error");
+    return;
+  }
 
-    const whatsappDraftText = "Listo 👍";
-    const whatsappReturnUrl = `https://wa.me/14155238886?text=${encodeURIComponent(whatsappDraftText)}`;
+  const members = buildMembersPayload();
+
+  if (members.length === 0) {
+    setStatus("Elegí al menos una persona.", "error");
+    return;
+  }
+
+  const payload = {
+    household_id: householdId,
+    members_age_groups: members.map(m => m.age_group)
+  };
+
+  try {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Guardando...";
+    setStatus("");
+
+    const response = await fetch(HOUSEHOLD_MEMBERS_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Household members HTTP ${response.status}`);
+    }
+
+    const triggerText = "Listo 👍";
+    const whatsappReturnUrl = `https://wa.me/14155238886?text=${encodeURIComponent(triggerText)}`;
+
+    console.log("household saved ok");
+    console.log("redirecting to whatsapp");
+    console.log(whatsappReturnUrl);
+
+    window.location.href = whatsappReturnUrl;
+    return;
 
   } catch (error) {
     console.error("Error saving household members:", error);
@@ -285,7 +325,23 @@ async function submitHouseholdMembers() {
     updateSubmitButton();
   }
 }
+    const whatsappReturnUrl = `https://wa.me/14155238886?text=${encodeURIComponent(triggerText)}`;
 
+    console.log("household saved ok");
+    console.log("redirecting to whatsapp");
+    console.log(whatsappReturnUrl);
+
+    window.location.href = whatsappReturnUrl;
+    return;
+
+  } catch (error) {
+    console.error("Error saving household members:", error);
+    setStatus("No se pudieron guardar los datos del hogar.", "error");
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Confirmar hogar";
+    updateSubmitButton();
+  }
+}
 // =====================================================
 // INIT
 // =====================================================
