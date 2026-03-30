@@ -286,6 +286,9 @@ async function submitHouseholdMembers() {
     updateSubmitButton();
   }
 }
+
+submitBtn.addEventListener("click", submitHouseholdMembers);
+
     const whatsappReturnUrl = `https://wa.me/14155238886?text=${encodeURIComponent(triggerText)}`;
 
     console.log("household saved ok");
