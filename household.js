@@ -287,25 +287,6 @@ async function submitHouseholdMembers() {
   }
 }
 
-submitBtn.addEventListener("click", submitHouseholdMembers);
-
-    const whatsappReturnUrl = `https://wa.me/14155238886?text=${encodeURIComponent(triggerText)}`;
-
-    console.log("household saved ok");
-    console.log("redirecting to whatsapp");
-    console.log(whatsappReturnUrl);
-
-    window.location.href = whatsappReturnUrl;
-    return;
-
-  } catch (error) {
-    console.error("Error saving household members:", error);
-    setStatus("No se pudieron guardar los datos del hogar.", "error");
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Confirmar hogar";
-    updateSubmitButton();
-  }
-}
 // =====================================================
 // INIT
 // =====================================================
