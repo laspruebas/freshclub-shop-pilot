@@ -499,31 +499,10 @@ function renderDashboardFromApi(response, orderId) {
     </div>
   `;
 
-  const shareText = [
-    `🍎 ${header.title}`,
-    header.subtitle,
-    "",
-    `📦 ${message1.title}`,
-    message1.value,
-    "",
-    `🥗 ${message2.title}`,
-    ...message2.categories.map((cat) => `${cat.emoji} ${cat.label}`),
-    "",
-    `📊 ${message3.title}`,
-    message3.weekly_progress_label,
-    message3.weekly_message,
-    "",
-    `📌 ${moreInfo.title}`,
-    `Categorías: ${moreInfo.order_categories.join(", ")}`,
-    `Semana: ${moreInfo.weekly_categories_count} / ${moreInfo.weekly_categories_target}`,
-    `Porciones: ${moreInfo.weekly_portions} / ${moreInfo.weekly_target_portions}`,
-    `Impacto: ${moreInfo.days_equivalent_label}`,
-    "",
-    `💡 Sugerencias`,
-    ...moreInfo.suggested_products.map((item) => `${item.emoji} ${item.product}`),
-    "",
-    footer.message
-  ].join("\n");
+  const shareText = dash.share.message;
+
+const whatsappShareUrl =
+  `https://wa.me/?text=${encodeURIComponent(shareText)}`;
 
   const whatsappShareUrl =
     `https://wa.me/?text=${encodeURIComponent(shareText)}`;
