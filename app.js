@@ -501,9 +501,6 @@ function renderDashboardFromApi(response, orderId) {
 
   const shareText = dash.share.message;
 
-const whatsappShareUrl =
-  `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-
   const whatsappShareUrl =
     `https://wa.me/?text=${encodeURIComponent(shareText)}`;
 
