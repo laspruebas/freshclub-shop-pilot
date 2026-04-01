@@ -48,8 +48,8 @@ body {
 }
 
 .status {
-  min-height: 0px;
-  margin-bottom: 6px;
+  min-height: 20px;
+  margin-bottom: 12px;
   font-size: 14px;
   color: #666666;
 }
