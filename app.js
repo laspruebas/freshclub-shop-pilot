@@ -526,7 +526,7 @@ function renderDashboardFromApi(response, orderId) {
         ${header.title}
       </div>
 
-      <div style="margin-bottom:20px;color:#4b5563;">
+      <div style="margin-bottom:10px;color:#4b5563;">
         ${header.subtitle}
       </div>
 
