@@ -44,12 +44,12 @@ body {
 }
 
 .main {
-  padding: 6px 16px 16px;
+  padding: 12px 16px 16px;
 }
 
 .status {
   min-height: 20px;
-  margin-bottom: 6px;
+  margin-bottom: 12px;
   font-size: 14px;
   color: #666666;
 }
