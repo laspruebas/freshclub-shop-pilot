@@ -522,7 +522,7 @@ function renderDashboardFromApi(response, orderId) {
       text-align:left;
     ">
 
-      <div style="font-size:20px;font-weight:700;margin-bottom:8px;">
+      <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
         ${header.title}
       </div>
 
