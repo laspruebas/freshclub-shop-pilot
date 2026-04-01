@@ -522,7 +522,7 @@ function renderDashboardFromApi(response, orderId) {
       text-align:left;
     ">
 
-      <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
+      <div style="font-size:20px;font-weight:700;margin-bottom:8px;">
         ${header.title}
       </div>
 
@@ -530,7 +530,7 @@ function renderDashboardFromApi(response, orderId) {
         ${header.subtitle}
       </div>
 
-      <div style="margin-top:10px;font-weight:700;font-size:17px;">
+      <div style="margin-top:20px;font-weight:700;font-size:17px;">
         ${message1.title}
       </div>
 
