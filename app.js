@@ -6,7 +6,7 @@ const API_BASE = "https://fruti-api-y5uz.onrender.com";
 
 // === COLORS ===
 // Orden alineado con UX: frutas → verduras base → complemento
-export const PRODUCT_COLORS: Record<string, string> = {
+export const PRODUCT_COLORS = {
   // 🍎 FRUTAS
   Banana: "#facc15",
   Manzana: "#ef4444",
