@@ -434,7 +434,7 @@ async function loadCatalog() {
     }
 
     const data = await response.json();
-    catalog = data.items || [];
+    catalog = Array.isArray(data) ? data : (data.items || []);
 
     renderCatalog(catalog);
     setStatus("");
