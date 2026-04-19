@@ -4,18 +4,27 @@
 
 const API_BASE = "https://fruti-api-y5uz.onrender.com";
 
-const PRODUCT_COLORS = {
+// === COLORS ===
+// Orden alineado con UX: frutas → verduras base → complemento
+export const PRODUCT_COLORS: Record<string, string> = {
+  // 🍎 FRUTAS
   Banana: "#facc15",
-  Cebolla: "#a855f7",
   Manzana: "#ef4444",
   Naranja: "#fb923c",
+
+  // 🥕 VERDURAS BASE
   Papa: "#eab308",
-  Pimiento: "#ef4444",
   Tomate: "#ef4444",
-  Zanahoria: "#f97316"
+  Zanahoria: "#f97316",
+
+  // 🧅 COMPLEMENTO / SABOR
+  Cebolla: "#a855f7",
+  Pimiento: "#ef4444"
 };
 
-const FALLBACK_CATALOG = [
+// === FALLBACK CATALOG ===
+export const FALLBACK_CATALOG = [
+  // 🍎 FRUTAS
   {
     product_id: "e78d5f1c-9524-4cc2-a71b-fd3e1c55256f",
     name: "Banana",
@@ -23,14 +32,6 @@ const FALLBACK_CATALOG = [
     price: 2500,
     currency: "ARS",
     price_label: "$2500"
-  },
-  {
-    product_id: "b4f8aa9a-9cf4-452e-a858-65f6a8584f31",
-    name: "Cebolla",
-    unit: "kg",
-    price: 1200,
-    currency: "ARS",
-    price_label: "$1200"
   },
   {
     product_id: "09d085fe-ffc3-45cb-b616-4907e20e2d18",
@@ -48,6 +49,8 @@ const FALLBACK_CATALOG = [
     currency: "ARS",
     price_label: "$2200"
   },
+
+  // 🥕 VERDURAS BASE
   {
     product_id: "b423f67e-6b40-4263-a35a-c5ffdb78d250",
     name: "Papa",
@@ -55,14 +58,6 @@ const FALLBACK_CATALOG = [
     price: 1500,
     currency: "ARS",
     price_label: "$1500"
-  },
-  {
-    product_id: "a9683ac6-b8bd-4e17-9629-1d605cc4077b",
-    name: "Pimiento",
-    unit: "kg",
-    price: 3200,
-    currency: "ARS",
-    price_label: "$3200"
   },
   {
     product_id: "9471ca56-bec4-48e1-942e-2ff2d5f2e29f",
@@ -79,9 +74,26 @@ const FALLBACK_CATALOG = [
     price: 1400,
     currency: "ARS",
     price_label: "$1400"
+  },
+
+  // 🧅 COMPLEMENTO / SABOR
+  {
+    product_id: "b4f8aa9a-9cf4-452e-a858-65f6a8584f31",
+    name: "Cebolla",
+    unit: "kg",
+    price: 1200,
+    currency: "ARS",
+    price_label: "$1200"
+  },
+  {
+    product_id: "a9683ac6-b8bd-4e17-9629-1d605cc4077b",
+    name: "Pimiento",
+    unit: "kg",
+    price: 3200,
+    currency: "ARS",
+    price_label: "$3200"
   }
 ];
-
 // =====================================================
 // STATE
 // =====================================================
