@@ -103,11 +103,12 @@ const token = params.get("t");
 let householdId = null;
 
 const statusEl = document.getElementById("status");
-const catalogEl = document.getElementById("catalog");
+const orderListEl = document.getElementById("orderList");
+const extrasEl = document.getElementById("extras");
 const submitBtn = document.getElementById("submitBtn");
 
-let catalog = [];
-const cart = {};
+let orderState = [];
+let extraProducts = [];
 
 const STEP = 0.5;
 
@@ -167,178 +168,10 @@ function escapeHtml(text) {
     .replaceAll("'", "&#039;");
 }
 
-function renderTagList(items = []) {
-  if (!Array.isArray(items) || items.length === 0) {
-    return `<div style="color:#6b7280;">Sin datos todavía.</div>`;
-  }
-
-  return items
-    .map((item) => `
-      <span style="
-        display:inline-block;
-        margin:0 8px 8px 0;
-        padding:8px 12px;
-        background:#f3f4f6;
-        border:1px solid #e5e7eb;
-        border-radius:999px;
-        font-size:14px;
-        color:#374151;
-      ">
-        ${escapeHtml(item)}
-      </span>
-    `)
-    .join("");
-}
-
-function changeQty(productId, delta) {
-  const current = cart[productId] || 0;
-  const next = Math.max(0, current + (delta * STEP));
-  cart[productId] = next;
-  const controlsEl = document.getElementById(`controls-${productId}`);
-  
-  if (controlsEl) {
-    if (next === 0) {
-      controlsEl.innerHTML = `
-        <button
-          class="add-btn"
-          type="button"
-          data-action="add"
-          data-id="${productId}"
-        >
-          + Agregar
-        </button>
-      `;
-    } else {
-      controlsEl.innerHTML = `
-        <div style="display:flex;align-items:center;gap:10px;">
-          <button
-            class="qty-btn"
-            type="button"
-            data-action="minus"
-            data-id="${productId}"
-          >−</button>
-  
-          <div id="qty-${productId}" style="min-width:40px;text-align:center;">
-            ${next} kg
-          </div>
-  
-          <button
-            class="qty-btn"
-            type="button"
-            data-action="plus"
-            data-id="${productId}"
-          >+</button>
-        </div>
-      `;
-    }
-  }
-  const qtyEl = document.getElementById(`qty-${productId}`);
-  if (qtyEl) {
-    qtyEl.textContent = `${next} kg`;
-  }
-  const product = catalog.find(p => p.product_id === productId);
-  const total = product ? product.price * next : 0;
-
-  const totalEl = document.getElementById(`total-${productId}`);
-  if (totalEl) {
-    totalEl.textContent = `$${Math.round(total)}`;
-  }
-  
-
-  updateSubmitButton();
-}
-
 // =====================================================
 // RENDER
 // =====================================================
 
-function renderEmpty(message) {
-  catalogEl.innerHTML = `<div class="empty">${message}</div>`;
-}
-
-function renderCatalog(items) {
-  document.getElementById("header").style.display = "block";
-  if (!items || items.length === 0) {
-    renderEmpty("No hay productos disponibles por ahora.");
-    return;
-  }
-
-  catalogEl.innerHTML = "";
-
-  items.forEach((item) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    
-    const color = PRODUCT_COLORS[item.name] || "#e5e7eb";
-    
-        
-    card.innerHTML = `
-<div class="card-top">
-  <div style="display:flex;align-items:center;gap:10px;">
-    <div style="
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      background:${color};
-      flex-shrink:0;
-    "></div>
-
-    <div>
-      <h2 class="card-title">${item.name}</h2>
-      <div class="card-meta">${item.price_label} / ${item.unit}</div>
-    </div>
-  </div>
-</div>
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        margin-top:12px;
-      ">
-      <div>
-        <div style="font-weight:700;font-size:18px;" id="total-${item.product_id}">
-          $0
-        </div>
-      </div>
-
-    <div id="controls-${item.product_id}">
-      <button
-        class="add-btn"
-        type="button"
-        data-action="add"
-        data-id="${item.product_id}"
-      >
-        + Agregar
-      </button>
-    </div>
-    `;
-
-    catalogEl.appendChild(card);
-  });
-}
-
-catalogEl.addEventListener("click", (event) => {
-  const button = event.target.closest("button");
-  if (!button) return;
-
-  const productId = button.dataset.id;
-  const action = button.dataset.action;
-
-  if (!productId || !action) return;
-
-  if (action === "add") {
-    changeQty(productId, 1);
-  }
-
-  if (action === "plus") {
-    changeQty(productId, 1);
-  }
-
-  if (action === "minus") {
-    changeQty(productId, -1);
-  }
-});
 function renderPreparingReport() {
   document.getElementById("header").style.display = "none";
   catalogEl.innerHTML = `
@@ -418,33 +251,6 @@ async function resolveSessionFromToken() {
   householdId = data.household_id;
 }
 
-async function loadCatalog() {
-  try {
-    setStatus("Cargando catálogo...");
-
-    const response = await fetch(`${API_BASE}/pilot/catalog`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error(`Catalog HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-    catalog = Array.isArray(data) ? data : (data.items || []);
-
-    renderCatalog(catalog);
-    setStatus("");
-  } catch (error) {
-    console.error("Error loading catalog:", error);
-    catalog = FALLBACK_CATALOG;
-    renderCatalog(catalog);
-    setStatus("Mostrando catálogo de prueba.", "ok");
-  }
-}
 
 async function loadOrderDashboard(orderId) {
   const response = await fetch(`${API_BASE}/pilot/orders/${orderId}/dashboard`);
