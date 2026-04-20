@@ -124,27 +124,6 @@ function setStatus(message, type = "") {
   }
 }
 
-function getSelectedItemsCount() {
-  return Object.values(cart).reduce((acc, qty) => acc + qty, 0);
-}
-
-function updateSubmitButton() {
-  let total = 0;
-
-  Object.entries(cart).forEach(([id, qty]) => {
-    const product = catalog.find(p => p.product_id === id);
-    if (product) {
-      total += product.price * qty;
-    }
-  });
-
-  if (total > 0) {
-    submitBtn.textContent = `Confirmar $${Math.round(total)}`;
-  } else {
-    submitBtn.textContent = "Confirmar pedido";
-  }
-}
-
 function formatQty(qty) {
   if (qty === 0) return "0";
   if (qty < 1) return `${qty * 1000} g`;
@@ -174,7 +153,7 @@ function escapeHtml(text) {
 
 function renderPreparingReport() {
   document.getElementById("header").style.display = "none";
-  catalogEl.innerHTML = `
+  orderListEl.innerHTML = `
     <div class="empty" style="
       max-width:720px;
       margin:40px auto;
@@ -201,7 +180,7 @@ function renderPreparingReport() {
 
 function renderOrderConfirmed() {
   document.getElementById("header").style.display = "none";
-  catalogEl.innerHTML = `
+  orderListEl.innerHTML = `
     <div class="empty" style="
       max-width:720px;
       margin:40px auto;
@@ -326,7 +305,7 @@ function renderDashboardFromApi(response, orderId) {
   const whatsappReturnUrl =
     `https://wa.me/14155238886?text=${encodeURIComponent(whatsappReturnText)}`;
 
-  catalogEl.innerHTML = `
+  orderListEl.innerHTML = `
     <div class="empty" style="
       max-width:720px;
       margin:24px auto;
@@ -447,11 +426,11 @@ async function submitOrder() {
     return;
   }
 
-  const items = Object.entries(cart)
-    .filter(([, qty]) => qty > 0)
-    .map(([product_id, qty]) => ({
-      product_id,
-      qty
+  const items = orderState
+    .filter(item => item.qty > 0)
+    .map(item => ({
+      product_id: item.product_id,
+      qty: item.qty
     }));
 
   if (items.length === 0) {
@@ -533,7 +512,7 @@ async function initApp() {
 
     setStatus(`Hogar detectado: ${householdId}`);
     updateSubmitButton();
-    await loadCatalog();
+    await loadInitialOrder();
   } catch (error) {
     console.error("Error resolving session:", error);
     setStatus("No se pudo validar la sesión del pedido.", "error");
