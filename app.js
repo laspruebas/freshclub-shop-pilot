@@ -22,78 +22,6 @@ export const PRODUCT_COLORS = {
   Pimiento: "#ef4444"
 };
 
-// === FALLBACK CATALOG ===
-export const FALLBACK_CATALOG = [
-  // 🍎 FRUTAS
-  {
-    product_id: "e78d5f1c-9524-4cc2-a71b-fd3e1c55256f",
-    name: "Banana",
-    unit: "kg",
-    price: 2500,
-    currency: "ARS",
-    price_label: "$2500"
-  },
-  {
-    product_id: "09d085fe-ffc3-45cb-b616-4907e20e2d18",
-    name: "Manzana",
-    unit: "kg",
-    price: 2800,
-    currency: "ARS",
-    price_label: "$2800"
-  },
-  {
-    product_id: "6e715066-8c9d-4a09-9c0c-9b711929abe7",
-    name: "Naranja",
-    unit: "kg",
-    price: 2200,
-    currency: "ARS",
-    price_label: "$2200"
-  },
-
-  // 🥕 VERDURAS BASE
-  {
-    product_id: "b423f67e-6b40-4263-a35a-c5ffdb78d250",
-    name: "Papa",
-    unit: "kg",
-    price: 1500,
-    currency: "ARS",
-    price_label: "$1500"
-  },
-  {
-    product_id: "9471ca56-bec4-48e1-942e-2ff2d5f2e29f",
-    name: "Tomate",
-    unit: "kg",
-    price: 2400,
-    currency: "ARS",
-    price_label: "$2400"
-  },
-  {
-    product_id: "9c26c94c-679e-4747-aa87-97bfaa9f620c",
-    name: "Zanahoria",
-    unit: "kg",
-    price: 1400,
-    currency: "ARS",
-    price_label: "$1400"
-  },
-
-  // 🧅 COMPLEMENTO / SABOR
-  {
-    product_id: "b4f8aa9a-9cf4-452e-a858-65f6a8584f31",
-    name: "Cebolla",
-    unit: "kg",
-    price: 1200,
-    currency: "ARS",
-    price_label: "$1200"
-  },
-  {
-    product_id: "a9683ac6-b8bd-4e17-9629-1d605cc4077b",
-    name: "Pimiento",
-    unit: "kg",
-    price: 3200,
-    currency: "ARS",
-    price_label: "$3200"
-  }
-];
 // =====================================================
 // STATE
 // =====================================================
@@ -110,7 +38,6 @@ const submitBtn = document.getElementById("submitBtn");
 let orderState = [];
 let extraProducts = [];
 
-const STEP = 0.5;
 
 // =====================================================
 // HELPERS
@@ -198,6 +125,43 @@ function renderOrderConfirmed() {
   `;
 }
 
+function renderOrder() {
+  if (!orderState.length) {
+    orderListEl.innerHTML = `<div class="empty">No hay productos</div>`;
+    return;
+  }
+
+  orderListEl.innerHTML = "";
+
+  orderState.forEach((item, index) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div>
+          <p class="card-title">${item.name}</p>
+          <div class="item-category">${item.emoji} ${item.category}</div>
+        </div>
+      </div>
+
+      <div class="item-actions">
+        <div class="qty-row">
+          <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
+          <div class="qty-value">${item.qty} ${item.unit}</div>
+          <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
+        </div>
+
+        <button class="item-delete" data-action="delete" data-index="${index}">
+          Eliminar
+        </button>
+      </div>
+    `;
+
+    orderListEl.appendChild(card);
+  });
+}
+
 // =====================================================
 // API
 // =====================================================
@@ -230,6 +194,39 @@ async function resolveSessionFromToken() {
   householdId = data.household_id;
 }
 
+async function loadInitialOrder() {
+  try {
+    setStatus("Cargando pedido sugerido...");
+
+    const response = await fetch(
+      `${API_BASE}/initial-order/${householdId}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`Initial order HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    orderState = data.items
+      .sort((a, b) => a.display_order - b.display_order)
+      .map(item => ({
+        product_id: item.product_id,
+        name: item.product_name,
+        qty: item.suggested_qty,
+        unit: item.unit,
+        category: item.ux_category_label,
+        emoji: item.ux_emoji
+      }));
+
+    renderOrder();
+    setStatus("");
+
+  } catch (error) {
+    console.error(error);
+    setStatus("Error cargando pedido", "error");
+  }
+}
 
 async function loadOrderDashboard(orderId) {
   const response = await fetch(`${API_BASE}/pilot/orders/${orderId}/dashboard`);
@@ -420,6 +417,35 @@ function renderDashboardFromApi(response, orderId) {
     </div>
   `;
 }
+
+orderListEl.addEventListener("click", (event) => {
+  const btn = event.target.closest("button");
+  if (!btn) return;
+
+  const index = Number(btn.dataset.index);
+  const action = btn.dataset.action;
+
+  if (isNaN(index)) return;
+
+  if (action === "plus") {
+    orderState[index].qty += 1;
+  }
+
+  if (action === "minus") {
+    orderState[index].qty -= 1;
+
+    if (orderState[index].qty <= 0) {
+      orderState.splice(index, 1);
+    }
+  }
+
+  if (action === "delete") {
+    orderState.splice(index, 1);
+  }
+
+  renderOrder();
+});
+
 async function submitOrder() {
   if (!householdId) {
     setStatus("Falta household_id en la URL.", "error");
@@ -491,7 +517,6 @@ async function submitOrder() {
     console.error("Error creating order:", error);
     setStatus("No se pudo crear la orden.", "error");
     submitBtn.disabled = false;
-    updateSubmitButton();
   }
 }    
     
@@ -511,7 +536,6 @@ async function initApp() {
     }
 
     setStatus(`Hogar detectado: ${householdId}`);
-    updateSubmitButton();
     await loadInitialOrder();
   } catch (error) {
     console.error("Error resolving session:", error);
