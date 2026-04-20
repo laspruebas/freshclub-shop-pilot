@@ -334,3 +334,68 @@ body {
 #household .card-top {
   margin-bottom: 4px;
 }
+
+.order-list {
+  display: grid;
+  gap: 12px;
+}
+
+.item-category {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #666666;
+}
+
+.item-unit {
+  font-size: 14px;
+  color: #666666;
+  font-weight: 400;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.item-delete {
+  border: none;
+  background: transparent;
+  color: #888888;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.item-delete:active {
+  transform: scale(0.98);
+}
+
+.secondary-link {
+  border: none;
+  background: transparent;
+  color: #666666;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.footer-stack {
+  width: min(448px, calc(100% - 24px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cta-secondary {
+  border: none;
+  border-radius: 14px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  background: #eeeeee;
+  color: #1f1f1f;
+  cursor: pointer;
+}
