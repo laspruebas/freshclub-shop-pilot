@@ -304,7 +304,6 @@ submitBtn.addEventListener("click", submitHouseholdMembers);
 
 async function initHouseholdPage() {
   try {
-      await resolveSessionFromToken();   // 👈 comentar
       //householdId = "test";                // 👈 agregar
 
     if (!householdId) {
