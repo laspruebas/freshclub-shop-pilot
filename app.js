@@ -151,11 +151,6 @@ function renderOrder() {
           <div class="qty-value">${item.qty} ${item.unit}</div>
           <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
         </div>
-
-        <button class="item-delete" data-action="delete" data-index="${index}">
-          Eliminar
-        </button>
-      </div>
     `;
 
     orderListEl.appendChild(card);
@@ -432,17 +427,17 @@ orderListEl.addEventListener("click", (event) => {
   }
 
   if (action === "minus") {
-    orderState[index].qty -= 1;
-
-    if (orderState[index].qty <= 0) {
-      orderState.splice(index, 1);
+    const nextQty = orderState[index].qty - 1;
+  
+    if (nextQty <= 0) {
+      const confirmDelete = confirm("¿Eliminar este producto del pedido?");
+      if (confirmDelete) {
+        orderState.splice(index, 1);
+      }
+    } else {
+      orderState[index].qty = nextQty;
     }
-  }
-
-  if (action === "delete") {
-    orderState.splice(index, 1);
-  }
-
+  }  
   renderOrder();
 });
 
