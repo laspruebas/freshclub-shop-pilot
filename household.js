@@ -250,7 +250,7 @@ async function submitHouseholdMembers() {
     return;
   }
 
-  const params = new URLSearchParams(window..search);
+  const params = new URLSearchParams(window.location.search);
   const phone = params.get("phone");
     
   const payload = {
@@ -263,7 +263,7 @@ async function submitHouseholdMembers() {
     submitBtn.textContent = "Guardando...";
     setStatus("");
 
-    const response = await fetch(HOUSEHOLD_MEMBERS_ENDPOINT, {
+    const response = await fetch(`${API_BASE}/onboarding/complete`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -274,9 +274,6 @@ async function submitHouseholdMembers() {
     if (!response.ok) {
       throw new Error(`Household members HTTP ${response.status}`);
     }
-
-    const triggerText = "Listo 👍";
-    const whatsappReturnUrl = `https://wa.me/14155238886?text=${encodeURIComponent(triggerText)}`;
 
     const data = await response.json();
 
