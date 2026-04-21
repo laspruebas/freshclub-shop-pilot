@@ -276,7 +276,7 @@ async function submitHouseholdMembers() {
     }
 
     const data = await response.json();
-
+    console.log("REDIRECT:", data.pedido_url);
     window.location.href = data.pedido_url;
     
     return;
