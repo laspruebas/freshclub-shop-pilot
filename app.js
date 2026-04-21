@@ -145,12 +145,36 @@ function renderOrder() {
         </div>
       </div>
 
-      <div class="item-actions">
-        <div class="qty-row">
-          <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
-          <div class="qty-value">${item.qty} ${item.unit}</div>
-          <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
-        </div>
+
+      <div class="item-actions" style="
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:12px;
+">
+
+  <!-- IZQUIERDA: ORIGEN -->
+  <div class="item-origin" style="
+    font-size:14px;
+    color:#6b7280;
+  ">
+    Origen
+  </div>
+
+  <!-- DERECHA: CONTROLES -->
+  <div class="qty-row" style="
+    display:flex;
+    align-items:center;
+    gap:10px;
+  ">
+    <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
+    
+    <div class="qty-value">${item.qty} ${item.unit || ""}</div>
+    
+    <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
+  </div>
+
+</div>
     `;
 
     orderListEl.appendChild(card);
