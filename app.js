@@ -34,6 +34,7 @@ const statusEl = document.getElementById("status");
 const orderListEl = document.getElementById("orderList");
 const extrasEl = document.getElementById("extras");
 const submitBtn = document.getElementById("submitBtn");
+const editBtn = document.getElementById("editBtn");
 
 let orderState = [];
 let extraProducts = [];
@@ -515,6 +516,7 @@ async function submitOrder() {
 
     renderOrderConfirmed();
     submitBtn.style.display = "none";
+    editBtn.style.display = "none";
     submitBtn.textContent = "Pedido enviado";
     submitBtn.disabled = true;
 
