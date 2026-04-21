@@ -258,6 +258,10 @@ async function submitHouseholdMembers() {
     members
   };
 
+  console.log("ONBOARDING URL:", window.location.href);
+  console.log("PHONE:", phone);
+  console.log("MEMBERS:", members);
+   
   try {
     submitBtn.disabled = true;
     submitBtn.textContent = "Guardando...";
@@ -276,6 +280,8 @@ async function submitHouseholdMembers() {
     }
 
     const data = await response.json();
+
+    console.log("PEDIDO_URL:", data.pedido_url);
     
     window.location.href = data.pedido_url;
     
