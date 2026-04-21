@@ -238,10 +238,7 @@ async function resolveSessionFromToken() {
 }
 
 async function submitHouseholdMembers() {
-  if (!householdId) {
-    setStatus("Falta household_id en la URL.", "error");
-    return;
-  }
+
 
   const members = buildMembersPayload();
 
@@ -252,7 +249,12 @@ async function submitHouseholdMembers() {
 
   const params = new URLSearchParams(window.location.search);
   const phone = params.get("phone");
-    
+
+  if (!phone) {
+    setStatus("Falta teléfono en la URL.", "error");
+    return;
+  }
+  
   const payload = {
     phone,
     members
@@ -306,8 +308,11 @@ async function initHouseholdPage() {
   try {
       //householdId = "test";                // 👈 agregar
 
-    if (!householdId) {
-      setStatus("Abrí este link desde WhatsApp con una sesión válida.", "error");
+    const params = new URLSearchParams(window.location.search);
+    const phone = params.get("phone");
+    
+    if (!phone) {
+      setStatus("Abrí este link desde WhatsApp con un teléfono válido.", "error");
       return;
     }
 
