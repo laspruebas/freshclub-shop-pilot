@@ -5,7 +5,7 @@
 const API_BASE = "https://fruti-api-y5uz.onrender.com";
 
 // Cambiar solo si back te pasa otra ruta
-const HOUSEHOLD_MEMBERS_ENDPOINT = `${API_BASE}/fruti/household/onboarding`;
+const ONBOARDING_COMPLETE_ENDPOINT = `${API_BASE}/onboarding/complete`;
 
 const WHATSAPP_RETURN_URL = "https://wa.me/14155238886";
 
@@ -130,7 +130,7 @@ function buildMembersPayload() {
 
   Object.entries(household).forEach(([age_group, qty]) => {
     for (let i = 0; i < qty; i++) {
-      members.push({ age_group });
+      members.push(age_group);
     }
   });
 
@@ -250,9 +250,12 @@ async function submitHouseholdMembers() {
     return;
   }
 
+  const params = new URLSearchParams(window..search);
+  const phone = params.get("phone");
+    
   const payload = {
-    household_id: householdId,
-    members_age_groups: members.map(m => m.age_group)
+    phone,
+    members
   };
 
   try {
@@ -275,7 +278,10 @@ async function submitHouseholdMembers() {
     const triggerText = "Listo 👍";
     const whatsappReturnUrl = `https://wa.me/14155238886?text=${encodeURIComponent(triggerText)}`;
 
-    window.location.href = whatsappReturnUrl;
+    const data = await response.json();
+
+    window.location.href = data.pedido_url;
+    
     return;
 
   } catch (error) {
