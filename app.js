@@ -1,11 +1,3 @@
-console.log("URL:", window.location.href);
-
-const params = new URLSearchParams(window.location.search);
-const token = params.get("t");
-
-console.log("TOKEN:", token);
-
-
 // =====================================================
 // CONFIG
 // =====================================================
