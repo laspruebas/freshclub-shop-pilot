@@ -29,7 +29,7 @@ export const PRODUCT_COLORS = {
 const params = new URLSearchParams(window.location.search);
 const token = params.get("t");
 let householdId = null;
-
+let isEditing = false;
 const statusEl = document.getElementById("status");
 const orderListEl = document.getElementById("orderList");
 const extrasEl = document.getElementById("extras");
@@ -168,17 +168,52 @@ function renderOrder() {
     align-items:center;
     gap:10px;
   ">
-    <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
+    <button class="qty-btn" data-action="minus" data-index="${index}" ${!isEditing ? "disabled" : ""}>−</button>
     
     <div class="qty-value">${item.qty} ${item.unit || ""}</div>
     
-    <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
+    <button class="qty-btn" data-action="plus" data-index="${index}" ${!isEditing ? "disabled" : ""}>+</button>
   </div>
 
 </div>
     `;
 
     orderListEl.appendChild(card);
+  });
+}
+
+function renderExtras() {
+  if (!extraProducts.length) {
+    extrasEl.innerHTML = "";
+    return;
+  }
+
+  extrasEl.innerHTML = `
+    <div style="margin-top:16px;font-weight:700;">
+      Agregar más productos
+    </div>
+  `;
+
+  extraProducts.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div>
+          <p class="card-title">${item.ux_display_name || item.product_name}</p>
+          <div class="item-category">${item.ux_emoji} ${item.ux_category_label}</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;text-align:right;">
+        <button class="add-btn" data-add="${item.product_id}">
+          Agregar
+        </button>
+      </div>
+    `;
+
+    extrasEl.appendChild(card);
   });
 }
 
@@ -228,16 +263,14 @@ async function loadInitialOrder() {
 
     const data = await response.json();
 
-    orderState = data.items
-      .sort((a, b) => a.display_order - b.display_order)
-      .map(item => ({
-        product_id: item.product_id,
-        name: item.product_name,
-        qty: item.suggested_qty,
-        unit: item.unit,
-        category: item.ux_category_label,
-        emoji: item.ux_emoji
-      }));
+   orderState = data.items.map(item => ({
+      product_id: item.product_id,
+      name: item.ux_display_name || item.product_name,
+      qty: item.suggested_qty,
+      unit: item.unit,
+      category: item.ux_category_label,
+      emoji: item.ux_emoji
+    }));;
 
     renderOrder();
     setStatus("");
@@ -245,6 +278,25 @@ async function loadInitialOrder() {
   } catch (error) {
     console.error(error);
     setStatus("Error cargando pedido", "error");
+  }
+}
+
+async function loadExtras() {
+  try {
+    const res = await fetch(`${API_BASE}/initial-order/${householdId}/extras`);
+
+    if (!res.ok) {
+      throw new Error(`Extras HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    extraProducts = data.items;
+
+    renderExtras();
+
+  } catch (err) {
+    console.error("Error loading extras", err);
   }
 }
 
@@ -466,6 +518,28 @@ orderListEl.addEventListener("click", (event) => {
   renderOrder();
 });
 
+extrasEl.addEventListener("click", (event) => {
+  const btn = event.target.closest("button");
+  if (!btn) return;
+
+  const productId = btn.dataset.add;
+  if (!productId) return;
+
+  const product = extraProducts.find(p => p.product_id === productId);
+  if (!product) return;
+
+  orderState.push({
+    product_id: product.product_id,
+    name: product.ux_display_name || product.product_name,
+    qty: 1,
+    unit: product.unit,
+    category: product.ux_category_label,
+    emoji: product.ux_emoji
+  });
+
+  renderOrder();
+});
+
 async function submitOrder() {
   if (!householdId) {
     setStatus("Falta household_id en la URL.", "error");
@@ -547,6 +621,14 @@ async function submitOrder() {
 
 submitBtn.addEventListener("click", submitOrder);
 
+editBtn.addEventListener("click", () => {
+  isEditing = true;
+
+  setStatus("Ahora podés editar tu pedido");
+
+  renderOrder();
+});
+
 async function initApp() {
   try {
     await resolveSessionFromToken();
@@ -558,6 +640,7 @@ async function initApp() {
 
     setStatus(`Hogar detectado: ${householdId}`);
     await loadInitialOrder();
+    await loadExtras();
   } catch (error) {
     console.error("Error resolving session:", error);
     setStatus("No se pudo validar la sesión del pedido.", "error");
