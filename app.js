@@ -29,7 +29,7 @@ export const PRODUCT_COLORS = {
 const params = new URLSearchParams(window.location.search);
 const token = params.get("t");
 let householdId = null;
-let isEditing = false;
+
 const statusEl = document.getElementById("status");
 const orderListEl = document.getElementById("orderList");
 const extrasEl = document.getElementById("extras");
@@ -173,11 +173,11 @@ function renderOrder() {
     align-items:center;
     gap:10px;
   ">
-    <button class="qty-btn" data-action="minus" data-index="${index}" ${!isEditing ? "disabled" : ""}>−</button>
+    <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
     
     <div class="qty-value">${item.qty} ${item.unit || ""}</div>
     
-    <button class="qty-btn" data-action="plus" data-index="${index}" ${!isEditing ? "disabled" : ""}>+</button>
+    <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
   </div>
 
 </div>
