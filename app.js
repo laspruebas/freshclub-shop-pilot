@@ -138,6 +138,10 @@ function renderOrder() {
   orderState.forEach((item, index) => {
     const card = document.createElement("div");
     card.className = "card";
+    
+    const color = PRODUCT_COLORS[item.name] || "#e5e7eb";
+    
+    card.style.borderLeft = `6px solid ${color}`;
 
     card.innerHTML = `
       <div class="card-top">
