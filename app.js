@@ -195,7 +195,7 @@ function renderExtras() {
 
   extrasEl.innerHTML = `
     <div style="margin-top:16px;font-weight:700;">
-      Agregar más productos
+      ¿Querés sumar algo más?
     </div>
   `;
 
