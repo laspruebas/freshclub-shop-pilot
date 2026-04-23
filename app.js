@@ -199,6 +199,13 @@ function renderExtras() {
   `;
 
   extraProducts.forEach((item) => {
+  
+    const alreadyInOrder = orderState.some(
+      (p) => p.product_id === item.product_id
+    );
+  
+    if (alreadyInOrder) return;
+  
     const card = document.createElement("div");
     card.className = "card";
 
