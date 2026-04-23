@@ -34,7 +34,6 @@ const statusEl = document.getElementById("status");
 const orderListEl = document.getElementById("orderList");
 const extrasEl = document.getElementById("extras");
 const submitBtn = document.getElementById("submitBtn");
-const editBtn = document.getElementById("editBtn");
 const subtitleEl = document.getElementById("subtitle");
 
 let orderState = [];
@@ -626,16 +625,6 @@ async function submitOrder() {
 // =====================================================
 
 submitBtn.addEventListener("click", submitOrder);
-
-editBtn.addEventListener("click", () => {
-  isEditing = true;
-
-  setStatus("Ahora podés ajustar tu pedido");
-
-  subtitleEl.textContent = "Estás editando tu pedido";
-
-  renderOrder();
-});
 
 async function initApp() {
   try {
