@@ -543,6 +543,7 @@ extrasEl.addEventListener("click", (event) => {
   });
 
   renderOrder();
+  renderExtras();
 });
 
 async function submitOrder() {
