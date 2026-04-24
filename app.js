@@ -602,7 +602,11 @@ async function submitOrder() {
 
     renderOrderConfirmed();
     submitBtn.style.display = "none";
-    editBtn.style.display = "none";
+    
+    // ocultar extras
+    extrasEl.innerHTML = "";
+    extrasEl.style.display = "none";
+    
     submitBtn.textContent = "Pedido enviado";
     submitBtn.disabled = true;
 
