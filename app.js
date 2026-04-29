@@ -381,10 +381,9 @@ function renderDashboardFromApi(response, orderId) {
   const whatsappShareUrl =
     `https://wa.me/?text=${encodeURIComponent(shareText)}`;
 
-  const whatsappReturnText = `FRESHCLUB_ORDER_DONE:${orderId}`;
-  const whatsappReturnUrl =
-    `https://wa.me/14155238886?text=${encodeURIComponent(whatsappReturnText)}`;
-
+  // Volver a WhatsApp SIN mensaje draft
+  const whatsappReturnUrl = `https://wa.me/14155238886`;
+  
   orderListEl.innerHTML = `
     <div class="empty" style="
       max-width:720px;
