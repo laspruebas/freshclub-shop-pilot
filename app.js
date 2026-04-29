@@ -477,8 +477,13 @@ function renderDashboardFromApi(response, orderId) {
         </div>
       </details>
 
-      <div style="margin-top:22px;color:#4b5563;">
-        ${footer.message}
+      <div style="
+        margin-top:22px;
+        color:#4b5563;
+        font-size:18px;
+        font-weight:700;
+      ">
+      ${footer.message}
       </div>
 
       <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
