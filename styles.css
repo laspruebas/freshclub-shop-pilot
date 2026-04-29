@@ -443,3 +443,11 @@ body {
   margin-top: 22px;
   text-decoration: none;
 }
+
+.origin-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
