@@ -364,11 +364,11 @@ function renderDashboardFromApi(response, orderId) {
     </div>
 
     <div style="margin-top:10px;font-size:15px;color:#374151;">
-      Impacto estimado: ${moreInfo.days_equivalent_label}
+      Muy bien! Ya tenes para ${moreInfo.days_equivalent_label}
     </div>
 
     <div style="margin-top:14px;font-size:15px;font-weight:600;color:#111827;">
-      Productos sugeridos
+      La próxima podes probar estos productos:
     </div>
 
     <div style="margin-top:6px;">
