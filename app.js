@@ -421,7 +421,17 @@ function renderDashboardFromApi(response, orderId) {
       ">
         ${message1.value}
       </div>
-
+      
+        ${message1.subtitle ? `
+          <div style="
+            margin-top:8px;
+            font-size:14px;
+            color:#4b5563;
+          ">
+            ${message1.subtitle}
+          </div>
+        ` : ''}
+      
       <div style="margin-top:24px;font-weight:700;font-size:17px;">
         ${message2.title}
       </div>
