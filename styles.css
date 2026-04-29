@@ -399,3 +399,47 @@ body {
   color: #1f1f1f;
   cursor: pointer;
 }
+
+#para origen
+
+.origen-page {
+  padding-bottom: 32px;
+}
+
+.origen-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px;
+  margin: 16px 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.origen-card h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+.origen-card p {
+  margin: 8px 0;
+  line-height: 1.45;
+}
+
+.origen-info {
+  margin-top: 14px;
+}
+
+.origen-card ul {
+  padding-left: 20px;
+  margin: 8px 0 0;
+}
+
+.origen-card li {
+  margin-bottom: 8px;
+}
+
+.whatsapp-button {
+  display: block;
+  text-align: center;
+  margin-top: 22px;
+  text-decoration: none;
+}
