@@ -159,12 +159,13 @@ function renderOrder() {
 ">
 
   <!-- IZQUIERDA: ORIGEN -->
-  <div class="item-origin" style="
+  <a class="item-origin" href="./origen.html" style="
     font-size:14px;
     color:#6b7280;
+    text-decoration:none;
   ">
-    Origen
-  </div>
+    🌱 Origen
+  </a>
 
   <!-- DERECHA: CONTROLES -->
   <div class="qty-row" style="
