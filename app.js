@@ -331,6 +331,7 @@ function renderDashboardFromApi(response, orderId) {
   const message1 = dash.message_1;
   const message2 = dash.message_2;
   const message3 = dash.message_3;
+  const message4 = dash.message_4;
   const moreInfo = dash.more_info;
   const footer = dash.footer;
 
