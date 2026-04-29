@@ -425,7 +425,8 @@ function renderDashboardFromApi(response, orderId) {
         ${message1.subtitle ? `
           <div style="
             margin-top:8px;
-            font-size:14px;
+            font-size:16px;
+            font-weight:700;
             color:#4b5563;
           ">
             ${message1.subtitle}
