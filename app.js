@@ -143,44 +143,55 @@ function renderOrder() {
     card.style.borderLeft = `6px solid ${color}`;
 
     card.innerHTML = `
-      <div class="card-top">
+      <div class="card-top" style="display:flex;align-items:center;gap:10px;">
+        
+        <img 
+          src="${item.image_url}" 
+          alt="${item.name}"
+          style="
+            width:60px;
+            height:60px;
+            object-fit:contain;
+            background:#fff;
+            border-radius:10px;
+          "
+        />
+    
         <div>
           <p class="card-title">${item.name}</p>
           <div class="item-category">${item.emoji} ${item.category}</div>
         </div>
+    
       </div>
-
-
+    
       <div class="item-actions" style="
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:12px;
-">
-
-  <!-- IZQUIERDA: ORIGEN -->
-  <a class="item-origin" href="./origen.html" style="
-    font-size:14px;
-    color:#6b7280;
-    text-decoration:none;
-  ">
-    🌱 Origen
-  </a>
-
-  <!-- DERECHA: CONTROLES -->
-  <div class="qty-row" style="
-    display:flex;
-    align-items:center;
-    gap:10px;
-  ">
-    <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-top:12px;
+      ">
     
-    <div class="qty-value">${item.qty} ${item.unit || ""}</div>
+        <a class="item-origin" href="./origen.html" style="
+          font-size:14px;
+          color:#6b7280;
+          text-decoration:none;
+        ">
+          🌱 Origen
+        </a>
     
-    <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
-  </div>
-
-</div>
+        <div class="qty-row" style="
+          display:flex;
+          align-items:center;
+          gap:10px;
+        ">
+          <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
+          
+          <div class="qty-value">${item.qty} ${item.unit || ""}</div>
+          
+          <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
+        </div>
+    
+      </div>
     `;
 
     orderListEl.appendChild(card);
@@ -209,15 +220,7 @@ function renderExtras() {
   
     const card = document.createElement("div");
     card.className = "card";
-
-    card.innerHTML = `
-      <div class="card-top">
-        <div>
-          <p class="card-title">${item.ux_display_name || item.product_name}</p>
-          <div class="item-category">${item.ux_emoji} ${item.ux_category_label}</div>
-        </div>
-      </div>
-
+    
       <div style="margin-top:12px;text-align:right;">
         <button class="add-btn" data-add="${item.product_id}">
           Agregar
@@ -275,14 +278,15 @@ async function loadInitialOrder() {
 
     const data = await response.json();
 
-   orderState = data.items.map(item => ({
+    orderState = data.items.map(item => ({
       product_id: item.product_id,
       name: item.ux_display_name || item.product_name,
       qty: item.suggested_qty,
       unit: item.unit,
       category: item.ux_category_label,
-      emoji: item.ux_emoji
-    }));;
+      emoji: item.ux_emoji,
+      image_url: item.image_url
+    }));
 
     renderOrder();
     setStatus("");
@@ -561,7 +565,8 @@ extrasEl.addEventListener("click", (event) => {
     qty: 1,
     unit: product.unit,
     category: product.ux_category_label,
-    emoji: product.ux_emoji
+    emoji: product.ux_emoji,
+    image_url: product.image_url
   });
 
   renderOrder();
