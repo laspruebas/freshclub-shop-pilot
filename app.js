@@ -217,9 +217,31 @@ function renderExtras() {
     );
   
     if (alreadyInOrder) return;
-  
+      
     const card = document.createElement("div");
     card.className = "card";
+    
+    card.innerHTML = `
+      <div class="card-top" style="display:flex;align-items:center;gap:10px;">
+    
+        <img 
+          src="${item.image_url}" 
+          alt="${item.ux_display_name}"
+          style="
+            width:60px;
+            height:60px;
+            object-fit:contain;
+            background:#fff;
+            border-radius:10px;
+          "
+        />
+    
+        <div>
+          <p class="card-title">${item.ux_display_name || item.product_name}</p>
+          <div class="item-category">${item.ux_emoji} ${item.ux_category_label}</div>
+        </div>
+    
+      </div>
     
       <div style="margin-top:12px;text-align:right;">
         <button class="add-btn" data-add="${item.product_id}">
