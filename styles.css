@@ -452,3 +452,231 @@ body {
   font-weight: 600;
   text-decoration: none;
 }
+
+/* =========================
+   PEDIDO SUGERIDO - FRUTI
+========================= */
+
+.pedido-page {
+  background: #f4f7f2;
+  color: #172016;
+}
+
+.pedido-page .app {
+  max-width: 480px;
+  background: #f8faf5;
+  min-height: 100vh;
+  padding-bottom: 110px;
+}
+
+.pedido-page .header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(180deg, #ffffff 0%, #f8faf5 100%);
+  border-bottom: 1px solid #e5eadf;
+  padding: 18px 18px 16px;
+}
+
+.pedido-page .brand {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4d7c32;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.pedido-page .pedido-title {
+  margin: 0;
+  max-width: 390px;
+  font-size: 24px;
+  line-height: 1.12;
+  font-weight: 800;
+  color: #152312;
+}
+
+.pedido-page .subtitle {
+  margin: 8px 0 0;
+  max-width: 390px;
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: #66735e;
+}
+
+.pedido-page .main {
+  padding: 14px 14px 120px;
+}
+
+.pedido-page .status {
+  min-height: 0;
+  margin: 0 0 14px;
+  font-size: 14px;
+  color: #60715a;
+}
+
+.pedido-page .catalog,
+.pedido-page .order-list {
+  display: grid;
+  gap: 12px;
+}
+
+.pedido-page .card {
+  position: relative;
+  border: 1px solid #e3eadc;
+  border-radius: 22px;
+  padding: 14px;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(38, 71, 24, 0.07);
+  overflow: hidden;
+}
+
+.pedido-page .card::before,
+.pedido-page .card::after {
+  display: none !important;
+  content: none !important;
+}
+
+.pedido-page .card-top {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.pedido-page .card img,
+.pedido-page .product-img,
+.pedido-page .item-img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 18px;
+  background: #f7f7f2;
+  padding: 8px;
+}
+
+.pedido-page .card-title {
+  font-size: 18px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: #101810;
+  margin: 0 0 6px;
+}
+
+.pedido-page .card-meta,
+.pedido-page .item-unit,
+.pedido-page .item-category {
+  font-size: 14px;
+  line-height: 1.25;
+  color: #65735f;
+}
+
+.pedido-page .origin-link,
+.pedido-page .secondary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  color: #5b7f3a;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pedido-page .qty-row,
+.pedido-page #catalog [id^="controls-"] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.pedido-page .qty-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #d9e2d2;
+  border-radius: 14px;
+  background: #f9fbf6;
+  color: #172016;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pedido-page .qty-btn:active {
+  transform: scale(0.96);
+}
+
+.pedido-page .qty-value {
+  min-width: 30px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 800;
+  color: #101810;
+}
+
+.pedido-page .extras-block {
+  margin-top: 22px;
+}
+
+.pedido-page .extras-title {
+  margin: 0 2px 4px;
+  font-size: 21px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: #152312;
+}
+
+.pedido-page .extras-subtitle {
+  margin: 0 2px 14px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #66735e;
+}
+
+.pedido-page .footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  padding: 14px 14px 18px;
+  background: rgba(248, 250, 245, 0.94);
+  border-top: 1px solid #e1e8d8;
+  backdrop-filter: blur(10px);
+}
+
+.pedido-page .footer-stack {
+  width: min(448px, 100%);
+}
+
+.pedido-page .cta {
+  width: 100%;
+  min-height: 56px;
+  border: none;
+  border-radius: 18px;
+  padding: 16px 18px;
+  font-size: 17px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #55a630 0%, #2b7a2e 100%);
+  color: #ffffff;
+  box-shadow: 0 12px 26px rgba(43, 122, 46, 0.28);
+  cursor: pointer;
+}
+
+.pedido-page .cta:active {
+  transform: translateY(1px);
+}
+
+.pedido-page .cta:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
