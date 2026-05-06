@@ -173,7 +173,7 @@ function renderOrder() {
           <div class="qty-row">
             <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
             <div class="qty-value">
-              ${escapeHtml(item.qty)} ${escapeHtml(item.unit_label || item.unit || "")}
+              ${escapeHtml(item.qty ?? item.suggested_qty)} ${escapeHtml(item.unit_label || item.unit || "")}
             </div>
             <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
           </div>
