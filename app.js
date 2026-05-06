@@ -75,6 +75,18 @@ function escapeHtml(text) {
     .replaceAll("'", "&#039;");
 }
 
+function handleImageError(img) {
+  console.warn(
+    "FRUTI image failed:",
+    img.dataset.productId,
+    img.dataset.productName,
+    img.src
+  );
+
+  img.removeAttribute("src");
+  img.classList.add("product-img-fallback");
+}
+
 // =====================================================
 // RENDER
 // =====================================================
@@ -139,57 +151,39 @@ function renderOrder() {
     card.className = "card";
 
     card.innerHTML = `
-      <div class="card-top" style="display:flex;align-items:center;gap:10px;">
-        
+      <div class="product-row">
         <img 
-          src="${item.image_url}" 
-          alt="${item.name}"
-          style="
-            width:60px;
-            height:60px;
-            object-fit:contain;
-            background:#fff;
-            border-radius:10px;
-          "
+          class="product-img"
+          src="${escapeHtml(item.image_url || '')}" 
+          alt=""
+          loading="lazy"
+          data-product-id="${escapeHtml(item.product_id)}"
+          data-product-name="${escapeHtml(item.name)}"
         />
     
-        <div>
-          <p class="card-title">${item.name}</p>
-          <div class="item-category">${item.category || ""}</div>
+        <div class="product-content">
+          <div class="product-main">
+            <p class="card-title">${escapeHtml(item.name)}</p>
+            ${item.category ? `<div class="item-category">${escapeHtml(item.category)}</div>` : ""}
+            <a class="item-origin" href="./origen.html">
+              Ver origen
+            </a>
+          </div>
+    
+          <div class="qty-row">
+            <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
+            <div class="qty-value">${escapeHtml(item.qty)} ${escapeHtml(item.unit || "")}</div>
+            <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
+          </div>
         </div>
-    
-      </div>
-    
-      <div class="item-actions" style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        margin-top:12px;
-      ">
-    
-        <a class="item-origin" href="./origen.html" style="
-          font-size:14px;
-          color:#6b7280;
-          text-decoration:none;
-        ">
-          Ver origen del producto
-        </a>
-    
-        <div class="qty-row" style="
-          display:flex;
-          align-items:center;
-          gap:10px;
-        ">
-          <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
-          
-          <div class="qty-value">${item.qty} ${item.unit || ""}</div>
-          
-          <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
-        </div>
-    
       </div>
     `;
 
+    const img = card.querySelector(".product-img");
+    if (img) {
+      img.addEventListener("error", () => handleImageError(img));
+    }
+    
     orderListEl.appendChild(card);
   });
 }
@@ -200,11 +194,7 @@ function renderExtras() {
     return;
   }
 
-  extrasEl.innerHTML = `
-    <div style="margin-top:16px;font-weight:700;">
-      ¿Querés sumar algo más?
-    </div>
-  `;
+  extrasEl.innerHTML = "";
 
   extraProducts.forEach((item) => {
   
@@ -218,34 +208,34 @@ function renderExtras() {
     card.className = "card";
     
     card.innerHTML = `
-      <div class="card-top" style="display:flex;align-items:center;gap:10px;">
-    
+      <div class="product-row extra-row">
         <img 
-          src="${item.image_url}" 
-          alt="${item.ux_display_name}"
-          style="
-            width:60px;
-            height:60px;
-            object-fit:contain;
-            background:#fff;
-            border-radius:10px;
-          "
+          class="product-img"
+          src="${escapeHtml(item.image_url || '')}" 
+          alt=""
+          loading="lazy"
+          data-product-id="${escapeHtml(item.product_id)}"
+          data-product-name="${escapeHtml(item.ux_display_name || item.product_name || '')}"
         />
     
-        <div>
-          <p class="card-title">${item.ux_display_name || item.product_name}</p>
-          <div class="item-category">${item.ux_category_label || ""}</div>
+        <div class="product-content">
+          <div class="product-main">
+            <p class="card-title">${escapeHtml(item.ux_display_name || item.product_name || "")}</p>
+            ${item.ux_category_label ? `<div class="item-category">${escapeHtml(item.ux_category_label)}</div>` : ""}
+          </div>
+    
+          <button class="add-btn" data-add="${escapeHtml(item.product_id)}">
+            + Agregar
+          </button>
         </div>
-    
-      </div>
-    
-      <div style="margin-top:12px;text-align:right;">
-        <button class="add-btn" data-add="${item.product_id}">
-          Agregar
-        </button>
       </div>
     `;
 
+    const img = card.querySelector(".product-img");
+    if (img) {
+      img.addEventListener("error", () => handleImageError(img));
+    }
+    
     extrasEl.appendChild(card);
   });
 }
