@@ -33,6 +33,7 @@ let householdId = null;
 const statusEl = document.getElementById("status");
 const orderListEl = document.getElementById("orderList");
 const extrasEl = document.getElementById("extras");
+const extrasBlockEl = document.getElementById("extrasBlock");
 const submitBtn = document.getElementById("submitBtn");
 const subtitleEl = document.getElementById("subtitle");
 
@@ -636,9 +637,11 @@ async function submitOrder() {
     renderOrderConfirmed();
     submitBtn.style.display = "none";
     
-    // ocultar extras
+    // ocultar bloque completo de extras
     extrasEl.innerHTML = "";
-    extrasEl.style.display = "none";
+    if (extrasBlockEl) {
+      extrasBlockEl.style.display = "none";
+    }
     
     submitBtn.textContent = "Pedido enviado";
     submitBtn.disabled = true;
