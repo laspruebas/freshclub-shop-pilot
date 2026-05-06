@@ -401,7 +401,7 @@ body {
   cursor: pointer;
 }
 
-#para origen
+/* para origen */
 
 .origen-page {
   padding-bottom: 32px;
@@ -679,4 +679,134 @@ body {
   opacity: 0.55;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+/* =========================
+   PEDIDO - CARDS UX CLEAN
+========================= */
+
+.pedido-page .catalog {
+  display: grid;
+  gap: 10px;
+}
+
+.pedido-page .card {
+  border: 1px solid #e3eadc !important;
+  border-left: 1px solid #e3eadc !important;
+  border-radius: 18px;
+  padding: 12px;
+  background: #ffffff;
+  background-image: none !important;
+  box-shadow: 0 6px 18px rgba(38, 71, 24, 0.06);
+  overflow: hidden;
+}
+
+.pedido-page .card::before,
+.pedido-page .card::after {
+  display: none !important;
+  content: none !important;
+}
+
+.pedido-page .product-row {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.pedido-page .product-img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 16px;
+  background: #f7f7f2;
+  padding: 8px;
+  display: block;
+}
+
+.pedido-page .product-img-fallback {
+  background: radial-gradient(circle at center, #edf3e8 0%, #f7f7f2 68%);
+}
+
+.pedido-page .product-content {
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.pedido-page .product-main {
+  min-width: 0;
+}
+
+.pedido-page .card-title {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: #101810;
+}
+
+.pedido-page .item-category {
+  margin-top: 3px;
+  font-size: 13px;
+  line-height: 1.25;
+  color: #66735e;
+}
+
+.pedido-page .item-origin {
+  display: inline-flex;
+  margin-top: 5px;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #5b7f3a;
+  text-decoration: none;
+}
+
+.pedido-page .qty-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 0;
+}
+
+.pedido-page .qty-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #d9e2d2;
+  border-radius: 13px;
+  background: #f9fbf6;
+  color: #172016;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pedido-page .qty-value {
+  min-width: 58px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  color: #101810;
+  white-space: nowrap;
+}
+
+.pedido-page .add-btn {
+  justify-self: end;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid #d9e2d2;
+  border-radius: 13px;
+  background: #f9fbf6;
+  color: #172016;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pedido-page .add-btn:active,
+.pedido-page .qty-btn:active {
+  transform: scale(0.96);
 }
