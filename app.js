@@ -137,10 +137,6 @@ function renderOrder() {
   orderState.forEach((item, index) => {
     const card = document.createElement("div");
     card.className = "card";
-    
-    const color = PRODUCT_COLORS[item.name] || "#e5e7eb";
-    
-    card.style.borderLeft = `6px solid ${color}`;
 
     card.innerHTML = `
       <div class="card-top" style="display:flex;align-items:center;gap:10px;">
@@ -159,7 +155,7 @@ function renderOrder() {
     
         <div>
           <p class="card-title">${item.name}</p>
-          <div class="item-category">${item.emoji} ${item.category}</div>
+          <div class="item-category">${item.category || ""}</div>
         </div>
     
       </div>
@@ -176,7 +172,7 @@ function renderOrder() {
           color:#6b7280;
           text-decoration:none;
         ">
-          🌱 Origen
+          Ver origen del producto
         </a>
     
         <div class="qty-row" style="
@@ -238,7 +234,7 @@ function renderExtras() {
     
         <div>
           <p class="card-title">${item.ux_display_name || item.product_name}</p>
-          <div class="item-category">${item.ux_emoji} ${item.ux_category_label}</div>
+          <div class="item-category">${item.ux_category_label || ""}</div>
         </div>
     
       </div>
