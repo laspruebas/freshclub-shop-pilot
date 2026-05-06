@@ -172,7 +172,9 @@ function renderOrder() {
     
           <div class="qty-row">
             <button class="qty-btn" data-action="minus" data-index="${index}">−</button>
-            <div class="qty-value">${escapeHtml(item.qty)} ${escapeHtml(item.unit || "")}</div>
+            <div class="qty-value">
+              ${escapeHtml(item.qty)} ${escapeHtml(item.unit_label || item.unit || "")}
+            </div>
             <button class="qty-btn" data-action="plus" data-index="${index}">+</button>
           </div>
         </div>
@@ -291,6 +293,7 @@ async function loadInitialOrder() {
       name: item.ux_display_name || item.product_name,
       qty: item.suggested_qty,
       unit: item.unit,
+      unit_label: item.unit_label,
       category: item.ux_category_label,
       emoji: item.ux_emoji,
       image_url: item.image_url
@@ -572,6 +575,7 @@ extrasEl.addEventListener("click", (event) => {
     name: product.ux_display_name || product.product_name,
     qty: 1,
     unit: product.unit,
+    unit_label: product.unit_label,
     category: product.ux_category_label,
     emoji: product.ux_emoji,
     image_url: product.image_url
