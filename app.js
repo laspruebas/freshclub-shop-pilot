@@ -277,28 +277,67 @@ async function resolveSessionFromToken() {
 
 async function loadInitialOrder() {
   try {
-    setStatus("Cargando pedido sugerido...");
+    setStatus("Armando tu pedido sugerido...");
 
-    const response = await fetch(
-      `${API_BASE}/initial-order/${householdId}`
-    );
+    let items = [];
+    let source = "ai";
 
-    if (!response.ok) {
-      throw new Error(`Initial order HTTP ${response.status}`);
+    try {
+      const aiResponse = await fetch(
+        `${API_BASE}/ai/initial-order-selection/${householdId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      if (!aiResponse.ok) {
+        throw new Error(`AI initial order HTTP ${aiResponse.status}`);
+      }
+
+      const aiData = await aiResponse.json();
+
+      items = aiData?.selection?.selected_items || [];
+
+      if (!items.length) {
+        throw new Error("AI initial order returned empty selection");
+      }
+
+    } catch (aiError) {
+      console.warn("AI initial order failed, using DB fallback:", aiError);
+      source = "db";
+
+      const fallbackResponse = await fetch(
+        `${API_BASE}/initial-order/${householdId}`
+      );
+
+      if (!fallbackResponse.ok) {
+        throw new Error(`Initial order fallback HTTP ${fallbackResponse.status}`);
+      }
+
+      const fallbackData = await fallbackResponse.json();
+      items = fallbackData.items || [];
     }
 
-    const data = await response.json();
+    orderState = items
+      .slice()
+      .sort((a, b) => Number(a.display_order || 0) - Number(b.display_order || 0))
+      .map(item => ({
+        product_id: item.product_id,
+        name: item.ux_display_name || item.product_name,
+        qty: item.suggested_qty,
+        suggested_qty: item.suggested_qty,
+        unit: item.unit,
+        unit_label: item.unit_label,
+        category: item.ux_category_label,
+        emoji: item.ux_emoji,
+        image_url: item.image_url,
+        reason: item.reason
+      }));
 
-    orderState = data.items.map(item => ({
-      product_id: item.product_id,
-      name: item.ux_display_name || item.product_name,
-      qty: item.suggested_qty,
-      unit: item.unit,
-      unit_label: item.unit_label,
-      category: item.ux_category_label,
-      emoji: item.ux_emoji,
-      image_url: item.image_url
-    }));
+    console.log("Initial order source:", source, orderState);
 
     renderOrder();
     setStatus("");
