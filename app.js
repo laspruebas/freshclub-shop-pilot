@@ -390,6 +390,37 @@ function renderDashboardFromApi(response, orderId) {
   const moreInfo = dash.more_info;
   const footer = dash.footer;
 
+const referralInviteUrl = response?.actions?.referral?.invite_url || "";
+
+const referralShareText = referralInviteUrl
+  ? `Sumate a FRUTI 🍎🥦
+
+Te ayuda a armar un pedido de frutas y verduras pensado para tu hogar.
+
+Usá este link:
+${referralInviteUrl}`
+  : "";
+
+const referralWhatsappUrl = referralShareText
+  ? `https://wa.me/?text=${encodeURIComponent(referralShareText)}`
+  : "";
+
+const whatsappReturnUrl = `https://wa.me/14155238886`;
+
+const actionsHtml = `
+  <div class="dashboard-actions">
+    ${referralWhatsappUrl ? `
+      <a href="${escapeHtml(referralWhatsappUrl)}" class="dashboard-btn dashboard-btn-primary">
+        Invitar un amigo/a
+      </a>
+    ` : ""}
+
+    <a href="${escapeHtml(whatsappReturnUrl)}" class="dashboard-link">
+      Volver a WhatsApp
+    </a>
+  </div>
+`;
+  
   const categoriesHtml = message2.categories
     .map((cat) => `
       <div style="margin-top:6px;font-size:16px;color:#1f2937;">
@@ -432,13 +463,6 @@ function renderDashboardFromApi(response, orderId) {
     </div>
   `;
 
-  const shareText = dash.share.message;
-
-  const whatsappShareUrl =
-    `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-
-  // Volver a WhatsApp SIN mensaje draft
-  const whatsappReturnUrl = `https://wa.me/14155238886`;
   
   orderListEl.innerHTML = `
     <div class="empty" style="
