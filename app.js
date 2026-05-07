@@ -389,8 +389,12 @@ function renderDashboardFromApi(response, orderId) {
   const message3 = dash.message_3;
   const moreInfo = dash.more_info;
   const footer = dash.footer;
+  
 
 const referralInviteUrl = response?.actions?.referral?.invite_url || "";
+const historicalReportUrl = response?.actions?.historical_report_url || "";
+const whatsappReturnUrl =
+  response?.actions?.whatsapp_return_url || "https://wa.me/14155238886";
 
 const referralShareText = referralInviteUrl
   ? `Sumate a FRUTI 🍎🥦
@@ -405,13 +409,17 @@ const referralWhatsappUrl = referralShareText
   ? `https://wa.me/?text=${encodeURIComponent(referralShareText)}`
   : "";
 
-const whatsappReturnUrl = `https://wa.me/14155238886`;
-
 const actionsHtml = `
   <div class="dashboard-actions">
     ${referralWhatsappUrl ? `
       <a href="${escapeHtml(referralWhatsappUrl)}" class="dashboard-btn dashboard-btn-primary">
         Invitar un amigo/a
+      </a>
+    ` : ""}
+
+    ${historicalReportUrl ? `
+      <a href="${escapeHtml(historicalReportUrl)}" class="dashboard-btn dashboard-btn-secondary">
+        Ir a mi reporte
       </a>
     ` : ""}
 
