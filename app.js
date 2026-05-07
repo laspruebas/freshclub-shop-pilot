@@ -566,32 +566,8 @@ const actionsHtml = `
       ${footer.message}
       </div>
 
-      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
-        <a href="${whatsappShareUrl}"
-           style="
-             display:inline-block;
-             background:#16a34a;
-             color:white;
-             padding:10px 16px;
-             border-radius:8px;
-             text-decoration:none;
-             font-weight:600;">
-          Compartir reporte
-        </a>
-
-        <a href="${whatsappReturnUrl}"
-           style="
-             display:inline-block;
-             background:#16a34a;
-             color:white;
-             padding:10px 16px;
-             border-radius:8px;
-             text-decoration:none;
-             font-weight:600;">
-          Volver a WhatsApp
-        </a>
-      </div>
-
+      ${actionsHtml}
+      
     </div>
   `;
 }
