@@ -1143,3 +1143,41 @@ body {
   color: #66735e;
   font-weight: 700;
 }
+
+/* =========================
+   REPORT - ACTIONS
+========================= */
+
+.report-actions {
+  margin-top: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.report-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 14px;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.report-btn-primary {
+  background: #16a34a;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(22, 163, 74, 0.22);
+}
+
+.report-link {
+  display: inline-flex;
+  justify-content: center;
+  margin-top: 4px;
+  color: #4b5f45;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
