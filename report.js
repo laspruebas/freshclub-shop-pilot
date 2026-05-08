@@ -268,7 +268,23 @@ function renderReport(data) {
         ${timelineHtml}
       </div>
     </section>
-  `;
+    
+    <section class="report-actions">
+      <a
+        class="report-btn report-btn-primary"
+        href="https://wa.me/?text=${encodeURIComponent(`Mirá mi reporte FRUTI 🍎🥦\n\nAsí viene mejorando mi hogar con frutas y verduras:\n\n${window.location.href}`)}"
+      >
+        Compartir reporte
+      </a>
+    
+      <a
+        class="report-link"
+        href="https://wa.me/14155238886"
+      >
+        Volver a WhatsApp
+      </a>
+    </section>
+    `;
 }
 
 // =====================================================
