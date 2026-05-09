@@ -34,6 +34,14 @@ const statusEl = document.getElementById("status");
 const orderListEl = document.getElementById("orderList");
 const extrasEl = document.getElementById("extras");
 const extrasBlockEl = document.getElementById("extrasBlock");
+
+const manualSearchBlockEl = document.getElementById("manualSearchBlock");
+const manualSearchToggleEl = document.getElementById("manualSearchToggle");
+const manualSearchPanelEl = document.getElementById("manualSearchPanel");
+const manualSearchInputEl = document.getElementById("manualSearchInput");
+const manualSearchStatusEl = document.getElementById("manualSearchStatus");
+const manualSearchResultsEl = document.getElementById("manualSearchResults");
+
 const submitBtn = document.getElementById("submitBtn");
 const subtitleEl = document.getElementById("subtitle");
 
