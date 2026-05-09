@@ -31,6 +31,25 @@
         </p>
         <div id="extras" class="catalog"></div>
       </section>
+
+      <section id="manualSearchBlock" class="manual-search-block">
+        <button id="manualSearchToggle" class="manual-search-toggle" type="button">
+          ¿Buscás algo más?
+        </button>
+      
+        <div id="manualSearchPanel" class="manual-search-panel" hidden>
+          <input
+            id="manualSearchInput"
+            class="manual-search-input"
+            type="search"
+            placeholder="Buscar fruta o verdura..."
+            autocomplete="off"
+          />
+      
+          <div id="manualSearchStatus" class="manual-search-status"></div>
+          <div id="manualSearchResults" class="catalog"></div>
+        </div>
+      </section>  
     </main>
 
     <footer class="footer">
