@@ -1181,3 +1181,64 @@ body {
   font-weight: 700;
   text-decoration: none;
 }
+
+/* =========================
+   MANUAL SEARCH - PEDIDO
+========================= */
+
+.pedido-page .manual-search-block {
+  margin-top: 22px;
+}
+
+.pedido-page .manual-search-toggle {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #d9e2d2;
+  border-radius: 15px;
+  background: #ffffff;
+  color: #305d25;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pedido-page .manual-search-panel {
+  margin-top: 12px;
+}
+
+.pedido-page .manual-search-input {
+  width: 100%;
+  height: 46px;
+  border: 1px solid #d9e2d2;
+  border-radius: 15px;
+  padding: 0 14px;
+  background: #ffffff;
+  color: #172016;
+  font-size: 15px;
+  font-weight: 700;
+  outline: none;
+}
+
+.pedido-page .manual-search-input:focus {
+  border-color: #8fbd7a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.08);
+}
+
+.pedido-page .manual-search-status {
+  min-height: 18px;
+  margin: 8px 2px 10px;
+  font-size: 13px;
+  color: #66735e;
+  font-weight: 700;
+}
+
+.pedido-page .manual-search-empty {
+  border: 1px dashed #d9e2d2;
+  border-radius: 16px;
+  padding: 14px;
+  background: #ffffff;
+  color: #66735e;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
