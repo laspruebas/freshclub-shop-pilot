@@ -47,7 +47,8 @@ const subtitleEl = document.getElementById("subtitle");
 
 let orderState = [];
 let extraProducts = [];
-
+let manualSearchResults = [];
+let manualSearchTimeout = null;
 
 // =====================================================
 // HELPERS
@@ -251,6 +252,69 @@ function renderExtras() {
   });
 }
 
+function renderManualSearchResults() {
+  if (!manualSearchResultsEl) return;
+
+  const query = String(manualSearchInputEl?.value || "").trim();
+
+  if (query.length < 2) {
+    manualSearchResultsEl.innerHTML = "";
+    manualSearchStatusEl.textContent = "";
+    return;
+  }
+
+  const visibleItems = manualSearchResults.filter((item) => {
+    return !orderState.some((p) => p.product_id === item.product_id);
+  });
+
+  if (!visibleItems.length) {
+    manualSearchResultsEl.innerHTML = `
+      <div class="manual-search-empty">
+        No encontramos productos para esa búsqueda.
+      </div>
+    `;
+    return;
+  }
+
+  manualSearchResultsEl.innerHTML = "";
+
+  visibleItems.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="product-row extra-row">
+        <img 
+          class="product-img"
+          src="${escapeHtml(item.image_url || '')}" 
+          alt=""
+          loading="lazy"
+          data-product-id="${escapeHtml(item.product_id)}"
+          data-product-name="${escapeHtml(item.ux_display_name || item.product_name || '')}"
+        />
+
+        <div class="product-content">
+          <div class="product-main">
+            <p class="card-title">${escapeHtml(item.ux_display_name || item.product_name || "")}</p>
+            ${item.ux_category_label ? `<div class="item-category">${escapeHtml(item.ux_category_label)}</div>` : ""}
+          </div>
+
+          <button class="add-btn" data-manual-add="${escapeHtml(item.product_id)}">
+            + Agregar
+          </button>
+        </div>
+      </div>
+    `;
+
+    const img = card.querySelector(".product-img");
+    if (img) {
+      img.addEventListener("error", () => handleImageError(img));
+    }
+
+    manualSearchResultsEl.appendChild(card);
+  });
+}
+
 // =====================================================
 // API
 // =====================================================
@@ -372,6 +436,41 @@ async function loadExtras() {
 
   } catch (err) {
     console.error("Error loading extras", err);
+  }
+}
+
+async function searchManualProducts(query) {
+  const cleanQuery = String(query || "").trim();
+
+  if (!householdId || cleanQuery.length < 2) {
+    manualSearchResults = [];
+    renderManualSearchResults();
+    return;
+  }
+
+  try {
+    manualSearchStatusEl.textContent = "Buscando...";
+
+    const response = await fetch(
+      `${API_BASE}/initial-order/${householdId}/catalog-search?q=${encodeURIComponent(cleanQuery)}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`Manual search HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    manualSearchResults = data.items || [];
+
+    renderManualSearchResults();
+    manualSearchStatusEl.textContent = "";
+
+  } catch (error) {
+    console.error("Error searching manual products:", error);
+    manualSearchResults = [];
+    renderManualSearchResults();
+    manualSearchStatusEl.textContent = "No se pudo buscar productos.";
   }
 }
 
@@ -641,6 +740,56 @@ extrasEl.addEventListener("click", (event) => {
   renderExtras();
 });
 
+manualSearchToggleEl?.addEventListener("click", () => {
+  const isHidden = manualSearchPanelEl.hasAttribute("hidden");
+
+  if (isHidden) {
+    manualSearchPanelEl.removeAttribute("hidden");
+    manualSearchToggleEl.textContent = "Ocultar búsqueda";
+    manualSearchInputEl.focus();
+  } else {
+    manualSearchPanelEl.setAttribute("hidden", "");
+    manualSearchToggleEl.textContent = "¿Buscás algo más?";
+  }
+});
+
+manualSearchInputEl?.addEventListener("input", (event) => {
+  const query = event.target.value;
+
+  clearTimeout(manualSearchTimeout);
+
+  manualSearchTimeout = setTimeout(() => {
+    searchManualProducts(query);
+  }, 300);
+});
+
+manualSearchResultsEl?.addEventListener("click", (event) => {
+  const btn = event.target.closest("button");
+  if (!btn) return;
+
+  const productId = btn.dataset.manualAdd;
+  if (!productId) return;
+
+  const product = manualSearchResults.find((p) => p.product_id === productId);
+  if (!product) return;
+
+  orderState.push({
+    product_id: product.product_id,
+    name: product.ux_display_name || product.product_name,
+    qty: product.suggested_qty || 1,
+    suggested_qty: product.suggested_qty || 1,
+    unit: product.unit,
+    unit_label: product.unit_label,
+    category: product.ux_category_label,
+    emoji: product.ux_emoji,
+    image_url: product.image_url
+  });
+
+  renderOrder();
+  renderExtras();
+  renderManualSearchResults();
+});
+
 async function submitOrder() {
   if (!householdId) {
     setStatus("Falta household_id en la URL.", "error");
@@ -692,10 +841,15 @@ async function submitOrder() {
     renderOrderConfirmed();
     submitBtn.style.display = "none";
     
-    // ocultar bloque completo de extras
+    // ocultar bloque completo de extras y buscador
     extrasEl.innerHTML = "";
+    
     if (extrasBlockEl) {
       extrasBlockEl.style.display = "none";
+    }
+    
+    if (manualSearchBlockEl) {
+      manualSearchBlockEl.style.display = "none";
     }
     
     submitBtn.textContent = "Pedido enviado";
