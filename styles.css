@@ -1310,3 +1310,140 @@ body {
 .report-metric strong {
   color: #2D3436;
 }
+
+/* =========================
+   INVITE PAGE - FRUTI
+========================= */
+
+.invite-page {
+  background: #f4f7f2;
+  color: #2D3436;
+}
+
+.invite-page .app {
+  max-width: 480px;
+  background: #f8faf5;
+  min-height: 100vh;
+}
+
+.invite-header {
+  background: linear-gradient(180deg, #ffffff 0%, #f8faf5 100%);
+  border-bottom: 1px solid #e5eadf;
+  padding: 18px 18px 16px;
+}
+
+.invite-page .brand {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4d7c32;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.invite-title {
+  margin: 0;
+  max-width: 390px;
+  font-size: 25px;
+  line-height: 1.12;
+  font-weight: 800;
+  color: #2D3436;
+}
+
+.invite-subtitle {
+  margin: 8px 0 0;
+  max-width: 390px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #66735e;
+}
+
+.invite-main {
+  padding: 16px 14px 24px;
+}
+
+.invite-card {
+  background: #ffffff;
+  border: 1px solid #e3eadc;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 8px 22px rgba(38, 71, 24, 0.06);
+}
+
+.invite-eyebrow {
+  font-size: 13px;
+  font-weight: 800;
+  color: #4CAF50;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.invite-card h2 {
+  margin: 10px 0 8px;
+  font-size: 22px;
+  line-height: 1.15;
+  color: #2D3436;
+}
+
+.invite-card p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #66735e;
+}
+
+.invite-benefits {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.invite-benefit {
+  border: 1px solid #edf1e8;
+  border-radius: 14px;
+  padding: 12px;
+  background: #fbfcf8;
+}
+
+.invite-benefit strong {
+  display: block;
+  font-size: 14px;
+  color: #2D3436;
+  margin-bottom: 4px;
+}
+
+.invite-benefit span {
+  display: block;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #66735e;
+  font-weight: 600;
+}
+
+.invite-btn {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 12px;
+  background: #4CAF50;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.30);
+}
+
+.invite-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.25);
+}
+
+.invite-ref {
+  margin-top: 12px !important;
+  font-size: 12px !important;
+  color: #8a9583 !important;
+  text-align: center;
+}
