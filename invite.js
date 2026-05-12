@@ -2,6 +2,8 @@
 // INVITE PAGE
 // =====================================================
 
+const WHATSAPP_RETURN_URL = "https://wa.me/14155238886";
+
 const params = new URLSearchParams(window.location.search);
 const referralCode = params.get("ref");
 
@@ -15,9 +17,10 @@ if (inviteRefLabel) {
 }
 
 startInviteBtn?.addEventListener("click", () => {
-  const targetUrl = referralCode
-    ? `./index.html?ref=${encodeURIComponent(referralCode)}`
-    : "./index.html";
+  const message = referralCode
+    ? `Hola, quiero sumarme a FRUTI con este código de invitación: ${referralCode}`
+    : "Hola, quiero sumarme a FRUTI";
 
-  window.location.href = targetUrl;
+  window.location.href =
+    `${WHATSAPP_RETURN_URL}?text=${encodeURIComponent(message)}`;
 });
