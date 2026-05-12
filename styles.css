@@ -1242,3 +1242,71 @@ body {
   font-weight: 700;
   text-align: center;
 }
+/* =========================
+   FRUTI FINAL VISUAL TUNING
+========================= */
+
+/* Verde único FRUTI */
+.pedido-page .cta,
+.pedido-page .dashboard-btn-primary,
+.report-btn-primary,
+.report-chart-fill,
+.report-progress-fill {
+  background: #4CAF50;
+}
+
+/* Sombra profesional y más limpia */
+.pedido-page .cta,
+.pedido-page .dashboard-btn-primary,
+.report-btn-primary {
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.30);
+}
+
+/* Feedback táctil al presionar */
+.pedido-page .cta:active,
+.pedido-page .dashboard-btn-primary:active,
+.report-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.25);
+}
+
+/* Radio recomendado para botones */
+.pedido-page .cta,
+.pedido-page .dashboard-btn,
+.report-btn,
+.pedido-page .manual-search-toggle,
+.pedido-page .add-btn,
+.pedido-page .qty-btn {
+  border-radius: 12px;
+}
+
+/* Cards con friendly round */
+.pedido-page .card,
+.report-summary-card,
+.report-week-card,
+.report-section {
+  border-radius: 18px;
+}
+
+/* Imágenes internas: nested border radius */
+.pedido-page .product-img {
+  border-radius: 12px;
+}
+
+/* Color principal de textos */
+.pedido-page .pedido-title,
+.pedido-page .extras-title,
+.pedido-page .card-title,
+.report-title,
+.report-section h2,
+.report-summary-main h2,
+.report-week-label {
+  color: #2D3436;
+}
+
+/* También bajamos agresividad en cantidades y scores */
+.pedido-page .qty-value,
+.report-chart-value,
+.report-metric strong {
+  color: #2D3436;
+}
