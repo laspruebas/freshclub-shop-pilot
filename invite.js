@@ -7,8 +7,8 @@ const WHATSAPP_RETURN_URL = "https://wa.me/14155238886";
 const params = new URLSearchParams(window.location.search);
 const referralCode = params.get("ref");
 
-if (ref) {
-  sessionStorage.setItem("referral_code", ref);
+if (referralCode) {
+  sessionStorage.setItem("referral_code", referralCode);
 }
 
 const startInviteBtn = document.getElementById("startInviteBtn");
