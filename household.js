@@ -249,7 +249,9 @@ async function submitHouseholdMembers() {
 
   const params = new URLSearchParams(window.location.search);
   const phone = params.get("phone");
-
+  
+  const referral_code = sessionStorage.getItem("referral_code");
+  
   if (!phone) {
     setStatus("Falta teléfono en la URL.", "error");
     return;
@@ -257,7 +259,8 @@ async function submitHouseholdMembers() {
   
   const payload = {
     phone,
-    members
+    members,
+    ...(referral_code ? { referral_code } : {})
   };
 
   console.log("ONBOARDING URL:", window.location.href);
