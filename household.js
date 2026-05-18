@@ -153,6 +153,13 @@ function buildMembersPayload() {
   return members;
 }
 
+function buildDeliverySlotsPayload() {
+  return selectedDeliverySlots.map((slot) => ({
+    delivery_day: slot.delivery_day_code,
+    delivery_window: slot.delivery_window_code
+  }));
+}
+
 // =====================================================
 // RENDER
 // =====================================================
@@ -222,6 +229,113 @@ catalogEl.addEventListener("click", (event) => {
     changeQty(ageGroup, -1);
   }
 });
+
+function renderDeliverySlots(slots) {
+  if (!slots || slots.length === 0) {
+    deliverySlotsEl.innerHTML = "";
+    return;
+  }
+
+  deliverySlots = [...slots];
+
+  const grouped = {};
+
+  slots.forEach((slot) => {
+    const key = slot.delivery_day_code;
+
+    if (!grouped[key]) {
+      grouped[key] = {
+        label: slot.delivery_day_label,
+        slots: []
+      };
+    }
+
+    grouped[key].slots.push(slot);
+  });
+
+  deliverySlotsEl.innerHTML = "";
+
+  Object.values(grouped).forEach((day) => {
+    const column = document.createElement("div");
+    column.className = "delivery-day-column";
+
+    const slotsHtml = day.slots.map((slot) => {
+      const selected = selectedDeliverySlots.some(
+        (s) =>
+          s.delivery_day_code === slot.delivery_day_code &&
+          s.delivery_window_code === slot.delivery_window_code
+      );
+
+      return `
+        <button
+          type="button"
+          class="delivery-slot-btn ${selected ? "selected" : ""}"
+          data-day="${slot.delivery_day_code}"
+          data-window="${slot.delivery_window_code}"
+        >
+          ${slot.delivery_window_label}
+        </button>
+      `;
+    }).join("");
+
+    column.innerHTML = `
+      <div class="delivery-day-title">
+        ${day.label}
+      </div>
+
+      <div class="delivery-day-slots">
+        ${slotsHtml}
+      </div>
+    `;
+
+    deliverySlotsEl.appendChild(column);
+  });
+
+  renderDeliverySummary();
+}
+
+function renderDeliverySummary() {
+  if (selectedDeliverySlots.length === 0) {
+    deliverySummaryEl.textContent = "";
+    return;
+  }
+
+  deliverySummaryEl.textContent =
+    selectedDeliverySlots
+      .map(
+        (slot) =>
+          `${slot.delivery_day_label} ${slot.delivery_window_label}`
+      )
+      .join(" · ");
+}
+
+function toggleDeliverySlot(dayCode, windowCode) {
+  const slot = deliverySlots.find(
+    (s) =>
+      s.delivery_day_code === dayCode &&
+      s.delivery_window_code === windowCode
+  );
+
+  if (!slot) return;
+
+  const existingIndex = selectedDeliverySlots.findIndex(
+    (s) =>
+      s.delivery_day_code === dayCode &&
+      s.delivery_window_code === windowCode
+  );
+
+  if (existingIndex >= 0) {
+    selectedDeliverySlots.splice(existingIndex, 1);
+  } else {
+    if (selectedDeliverySlots.length >= 2) {
+      return;
+    }
+
+    selectedDeliverySlots.push(slot);
+  }
+
+  renderDeliverySlots(deliverySlots);
+}
 
 // =====================================================
 // API
@@ -358,5 +472,4 @@ async function initHouseholdPage() {
     setStatus("No se pudo validar la sesión.", "error");
   }
 }
-
 initHouseholdPage();
