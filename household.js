@@ -18,9 +18,25 @@ const token = params.get("t");
 
 let householdId = null;
 
+let waName = "";
+let householdName = "";
+let deliverySlots = [];
+let selectedDeliverySlots = [];
+
 const statusEl = document.getElementById("status");
 const catalogEl = document.getElementById("household");
 const submitBtn = document.getElementById("submitBtn");
+
+const onboardingTitleEl = document.getElementById("onboardingTitle");
+
+const householdNameInput =
+  document.getElementById("householdNameInput");
+
+const deliverySlotsEl =
+  document.getElementById("deliverySlots");
+
+const deliverySummaryEl =
+  document.getElementById("deliverySummary");
 
 const ageGroups = [
   {
