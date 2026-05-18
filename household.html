@@ -10,13 +10,32 @@
   <main class="container">
     <header class="header">
       <h1>Fruti</h1>
-      <p>Contanos cuántas personas viven en tu hogar según su edad</p>
+      <p id="onboardingTitle">Contanos quiénes viven en tu hogar</p>
     </header>
 
     <div id="status" class="status"></div>
 
+    <section class="household-name-section">
+      <label for="householdNameInput">Nombre del hogar</label>
+      <input
+        id="householdNameInput"
+        type="text"
+        placeholder="Ej: Familia Gómez"
+        autocomplete="off"
+      />
+    </section>
+    
     <section id="household" class="catalog"></section>
 
+    <section class="delivery-section">
+      <h2>¿Cuándo preferís recibir tu pedido?</h2>
+      <p>Elegí 1 o 2 opciones.</p>
+    
+      <div id="deliverySlots" class="delivery-slots"></div>
+    
+      <div id="deliverySummary" class="delivery-summary"></div>
+    </section>
+    
     <div class="footer-actions">
       <button id="submitBtn" class="primary-btn" type="button">
         Confirmar hogar
