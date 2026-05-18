@@ -457,7 +457,9 @@ if (
   
   const payload = {
     phone,
+    household_name,
     members,
+    delivery_slots,
     ...(referral_code ? { referral_code } : {})
   };
 
