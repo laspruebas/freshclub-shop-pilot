@@ -348,6 +348,8 @@ async function initHouseholdPage() {
       return;
     }
 
+    await resolveSessionFromToken();
+    
     renderAgeGroups(ageGroups);
     updateSubmitButton();
     setStatus("");
