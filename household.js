@@ -230,6 +230,19 @@ catalogEl.addEventListener("click", (event) => {
   }
 });
 
+deliverySlotsEl.addEventListener("click", (event) => {
+  const button = event.target.closest(".delivery-slot-btn");
+
+  if (!button) return;
+
+  const dayCode = button.dataset.day;
+  const windowCode = button.dataset.window;
+
+  if (!dayCode || !windowCode) return;
+
+  toggleDeliverySlot(dayCode, windowCode);
+});
+
 function renderDeliverySlots(slots) {
   if (!slots || slots.length === 0) {
     deliverySlotsEl.innerHTML = "";
@@ -378,6 +391,26 @@ async function resolveSessionFromToken() {
   if (householdNameInput && householdName) {
     householdNameInput.value = householdName;
   } 
+}
+
+async function fetchDeliverySlots() {
+  const response = await fetch(
+    `${API_BASE}/delivery-slots`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(`Delivery slots HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  renderDeliverySlots(data.slots || []);
 }
 
 async function submitHouseholdMembers() {
