@@ -251,6 +251,19 @@ async function resolveSessionFromToken() {
   }
 
   householdId = data.household_id;
+
+  waName = data.wa_name || "";
+  householdName = data.household_name || "";
+
+  if (onboardingTitleEl) {
+    onboardingTitleEl.textContent = waName
+      ? `Hola ${waName}, contanos quiénes viven en tu hogar`
+      : "Contanos quiénes viven en tu hogar";
+  }
+  
+  if (householdNameInput && householdName) {
+    householdNameInput.value = householdName;
+  } 
 }
 
 async function submitHouseholdMembers() {
