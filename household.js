@@ -418,11 +418,33 @@ async function submitHouseholdMembers() {
 
   const members = buildMembersPayload();
 
+  const household_name =
+    householdNameInput.value.trim();
+  
+  const delivery_slots =
+    buildDeliverySlotsPayload();
+  
   if (members.length === 0) {
     setStatus("Elegí al menos una persona.", "error");
     return;
   }
 
+  if (!household_name) {
+  setStatus("Ingresá un nombre para el hogar.", "error");
+  return;
+}
+
+if (
+  delivery_slots.length < 1 ||
+  delivery_slots.length > 2
+) {
+  setStatus(
+    "Elegí entre 1 y 2 horarios de entrega.",
+    "error"
+  );
+  return;
+}
+  
   const params = new URLSearchParams(window.location.search);
   const phone = params.get("phone");
   
@@ -498,6 +520,9 @@ async function initHouseholdPage() {
     await resolveSessionFromToken();
     
     renderAgeGroups(ageGroups);
+
+    await fetchDeliverySlots();
+    
     updateSubmitButton();
     setStatus("");
   } catch (error) {
