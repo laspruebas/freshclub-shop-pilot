@@ -45,6 +45,9 @@ const onboardingSlider =
 const stepIndicators =
   document.querySelectorAll("[data-step-indicator]");
 
+const householdNextBtn =
+  document.getElementById("householdNextBtn");
+
 const householdBackBtn =
   document.getElementById("householdBackBtn");
 
