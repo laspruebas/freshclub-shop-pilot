@@ -1972,3 +1972,15 @@ body {
 .delivery-slot-btn.selected .delivery-slot-range {
   color: #4a7c3f;
 }
+
+/* =========================
+   DELIVERY INTERNAL SCROLL
+========================= */
+
+.onboarding-scroll-area {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding-bottom: 20px;
+}
