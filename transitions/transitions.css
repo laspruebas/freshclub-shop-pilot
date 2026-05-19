@@ -1,1 +1,87 @@
+.transition-page {
+  margin: 0;
+  height: 100dvh;
+  overflow: hidden;
+}
 
+.transition-shell {
+  height: 100%;
+  padding: 48px 32px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.transition-brand {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  margin-bottom: 48px;
+}
+
+.transition-accent {
+  width: 56px;
+  height: 6px;
+
+  border-radius: 999px;
+
+  margin-bottom: 48px;
+}
+
+.transition-title {
+  margin: 0;
+
+  font-size: 42px;
+  line-height: 1.08;
+  font-weight: 800;
+
+  max-width: 640px;
+}
+
+.transition-subtitle {
+  margin-top: 28px;
+
+  font-size: 18px;
+  line-height: 1.6;
+
+  max-width: 680px;
+
+  opacity: 0.78;
+}
+
+.transition-loader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 64px;
+}
+
+.transition-loader span {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 999px;
+
+  opacity: 0.35;
+}
+
+.transition-loader span.active {
+  width: 34px;
+  opacity: 1;
+}
+
+.transition-footer {
+  margin-top: 28px;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  opacity: 0.6;
+}
