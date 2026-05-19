@@ -236,7 +236,25 @@ catalogEl.addEventListener("click", (event) => {
 });
 
 deliverySlotsEl.addEventListener("click", (event) => {
-  const button = event.target.closest(".delivery-slot-btn");
+
+  const dayToggle =
+    event.target.closest("[data-toggle-day]");
+
+  if (dayToggle) {
+
+    const dayCode =
+      dayToggle.dataset.toggleDay;
+
+    expandedDeliveryDays[dayCode] =
+      !expandedDeliveryDays[dayCode];
+
+    renderDeliverySlots(deliverySlots);
+
+    return;
+  }
+
+  const button =
+    event.target.closest(".delivery-slot-btn");
 
   if (!button) return;
 
