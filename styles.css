@@ -1583,6 +1583,9 @@ body {
 .onboarding-slider {
   display: flex;
   width: 100%;
+
+  margin-top: -4px;
+  
   transition: transform 300ms ease;
 }
 
@@ -1752,8 +1755,9 @@ body {
 ========================= */
 
 .onboarding-status {
-  padding: 10px 18px 0;
-  min-height: 20px;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
 }
 
 /* =========================
@@ -1808,4 +1812,69 @@ body {
   line-height: 1.4;
 
   color: #8a9583;
+}
+
+/* =========================
+   ONBOARDING ISOLATED CARDS
+========================= */
+
+.onboarding-page .catalog {
+  display: grid;
+  gap: 8px;
+}
+
+.onboarding-page .card {
+  border: 1px solid #e3eadc;
+  border-radius: 16px;
+  padding: 10px 12px;
+  background: #ffffff;
+
+  box-shadow: none;
+
+  min-height: unset;
+}
+
+.onboarding-page .card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin-bottom: 2px;
+}
+
+.onboarding-page .card-title {
+  margin: 0;
+
+  font-size: 16px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.onboarding-page .add-btn {
+  height: 34px;
+  padding: 0 12px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.onboarding-page .qty-btn {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 10px;
+
+  font-size: 18px;
+}
+
+.onboarding-page .qty-value {
+  font-size: 15px;
+}
+
+.onboarding-page .qty-row {
+  margin-top: 8px;
 }
