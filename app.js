@@ -104,53 +104,6 @@ function handleImageError(img) {
 // RENDER
 // =====================================================
 
-function renderPreparingReport() {
-  document.getElementById("header").style.display = "none";
-  orderListEl.innerHTML = `
-    <div class="empty" style="
-      max-width:720px;
-      margin:40px auto;
-      text-align:center;
-      color:#1f2937;
-    ">
-
-      <div style="font-size:22px;font-weight:700;margin-bottom:10px;">
-        Estamos preparando tu reporte Fruti
-      </div>
-
-      <div style="color:#4b5563;margin-bottom:20px;">
-        Estamos analizando tu compra.
-      </div>
-
-      <div class="fruit-bounce">
-        <span>🍎</span>
-        <span>🥬</span>
-        <span>🥕</span>
-      </div>
-    </div>
-  `;
-}
-
-function renderOrderConfirmed() {
-  document.getElementById("header").style.display = "none";
-  orderListEl.innerHTML = `
-    <div class="empty" style="
-      max-width:720px;
-      margin:40px auto;
-      text-align:center;
-      color:#1f2937;
-    ">
-      <div style="font-size:24px;font-weight:700;margin-bottom:10px;">
-        ¡Listo!
-      </div>
-
-      <div style="color:#4b5563;">
-        Tu pedido fue generado correctamente.
-      </div>
-    </div>
-  `;
-}
-
 function renderOrder() {
   if (!orderState.length) {
     orderListEl.innerHTML = `<div class="empty">No hay productos</div>`;
@@ -840,37 +793,23 @@ async function submitOrder() {
       throw new Error("Order created without order_id");
     }
 
-    renderOrderConfirmed();
-    submitBtn.style.display = "none";
-    
-    // ocultar bloque completo de extras y buscador
-    extrasEl.innerHTML = "";
-    
-    if (extrasBlockEl) {
-      extrasBlockEl.style.display = "none";
-    }
-    
-    if (manualSearchBlockEl) {
-      manualSearchBlockEl.style.display = "none";
-    }
-    
-    submitBtn.textContent = "Pedido enviado";
     submitBtn.disabled = true;
-
-    setTimeout(() => {
-      renderPreparingReport();
-
-      setTimeout(async () => {
-        try {
-          const dashboardData = await loadOrderDashboard(orderId);
-          console.log("dashboardData", dashboardData);
-          renderDashboardFromApi(dashboardData, orderId);
-        } catch (error) {
-          console.error("Error loading dashboard:", error);
-          setStatus("No se pudo cargar el dashboard.", "error");
-        }
-      }, 2500);
-    }, 1500);
+    submitBtn.textContent = "Preparando reporte...";
+    
+    const deliveryDays =
+      JSON.stringify(
+        JSON.parse(
+          sessionStorage.getItem("delivery_schedule") || "[]"
+        ).map((s) => s.day)
+      );
+    
+    window.location.href =
+      `./transitions/transition.html?type=confirmation&days=${encodeURIComponent(
+        deliveryDays
+      )}&next=${encodeURIComponent(
+        `./dashboard.html?order_id=${orderId}`
+      )}`;
+    
   } catch (error) {
     console.error("Error creating order:", error);
     setStatus("No se pudo crear la orden.", "error");
