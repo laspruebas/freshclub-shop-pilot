@@ -45,12 +45,6 @@ const onboardingSlider =
 const stepIndicators =
   document.querySelectorAll("[data-step-indicator]");
 
-const nameNextBtn =
-  document.getElementById("nameNextBtn");
-
-const householdNextBtn =
-  document.getElementById("householdNextBtn");
-
 const householdBackBtn =
   document.getElementById("householdBackBtn");
 
@@ -250,29 +244,14 @@ deliverySlotsEl.addEventListener("click", (event) => {
   toggleDeliverySlot(dayCode, windowCode);
 });
 
-householdNameInput.addEventListener(
-  "input",
-  validateWizard
-);
-
-nameNextBtn?.addEventListener(
-  "click",
-  () => goToStep(1)
-);
-
 householdNextBtn?.addEventListener(
   "click",
-  () => goToStep(2)
-);
-
-householdBackBtn?.addEventListener(
-  "click",
-  () => goToStep(0)
+  () => goToStep(1)
 );
 
 deliveryBackBtn?.addEventListener(
   "click",
-  () => goToStep(1)
+  () => goToStep(0)
 );
 
 function renderDeliverySlots(slots) {
@@ -400,19 +379,11 @@ function goToStep(step) {
 }
 
 function validateWizard() {
-  const household_name =
-    householdNameInput.value.trim();
-
   const totalMembers =
     getTotalMembers();
 
   const totalSlots =
     selectedDeliverySlots.length;
-
-  if (nameNextBtn) {
-    nameNextBtn.disabled =
-      household_name.length < 2;
-  }
 
   if (householdNextBtn) {
     householdNextBtn.disabled =
@@ -495,8 +466,9 @@ async function submitHouseholdMembers() {
   const members = buildMembersPayload();
 
   const household_name =
-    householdNameInput.value.trim();
-  
+    householdName ||
+    `${waName || "Mi"} hogar`;
+    
   const delivery_slots =
     buildDeliverySlotsPayload();
   
@@ -504,11 +476,6 @@ async function submitHouseholdMembers() {
     setStatus("Elegí al menos una persona.", "error");
     return;
   }
-
-  if (!household_name) {
-  setStatus("Ingresá un nombre para el hogar.", "error");
-  return;
-}
 
 if (
   delivery_slots.length < 1 ||
