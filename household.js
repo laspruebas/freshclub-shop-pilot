@@ -462,10 +462,8 @@ function validateWizard() {
     submitBtn.disabled =
       totalSlots < 1 || totalSlots > 2;
 
-    submitBtn.textContent =
-      totalMembers > 0
-        ? `Confirmar (${totalMembers})`
-        : "Confirmar";
+    submitBtn.textContent = "Confirmar"
+
   }
 }
 
