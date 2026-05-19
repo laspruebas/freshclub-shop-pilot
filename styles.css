@@ -1562,12 +1562,12 @@ body {
 
 .onboarding-slider {
   display: flex;
-  width: 300%;
+  width: 100%;
   transition: transform 300ms ease;
 }
 
 .onboarding-step-panel {
-  width: 100%;
+  min-width: 100%;
   min-height: calc(100vh - 116px);
 
   display: flex;
@@ -1598,7 +1598,8 @@ body {
 
 .onboarding-title {
   margin: 0;
-  font-size: 30px;
+  max-width: 320px;
+  font-size: 22px;
   line-height: 1.08;
   font-weight: 800;
   color: #2D3436;
