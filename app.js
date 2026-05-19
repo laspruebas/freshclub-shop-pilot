@@ -807,7 +807,7 @@ async function submitOrder() {
       `./transitions/transition.html?type=confirmation&days=${encodeURIComponent(
         deliveryDays
       )}&next=${encodeURIComponent(
-        `/report.html?order_id=${orderId}`
+        `/report.html?t=${encodeURIComponent(token)}`
       )}`;
     
   } catch (error) {
