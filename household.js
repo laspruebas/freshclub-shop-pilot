@@ -28,6 +28,9 @@ const statusEl = document.getElementById("status");
 const catalogEl = document.getElementById("household");
 const submitBtn = document.getElementById("submitBtn");
 
+const onboardingLoadingEl =
+  document.getElementById("onboardingLoading");
+
 const onboardingTitleEl = document.getElementById("onboardingTitle");
 
 const householdNameInput =
@@ -522,6 +525,18 @@ async function fetchDeliverySlots() {
   renderDeliverySlots(data.slots || []);
 }
 
+function showOnboardingLoading() {
+  if (onboardingLoadingEl) {
+    onboardingLoadingEl.classList.remove("hidden");
+  }
+}
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 async function submitHouseholdMembers() {
 
 
@@ -573,6 +588,11 @@ if (
   console.log("MEMBERS:", members);
    
   try {
+
+    const loadingStart = Date.now();
+    
+    showOnboardingLoading();
+    
     submitBtn.disabled = true;
     submitBtn.textContent = "Guardando...";
     setStatus("");
@@ -593,8 +613,15 @@ if (
 
     console.log("PEDIDO_URL:", data.pedido_url);
     
-    window.location.href =
-  `transitions/transitions.html?type=onboarding&next=${encodeURIComponent(data.pedido_url)}`;
+    const elapsed =
+      Date.now() - loadingStart;
+    
+    const remaining =
+      Math.max(0, 1200 - elapsed);
+    
+    await wait(remaining);
+    
+    window.location.href = data.pedido_url;
     
     return;
 
