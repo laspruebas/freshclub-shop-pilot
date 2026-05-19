@@ -379,6 +379,7 @@ function goToStep(step) {
 }
 
 function validateWizard() {
+
   const totalMembers =
     getTotalMembers();
 
@@ -388,12 +389,17 @@ function validateWizard() {
   if (householdNextBtn) {
     householdNextBtn.disabled =
       totalMembers < 1;
+
+    householdNextBtn.textContent =
+      totalMembers > 0
+        ? `Siguiente (${totalMembers})`
+        : "Siguiente";
   }
 
   if (submitBtn) {
     submitBtn.disabled =
       totalSlots < 1 || totalSlots > 2;
-  
+
     submitBtn.textContent =
       totalMembers > 0
         ? `Confirmar (${totalMembers})`
