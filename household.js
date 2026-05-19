@@ -249,7 +249,14 @@ deliverySlotsEl.addEventListener("click", (event) => {
 
 householdNextBtn?.addEventListener(
   "click",
-  () => goToStep(1)
+  async () => {
+
+    if (deliverySlots.length === 0) {
+      await fetchDeliverySlots();
+    }
+
+    goToStep(1);
+  }
 );
 
 deliveryBackBtn?.addEventListener(
