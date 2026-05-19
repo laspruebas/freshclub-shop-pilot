@@ -3,44 +3,157 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FRUTI · Hogar</title>
+  <title>FRUTI · Onboarding</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
-<body>
-  <main class="container">
-    <header class="header">
-      <h1>Fruti</h1>
-      <p id="onboardingTitle">Contanos quiénes viven en tu hogar</p>
+
+<body class="onboarding-page">
+  <main class="onboarding-app">
+
+    <header class="onboarding-top">
+      <div class="onboarding-brand">FRUTI</div>
+
+      <div class="onboarding-steps" aria-label="Progreso del onboarding">
+        <div class="onboarding-step-dot active" data-step-indicator="0">
+          <span>1</span>
+          <small>Nombre</small>
+        </div>
+
+        <div class="onboarding-step-dot" data-step-indicator="1">
+          <span>2</span>
+          <small>Hogar</small>
+        </div>
+
+        <div class="onboarding-step-dot" data-step-indicator="2">
+          <span>3</span>
+          <small>Días</small>
+        </div>
+      </div>
     </header>
 
-    <div id="status" class="status"></div>
+    <div id="status" class="status onboarding-status"></div>
 
-    <section class="household-name-section">
-      <label for="householdNameInput">Nombre del hogar</label>
-      <input
-        id="householdNameInput"
-        type="text"
-        placeholder="Ej: Familia Gómez"
-        autocomplete="off"
-      />
-    </section>
-    
-    <section id="household" class="catalog"></section>
+    <section class="onboarding-slider" id="onboardingSlider">
 
-    <section class="delivery-section">
-      <h2>¿Cuándo preferís recibir tu pedido?</h2>
-      <p>Elegí 1 o 2 opciones.</p>
-    
-      <div id="deliverySlots" class="delivery-slots"></div>
-    
-      <div id="deliverySummary" class="delivery-summary"></div>
+      <!-- STEP 1: NOMBRE -->
+      <section class="onboarding-step-panel" data-step="0">
+        <div class="onboarding-content">
+          <p class="onboarding-eyebrow">Empecemos</p>
+
+          <h1 class="onboarding-title">
+            ¿Cómo querés que llamemos a tu hogar?
+          </h1>
+
+          <p class="onboarding-subtitle">
+            Usamos este nombre para personalizar tu experiencia.
+          </p>
+
+          <div class="onboarding-field">
+            <label for="householdNameInput">
+              Nombre del hogar
+            </label>
+
+            <input
+              id="householdNameInput"
+              class="onboarding-input"
+              type="text"
+              placeholder="Ej: Familia Gómez"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div class="onboarding-actions">
+          <button
+            id="nameNextBtn"
+            class="onboarding-primary-btn"
+            type="button"
+            disabled
+          >
+            Siguiente
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 2: HOGAR -->
+      <section class="onboarding-step-panel" data-step="1">
+        <div class="onboarding-content">
+          <p class="onboarding-eyebrow">Tu hogar</p>
+
+          <h1 id="onboardingTitle" class="onboarding-title">
+            ¿Quiénes viven en tu hogar?
+          </h1>
+
+          <p class="onboarding-subtitle">
+            Elegí cuántas personas hay según su edad.
+          </p>
+
+          <section id="household" class="catalog onboarding-household-list"></section>
+        </div>
+
+        <div class="onboarding-actions">
+          <button
+            id="householdNextBtn"
+            class="onboarding-primary-btn"
+            type="button"
+            disabled
+          >
+            Siguiente
+          </button>
+
+          <button
+            id="householdBackBtn"
+            class="onboarding-secondary-btn"
+            type="button"
+          >
+            Volver
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 3: DÍAS Y HORARIOS -->
+      <section class="onboarding-step-panel" data-step="2">
+        <div class="onboarding-content">
+          <p class="onboarding-eyebrow">Días y horarios</p>
+
+          <h1 class="onboarding-title">
+            ¿Cuándo querés recibir tu pedido?
+          </h1>
+
+          <p class="onboarding-subtitle">
+            Elegí hasta 2 días y el horario de cada uno.
+          </p>
+
+          <div id="deliverySlots" class="delivery-slots onboarding-delivery-slots"></div>
+
+          <div id="deliverySummary" class="delivery-summary onboarding-delivery-summary"></div>
+
+          <p class="onboarding-helper">
+            Podés cambiar esto cuando quieras.
+          </p>
+        </div>
+
+        <div class="onboarding-actions">
+          <button
+            id="submitBtn"
+            class="onboarding-primary-btn"
+            type="button"
+            disabled
+          >
+            Confirmar
+          </button>
+
+          <button
+            id="deliveryBackBtn"
+            class="onboarding-secondary-btn"
+            type="button"
+          >
+            Volver
+          </button>
+        </div>
+      </section>
+
     </section>
-    
-    <div class="footer-actions">
-      <button id="submitBtn" class="primary-btn" type="button">
-        Confirmar hogar
-      </button>
-    </div>
   </main>
 
   <script src="./household.js"></script>
