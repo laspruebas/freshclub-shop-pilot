@@ -398,7 +398,7 @@ function goToStep(step) {
   currentStep = step;
 
   onboardingSlider.style.transform =
-    `translateX(-${step * 33.3333}%)`;
+    `translateX(-${step * 100}%)`;
 
   stepIndicators.forEach((indicator, index) => {
     indicator.classList.toggle(
