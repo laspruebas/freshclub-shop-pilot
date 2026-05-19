@@ -597,6 +597,16 @@ if (
     submitBtn.textContent = "Guardando...";
     setStatus("");
 
+    sessionStorage.setItem(
+      "delivery_schedule",
+      JSON.stringify(
+        selectedDeliverySlots.map((slot) => ({
+          day: slot.delivery_day_label.toLowerCase(),
+          window: slot.delivery_window_label.toLowerCase()
+        }))
+      )
+    );
+    
     const response = await fetch(`${API_BASE}/onboarding/complete`, {
       method: "POST",
       headers: {
