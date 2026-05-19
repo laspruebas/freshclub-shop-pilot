@@ -85,3 +85,11 @@
 
   opacity: 0.6;
 }
+
+.transition-accent {
+  background: var(--transition-accent);
+}
+
+.transition-loader span {
+  background: var(--transition-accent);
+}
