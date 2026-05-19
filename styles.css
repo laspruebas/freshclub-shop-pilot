@@ -2012,3 +2012,66 @@ body,
   height: 100dvh;
   overflow: hidden;
 }
+
+/* =========================
+   ONBOARDING LOADING OVERLAY
+========================= */
+
+.onboarding-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  background: #1E3A2F;
+  color: #F0F7EC;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px;
+  text-align: center;
+}
+
+.onboarding-loading.hidden {
+  display: none;
+}
+
+.onboarding-loading-brand {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 48px;
+}
+
+.onboarding-loading-accent {
+  width: 56px;
+  height: 6px;
+  border-radius: 999px;
+  background: #7AB86A;
+  margin-bottom: 48px;
+}
+
+.onboarding-loading h1 {
+  margin: 0;
+  max-width: 640px;
+  font-size: 36px;
+  line-height: 1.08;
+  font-weight: 800;
+}
+
+.onboarding-loading p {
+  margin: 24px 0 0;
+  max-width: 640px;
+  font-size: 17px;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.onboarding-loading-footer {
+  margin-top: 56px;
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0.65;
+}
