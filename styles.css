@@ -1594,7 +1594,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
 
-  padding: 18px 18px 104px;
+  padding: 12px 18px 104px;
 
   flex-shrink: 0;
 }
@@ -1608,7 +1608,7 @@ body {
 }
 
 .onboarding-eyebrow {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -1765,6 +1765,11 @@ body {
 .onboarding-household-list .card {
   padding: 12px 14px;
   border-radius: 16px;
+  min-height: 86px;
+}
+
+.card-top {
+  margin-bottom: 4px;
 }
 
 .onboarding-household-list .card-title {
