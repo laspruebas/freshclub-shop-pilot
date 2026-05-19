@@ -593,7 +593,8 @@ if (
 
     console.log("PEDIDO_URL:", data.pedido_url);
     
-    window.location.href = data.pedido_url;
+    window.location.href =
+  `/transition.html?type=onboarding&next=${encodeURIComponent(data.pedido_url)}`;
     
     return;
 
