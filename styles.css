@@ -1599,7 +1599,7 @@ body {
 
   gap: 18px;
 
-  padding: 12px 18px 104px;
+  padding: 4px 18px 88px;
 
   flex-shrink: 0;
 }
@@ -1690,7 +1690,7 @@ body {
 .onboarding-actions {
   margin-top: auto;
 
-  padding-top: 18px;
+  padding-top: 8px;
 
   display: flex;
   flex-direction: column;
@@ -1811,7 +1811,10 @@ body {
 .onboarding-page .card {
   border: 1px solid #e3eadc;
   border-radius: 16px;
-  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  
+  padding: 8px 12px;
   background: #ffffff;
 
   box-shadow: none;
