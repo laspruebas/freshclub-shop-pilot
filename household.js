@@ -574,8 +574,6 @@ async function initHouseholdPage() {
     await resolveSessionFromToken();
     
     renderAgeGroups(ageGroups);
-
-    await fetchDeliverySlots();
     
     goToStep(0);
 
