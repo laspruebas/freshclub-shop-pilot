@@ -15,68 +15,23 @@
 
       <div class="onboarding-steps" aria-label="Progreso del onboarding">
         <div class="onboarding-step-dot active" data-step-indicator="0">
-          <span>1</span>
-          <small>Nombre</small>
-        </div>
-
-        <div class="onboarding-step-dot" data-step-indicator="1">
-          <span>2</span>
-          <small>Hogar</small>
-        </div>
-
-        <div class="onboarding-step-dot" data-step-indicator="2">
-          <span>3</span>
-          <small>Días</small>
-        </div>
+        <span>1</span>
+        <small>Hogar</small>
+      </div>
+      
+      <div class="onboarding-step-dot" data-step-indicator="1">
+        <span>2</span>
+        <small>Días</small>
+      </div>
       </div>
     </header>
 
     <div id="status" class="status onboarding-status"></div>
 
     <section class="onboarding-slider" id="onboardingSlider">
-
-      <!-- STEP 1: NOMBRE -->
+      
+      <!-- STEP 1: HOGAR -->
       <section class="onboarding-step-panel" data-step="0">
-        <div class="onboarding-content">
-          <p class="onboarding-eyebrow">Empecemos</p>
-
-          <h1 class="onboarding-title">
-            ¿Cómo querés que llamemos a tu hogar?
-          </h1>
-
-          <p class="onboarding-subtitle">
-            Usamos este nombre para personalizar tu experiencia.
-          </p>
-
-          <div class="onboarding-field">
-            <label for="householdNameInput">
-              Nombre del hogar
-            </label>
-
-            <input
-              id="householdNameInput"
-              class="onboarding-input"
-              type="text"
-              placeholder="Ej: Familia Gómez"
-              autocomplete="off"
-            />
-          </div>
-        </div>
-
-        <div class="onboarding-actions">
-          <button
-            id="nameNextBtn"
-            class="onboarding-primary-btn"
-            type="button"
-            disabled
-          >
-            Siguiente
-          </button>
-        </div>
-      </section>
-
-      <!-- STEP 2: HOGAR -->
-      <section class="onboarding-step-panel" data-step="1">
         <div class="onboarding-content">
           <p class="onboarding-eyebrow">Tu hogar</p>
 
@@ -100,19 +55,12 @@
           >
             Siguiente
           </button>
-
-          <button
-            id="householdBackBtn"
-            class="onboarding-secondary-btn"
-            type="button"
-          >
-            Volver
-          </button>
+          
         </div>
       </section>
 
-      <!-- STEP 3: DÍAS Y HORARIOS -->
-      <section class="onboarding-step-panel" data-step="2">
+      <!-- STEP 2: DÍAS Y HORARIOS -->
+      <section class="onboarding-step-panel" data-step="1">
         <div class="onboarding-content">
           <p class="onboarding-eyebrow">Días y horarios</p>
 
