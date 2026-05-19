@@ -1,3 +1,17 @@
+const params = new URLSearchParams(window.location.search);
+
+const type = params.get("type");
+const next = params.get("next");
+
+const transitionTitle =
+  document.getElementById("transitionTitle");
+
+const transitionSubtitle =
+  document.getElementById("transitionSubtitle");
+
+const transitionFooter =
+  document.getElementById("transitionFooter");
+
 const TRANSITIONS = {
 
   onboarding: {
@@ -12,7 +26,9 @@ const TRANSITIONS = {
       "Lo hacemos por vos, estamos eligiendo lo mejor para tu familia.",
 
     footer:
-      "ARMANDO TU PEDIDO..."
+      "ARMANDO TU PEDIDO...",
+
+    duration: 2200
   },
 
   confirmation: {
@@ -27,7 +43,9 @@ const TRANSITIONS = {
       "",
 
     footer:
-      "PREPARANDO TU REPORTE..."
+      "PREPARANDO TU REPORTE...",
+
+    duration: 1400
   },
 
   invite: {
@@ -42,6 +60,40 @@ const TRANSITIONS = {
       "",
 
     footer:
-      "COMPARTIENDO FRUTI..."
+      "COMPARTIENDO FRUTI...",
+
+    duration: 1000
   }
 };
+
+const config =
+  TRANSITIONS[type] ||
+  TRANSITIONS.onboarding;
+
+document.body.style.background =
+  config.background;
+
+document.body.style.color =
+  config.text;
+
+document.documentElement.style.setProperty(
+  "--transition-accent",
+  config.accent
+);
+
+transitionTitle.textContent =
+  config.title;
+
+transitionSubtitle.textContent =
+  config.subtitle;
+
+transitionFooter.textContent =
+  config.footer;
+
+setTimeout(() => {
+
+  if (next) {
+    window.location.href = next;
+  }
+
+}, config.duration);
