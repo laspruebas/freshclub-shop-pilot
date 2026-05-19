@@ -22,6 +22,7 @@ let waName = "";
 let householdName = "";
 let deliverySlots = [];
 let selectedDeliverySlots = [];
+let currentStep = 0;
 
 const statusEl = document.getElementById("status");
 const catalogEl = document.getElementById("household");
@@ -37,6 +38,24 @@ const deliverySlotsEl =
 
 const deliverySummaryEl =
   document.getElementById("deliverySummary");
+
+const onboardingSlider =
+  document.getElementById("onboardingSlider");
+
+const stepIndicators =
+  document.querySelectorAll("[data-step-indicator]");
+
+const nameNextBtn =
+  document.getElementById("nameNextBtn");
+
+const householdNextBtn =
+  document.getElementById("householdNextBtn");
+
+const householdBackBtn =
+  document.getElementById("householdBackBtn");
+
+const deliveryBackBtn =
+  document.getElementById("deliveryBackBtn");
 
 const ageGroups = [
   {
@@ -243,6 +262,31 @@ deliverySlotsEl.addEventListener("click", (event) => {
   toggleDeliverySlot(dayCode, windowCode);
 });
 
+householdNameInput.addEventListener(
+  "input",
+  validateWizard
+);
+
+nameNextBtn?.addEventListener(
+  "click",
+  () => goToStep(1)
+);
+
+householdNextBtn?.addEventListener(
+  "click",
+  () => goToStep(2)
+);
+
+householdBackBtn?.addEventListener(
+  "click",
+  () => goToStep(0)
+);
+
+deliveryBackBtn?.addEventListener(
+  "click",
+  () => goToStep(1)
+);
+
 function renderDeliverySlots(slots) {
   if (!slots || slots.length === 0) {
     deliverySlotsEl.innerHTML = "";
@@ -348,6 +392,48 @@ function toggleDeliverySlot(dayCode, windowCode) {
   }
 
   renderDeliverySlots(deliverySlots);
+}
+
+function goToStep(step) {
+  currentStep = step;
+
+  onboardingSlider.style.transform =
+    `translateX(-${step * 33.3333}%)`;
+
+  stepIndicators.forEach((indicator, index) => {
+    indicator.classList.toggle(
+      "active",
+      index === step
+    );
+  });
+
+  validateWizard();
+}
+
+function validateWizard() {
+  const household_name =
+    householdNameInput.value.trim();
+
+  const totalMembers =
+    getTotalMembers();
+
+  const totalSlots =
+    selectedDeliverySlots.length;
+
+  if (nameNextBtn) {
+    nameNextBtn.disabled =
+      household_name.length < 2;
+  }
+
+  if (householdNextBtn) {
+    householdNextBtn.disabled =
+      totalMembers < 1;
+  }
+
+  if (submitBtn) {
+    submitBtn.disabled =
+      totalSlots < 1 || totalSlots > 2;
+  }
 }
 
 // =====================================================
