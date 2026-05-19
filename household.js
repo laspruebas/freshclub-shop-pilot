@@ -617,7 +617,7 @@ if (
       Date.now() - loadingStart;
     
     const remaining =
-      Math.max(0, 1200 - elapsed);
+      Math.max(0, 700 - elapsed);
     
     await wait(remaining);
     
