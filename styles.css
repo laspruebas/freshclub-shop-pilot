@@ -1898,3 +1898,108 @@ body {
   }
 
 }
+
+/* =========================
+   DELIVERY V2
+========================= */
+
+.delivery-day-card {
+  border: 1px solid #e0e0d8;
+  border-radius: 18px;
+  background: #ffffff;
+
+  overflow: hidden;
+
+  margin-bottom: 12px;
+
+  transition: 200ms ease;
+}
+
+.delivery-day-card.selected {
+  border-color: #4a7c3f;
+}
+
+.delivery-day-header {
+  width: 100%;
+
+  border: none;
+  background: transparent;
+
+  padding: 18px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+}
+
+.delivery-day-label {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.delivery-day-badge {
+  background: #e8f5e2;
+  color: #4a7c3f;
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.delivery-day-slots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+  padding: 0 16px 16px;
+}
+
+.delivery-slot-btn {
+  border: 1px solid #e0e0d8;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  padding: 14px 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: 200ms ease;
+}
+
+.delivery-slot-btn.selected {
+  background: #e8f5e2;
+  border-color: #4a7c3f;
+}
+
+.delivery-slot-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.delivery-slot-btn.selected .delivery-slot-title {
+  color: #2d6a22;
+}
+
+.delivery-slot-range {
+  margin-top: 4px;
+
+  font-size: 11px;
+  color: #aaaaaa;
+}
+
+.delivery-slot-btn.selected .delivery-slot-range {
+  color: #4a7c3f;
+}
