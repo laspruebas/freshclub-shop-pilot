@@ -1610,6 +1610,7 @@ body {
 
 .onboarding-content {
   width: 100%;
+  flex: 1;
 }
 
 .onboarding-eyebrow {
@@ -1878,4 +1879,21 @@ body {
 
 .onboarding-step-panel {
   overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: calc(100vh - 120px);
+}
+
+/* =========================
+   MOBILE SAFE AREA
+========================= */
+
+@media (max-width: 768px) {
+
+  .onboarding-actions {
+    padding-bottom: calc(18px + env(safe-area-inset-bottom));
+  }
+
 }
