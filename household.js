@@ -586,15 +586,20 @@ if (
   console.log("ONBOARDING URL:", window.location.href);
   console.log("PHONE:", phone);
   console.log("MEMBERS:", members);
-   
+     
   try {
-
-    const loadingStart = Date.now();
-    
+  
     showOnboardingLoading();
-    
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Guardando...";
+  
+    requestAnimationFrame(() => {
+  
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Guardando...";
+  
+    });
+  
+    const loadingStart = Date.now();
+  
     setStatus("");
 
     sessionStorage.setItem(
