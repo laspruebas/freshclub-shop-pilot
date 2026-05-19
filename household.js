@@ -393,6 +393,11 @@ function validateWizard() {
   if (submitBtn) {
     submitBtn.disabled =
       totalSlots < 1 || totalSlots > 2;
+  
+    submitBtn.textContent =
+      totalMembers > 0
+        ? `Confirmar (${totalMembers})`
+        : "Confirmar";
   }
 }
 
