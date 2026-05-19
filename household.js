@@ -392,6 +392,7 @@ function toggleDeliverySlot(dayCode, windowCode) {
   }
 
   renderDeliverySlots(deliverySlots);
+  validateWizard();
 }
 
 function goToStep(step) {
