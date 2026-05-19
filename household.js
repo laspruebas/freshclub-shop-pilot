@@ -157,7 +157,7 @@ function changeQty(ageGroup, delta) {
     qtyEl.textContent = `${next}`;
   }
 
-  updateSubmitButton();
+  validateWizard();
 }
 
 function buildMembersPayload() {
