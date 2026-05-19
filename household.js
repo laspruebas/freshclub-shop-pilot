@@ -96,18 +96,6 @@ function getTotalMembers() {
   return Object.values(household).reduce((acc, qty) => acc + qty, 0);
 }
 
-function updateSubmitButton() {
-  const total = getTotalMembers();
-
-  if (total > 0) {
-    submitBtn.textContent = `Confirmar hogar (${total})`;
-    submitBtn.disabled = false;
-  } else {
-    submitBtn.textContent = "Confirmar hogar";
-    submitBtn.disabled = true;
-  }
-}
-
 function changeQty(ageGroup, delta) {
   const current = household[ageGroup] || 0;
   const next = Math.max(0, current + delta);
@@ -478,6 +466,7 @@ async function resolveSessionFromToken() {
   if (householdNameInput && householdName) {
     householdNameInput.value = householdName;
   } 
+  validateWizard();
 }
 
 async function fetchDeliverySlots() {
@@ -583,8 +572,6 @@ if (
     console.error("Error saving household members:", error);
     setStatus("No se pudieron guardar los datos del hogar.", "error");
     submitBtn.disabled = false;
-    submitBtn.textContent = "Confirmar hogar";
-    updateSubmitButton();
   }
 }
 
@@ -612,7 +599,10 @@ async function initHouseholdPage() {
 
     await fetchDeliverySlots();
     
-    updateSubmitButton();
+    goToStep(0);
+
+    validateWizard();
+    
     setStatus("");
   } catch (error) {
     console.error("Error resolving session:", error);
