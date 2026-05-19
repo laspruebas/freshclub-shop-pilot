@@ -427,7 +427,7 @@ function goToStep(step) {
   stepIndicators.forEach((indicator, index) => {
     indicator.classList.toggle(
       "active",
-      index === step
+      index <= step
     );
   });
 
