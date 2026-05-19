@@ -22,6 +22,7 @@ let waName = "";
 let householdName = "";
 let deliverySlots = [];
 let selectedDeliverySlots = [];
+let expandedDeliveryDays = {};
 let currentStep = 0;
 
 const statusEl = document.getElementById("status");
@@ -265,6 +266,7 @@ deliveryBackBtn?.addEventListener(
 );
 
 function renderDeliverySlots(slots) {
+
   if (!slots || slots.length === 0) {
     deliverySlotsEl.innerHTML = "";
     return;
@@ -275,10 +277,12 @@ function renderDeliverySlots(slots) {
   const grouped = {};
 
   slots.forEach((slot) => {
+
     const key = slot.delivery_day_code;
 
     if (!grouped[key]) {
       grouped[key] = {
+        code: slot.delivery_day_code,
         label: slot.delivery_day_label,
         slots: []
       };
@@ -290,15 +294,23 @@ function renderDeliverySlots(slots) {
   deliverySlotsEl.innerHTML = "";
 
   Object.values(grouped).forEach((day) => {
-    const column = document.createElement("div");
-    column.className = "delivery-day-column";
+
+    const selectedSlot =
+      selectedDeliverySlots.find(
+        (s) =>
+          s.delivery_day_code === day.code
+      );
+
+    const expanded =
+      expandedDeliveryDays[day.code] ||
+      !!selectedSlot;
 
     const slotsHtml = day.slots.map((slot) => {
-      const selected = selectedDeliverySlots.some(
-        (s) =>
-          s.delivery_day_code === slot.delivery_day_code &&
-          s.delivery_window_code === slot.delivery_window_code
-      );
+
+      const selected =
+        selectedSlot &&
+        selectedSlot.delivery_window_code ===
+          slot.delivery_window_code;
 
       return `
         <button
@@ -307,19 +319,60 @@ function renderDeliverySlots(slots) {
           data-day="${slot.delivery_day_code}"
           data-window="${slot.delivery_window_code}"
         >
-          ${slot.delivery_window_label}
+          <div class="delivery-slot-title">
+            ${slot.delivery_window_label}
+          </div>
+
+          <div class="delivery-slot-range">
+            ${
+              slot.delivery_window_code === "morning"
+                ? "9 a 13 hs"
+                : "14 a 18 hs"
+            }
+          </div>
         </button>
       `;
     }).join("");
 
-    column.innerHTML = `
-      <div class="delivery-day-title">
-        ${day.label}
-      </div>
+    column = document.createElement("div");
 
-      <div class="delivery-day-slots">
-        ${slotsHtml}
-      </div>
+    column.className =
+      `delivery-day-card ${
+        selectedSlot ? "selected" : ""
+      }`;
+
+    column.innerHTML = `
+      <button
+        type="button"
+        class="delivery-day-header"
+        data-toggle-day="${day.code}"
+      >
+
+        <div class="delivery-day-label">
+          ${day.label}
+        </div>
+
+        ${
+          selectedSlot
+            ? `
+              <div class="delivery-day-badge">
+                ${selectedSlot.delivery_window_label}
+              </div>
+            `
+            : ""
+        }
+
+      </button>
+
+      ${
+        expanded
+          ? `
+            <div class="delivery-day-slots">
+              ${slotsHtml}
+            </div>
+          `
+          : ""
+      }
     `;
 
     deliverySlotsEl.appendChild(column);
@@ -327,7 +380,6 @@ function renderDeliverySlots(slots) {
 
   renderDeliverySummary();
 }
-
 function renderDeliverySummary() {
   if (selectedDeliverySlots.length === 0) {
     deliverySummaryEl.textContent = "";
