@@ -1978,7 +1978,7 @@ body {
 ========================= */
 
 .onboarding-scroll-area {
-  flex: 1;
+  max-height: 420px;
 
   overflow-y: auto;
 
