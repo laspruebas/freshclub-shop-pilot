@@ -22,7 +22,6 @@ let waName = "";
 let householdName = "";
 let deliverySlots = [];
 let selectedDeliverySlots = [];
-let expandedDeliveryDays = {};
 let currentStep = 0;
 
 const statusEl = document.getElementById("status");
@@ -237,22 +236,6 @@ catalogEl.addEventListener("click", (event) => {
 
 deliverySlotsEl.addEventListener("click", (event) => {
 
-  const dayToggle =
-    event.target.closest("[data-toggle-day]");
-
-  if (dayToggle) {
-
-    const dayCode =
-      dayToggle.dataset.toggleDay;
-
-    expandedDeliveryDays[dayCode] =
-      !expandedDeliveryDays[dayCode];
-
-    renderDeliverySlots(deliverySlots);
-
-    return;
-  }
-
   const button =
     event.target.closest(".delivery-slot-btn");
 
@@ -319,10 +302,6 @@ function renderDeliverySlots(slots) {
           s.delivery_day_code === day.code
       );
 
-    const expanded =
-      expandedDeliveryDays[day.code] ||
-      !!selectedSlot;
-
     const slotsHtml = day.slots.map((slot) => {
 
       const selected =
@@ -337,6 +316,7 @@ function renderDeliverySlots(slots) {
           data-day="${slot.delivery_day_code}"
           data-window="${slot.delivery_window_code}"
         >
+
           <div class="delivery-slot-title">
             ${slot.delivery_window_label}
           </div>
@@ -348,56 +328,49 @@ function renderDeliverySlots(slots) {
                 : "14 a 18 hs"
             }
           </div>
+
         </button>
       `;
     }).join("");
 
-    column = document.createElement("div");
+    const badgeHtml =
+      selectedSlot
+        ? `
+          <div class="delivery-day-badge">
+            ${selectedSlot.delivery_window_label}
+          </div>
+        `
+        : "";
 
-    column.className =
-      `delivery-day-card ${
+    const row = document.createElement("div");
+
+    row.className =
+      `delivery-day-row ${
         selectedSlot ? "selected" : ""
       }`;
 
-    column.innerHTML = `
-      <button
-        type="button"
-        class="delivery-day-header"
-        data-toggle-day="${day.code}"
-      >
+    row.innerHTML = `
+      <div class="delivery-day-top">
 
         <div class="delivery-day-label">
           ${day.label}
         </div>
 
-        ${
-          selectedSlot
-            ? `
-              <div class="delivery-day-badge">
-                ${selectedSlot.delivery_window_label}
-              </div>
-            `
-            : ""
-        }
+        ${badgeHtml}
 
-      </button>
+      </div>
 
-      ${
-        expanded
-          ? `
-            <div class="delivery-day-slots">
-              ${slotsHtml}
-            </div>
-          `
-          : ""
-      }
+      <div class="delivery-day-slots">
+        ${slotsHtml}
+      </div>
     `;
 
-    deliverySlotsEl.appendChild(column);
+    deliverySlotsEl.appendChild(row);
   });
 
   renderDeliverySummary();
 }
+
 function renderDeliverySummary() {
   if (selectedDeliverySlots.length === 0) {
     deliverySummaryEl.textContent = "";
