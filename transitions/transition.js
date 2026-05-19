@@ -3,6 +3,13 @@ const params = new URLSearchParams(window.location.search);
 const type = params.get("type");
 const next = params.get("next");
 
+const deliveryDays =
+  JSON.parse(
+    decodeURIComponent(
+      params.get("days") || "[]"
+    )
+  );
+
 const transitionTitle =
   document.getElementById("transitionTitle");
 
@@ -35,17 +42,13 @@ const TRANSITIONS = {
     background: "#F5F0E8",
     text: "#2C2C2A",
     accent: "#A0845C",
-
-    title:
-      "Listo. Hasta el miércoles no pensás más en frutas y verduras.",
-
-    subtitle:
-      "",
-
+  
+    title: "",
+  
+    subtitle: "",
+  
     footer:
-      "PREPARANDO TU REPORTE...",
-
-    duration: 1400
+      "PREPARANDO TU REPORTE..."
   },
 
   invite: {
@@ -66,6 +69,60 @@ const TRANSITIONS = {
   }
 };
 
+function getNextDeliveryLabel(days) {
+
+  if (!days?.length) {
+    return "Hasta tu próximo pedido";
+  }
+
+  const normalized =
+    days.map((d) => d.toLowerCase());
+
+  const orderedDays = [
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes"
+  ];
+
+  const todayIndex =
+    new Date().getDay();
+
+  const jsToFruti = {
+    1: "lunes",
+    2: "martes",
+    3: "miércoles",
+    4: "jueves",
+    5: "viernes"
+  };
+
+  const today =
+    jsToFruti[todayIndex];
+
+  if (normalized.length === 1) {
+    return `Hasta el ${normalized[0]} que viene`;
+  }
+
+  const currentIndex =
+    orderedDays.indexOf(today);
+
+  const futureDays =
+    normalized
+      .map((d) => ({
+        day: d,
+        index: orderedDays.indexOf(d)
+      }))
+      .filter((d) => d.index > currentIndex)
+      .sort((a, b) => a.index - b.index);
+
+  if (futureDays.length) {
+    return `Hasta el ${futureDays[0].day}`;
+  }
+
+  return `Hasta el ${normalized[0]}`;
+}
+
 const config =
   TRANSITIONS[type] ||
   TRANSITIONS.onboarding;
@@ -81,8 +138,16 @@ document.documentElement.style.setProperty(
   config.accent
 );
 
-transitionTitle.textContent =
-  config.title;
+if (type === "confirmation") {
+
+  transitionTitle.textContent =
+    `Listo. ${getNextDeliveryLabel(deliveryDays)} no pensás más en frutas y verduras.`;
+
+} else {
+
+  transitionTitle.textContent =
+    config.title;
+}
 
 transitionSubtitle.textContent =
   config.subtitle;
