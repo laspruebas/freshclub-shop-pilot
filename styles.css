@@ -2075,3 +2075,80 @@ body,
   font-weight: 700;
   opacity: 0.65;
 }
+/* =========================
+   PEDIDO LOADING
+========================= */
+
+.pedido-loading {
+  position: fixed;
+  inset: 0;
+
+  z-index: 9999;
+
+  background: #1E3A2F;
+  color: #F0F7EC;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px;
+
+  text-align: center;
+
+  transition:
+    opacity 400ms ease,
+    visibility 400ms ease;
+}
+
+.pedido-loading.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pedido-loading-brand {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+
+  margin-bottom: 48px;
+}
+
+.pedido-loading-accent {
+  width: 56px;
+  height: 6px;
+
+  border-radius: 999px;
+
+  background: #7AB86A;
+
+  margin-bottom: 48px;
+}
+
+.pedido-loading h1 {
+  margin: 0;
+
+  font-size: 40px;
+  line-height: 1.08;
+  font-weight: 800;
+}
+
+.pedido-loading p {
+  margin: 24px 0 0;
+
+  font-size: 18px;
+  line-height: 1.5;
+
+  opacity: 0.8;
+}
+
+.pedido-loading-footer {
+  margin-top: 56px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  opacity: 0.65;
+}
