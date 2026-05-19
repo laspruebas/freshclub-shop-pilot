@@ -1978,9 +1978,25 @@ body {
 ========================= */
 
 .onboarding-scroll-area {
-  max-height: 420px;
+  max-height: calc(100dvh - 360px);
 
   overflow-y: auto;
 
   padding-bottom: 20px;
+}
+
+/* =========================
+   ONBOARDING FIXED VIEWPORT
+========================= */
+
+html,
+body,
+.onboarding-page {
+  height: 100%;
+  overflow: hidden;
+}
+
+.onboarding-app {
+  height: 100dvh;
+  overflow: hidden;
 }
