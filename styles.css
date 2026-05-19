@@ -1466,7 +1466,6 @@ body {
   margin: 0 auto;
   background: #f8faf5;
   position: relative;
-  overflow: hidden;
 }
 
 /* =========================
@@ -1863,28 +1862,6 @@ body {
 
 .onboarding-page .qty-row {
   margin-top: 8px;
-}
-
-/* =========================
-   ONBOARDING SCROLL FIX
-========================= */
-
-.onboarding-page {
-  overflow: hidden;
-}
-
-.onboarding-app {
-  height: 100vh;
-  overflow: hidden;
-}
-
-.onboarding-step-panel {
-  overflow-y: auto;
-
-  display: flex;
-  flex-direction: column;
-
-  min-height: calc(100vh - 120px);
 }
 
 /* =========================
