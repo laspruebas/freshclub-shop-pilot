@@ -1811,10 +1811,8 @@ body {
 .onboarding-page .card {
   border: 1px solid #e3eadc;
   border-radius: 16px;
-  display: flex;
-  align-items: center;
   
-  padding: 8px 12px;
+  padding: 10px 12px;
   background: #ffffff;
 
   box-shadow: none;
