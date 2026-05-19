@@ -1903,35 +1903,29 @@ body {
    DELIVERY V2
 ========================= */
 
-.delivery-day-card {
+.delivery-day-row {
   border: 1px solid #e0e0d8;
   border-radius: 18px;
+
   background: #ffffff;
 
-  overflow: hidden;
+  padding: 14px;
 
   margin-bottom: 12px;
 
   transition: 200ms ease;
 }
 
-.delivery-day-card.selected {
+.delivery-day-row.selected {
   border-color: #4a7c3f;
 }
 
-.delivery-day-header {
-  width: 100%;
-
-  border: none;
-  background: transparent;
-
-  padding: 18px 16px;
-
+.delivery-day-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  cursor: pointer;
+  margin-bottom: 12px;
 }
 
 .delivery-day-label {
@@ -1957,8 +1951,6 @@ body {
   grid-template-columns: 1fr 1fr;
 
   gap: 10px;
-
-  padding: 0 16px 16px;
 }
 
 .delivery-slot-btn {
@@ -1967,15 +1959,15 @@ body {
 
   background: #ffffff;
 
-  padding: 14px 10px;
+  padding: 12px 8px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  cursor: pointer;
-
   transition: 200ms ease;
+
+  cursor: pointer;
 }
 
 .delivery-slot-btn.selected {
