@@ -45,6 +45,9 @@ const manualSearchResultsEl = document.getElementById("manualSearchResults");
 const submitBtn = document.getElementById("submitBtn");
 const subtitleEl = document.getElementById("subtitle");
 
+const pedidoLoadingEl =
+  document.getElementById("pedidoLoading");
+
 let orderState = [];
 let extraProducts = [];
 let manualSearchResults = [];
@@ -349,7 +352,6 @@ async function resolveSessionFromToken() {
 
 async function loadInitialOrder() {
   try {
-    setStatus("Armando tu pedido sugerido...");
 
     let items = [];
     let source = "ai";
@@ -892,8 +894,17 @@ async function initApp() {
     }
 
     setStatus(`Hogar detectado: ${householdId}`);
-    await loadInitialOrder();
-    await loadExtras();
+    await Promise.all([
+      loadInitialOrder(),
+      loadExtras()
+    ]);
+    
+    setTimeout(() => {
+    
+      pedidoLoadingEl?.classList.add("hidden");
+    
+    }, 300);
+    
   } catch (error) {
     console.error("Error resolving session:", error);
     setStatus("No se pudo validar la sesión del pedido.", "error");
