@@ -1878,3 +1878,20 @@ body {
 .onboarding-page .qty-row {
   margin-top: 8px;
 }
+
+/* =========================
+   ONBOARDING SCROLL FIX
+========================= */
+
+.onboarding-page {
+  overflow: hidden;
+}
+
+.onboarding-app {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.onboarding-step-panel {
+  overflow-y: auto;
+}
