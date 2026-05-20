@@ -95,15 +95,12 @@ function escapeHtml(text) {
 }
 
 function handleImageError(img) {
-  console.warn(
-    "FRUTI image failed:",
-    img.dataset.productId,
-    img.dataset.productName,
-    img.src
-  );
 
-  img.removeAttribute("src");
-  img.classList.add("product-img-fallback");
+  if (!img) return;
+
+  img.onerror = null;
+
+  img.style.visibility = "hidden";
 }
 
 // =====================================================
