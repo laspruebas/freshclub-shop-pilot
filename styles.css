@@ -1465,9 +1465,9 @@ body {
   flex-direction: column;
   justify-content: flex-start;
 
-  gap: 18px;
+  gap: 12px;
 
-  padding: 4px 18px 88px;
+  padding: 4px 18px 72px;
 
   flex-shrink: 0;
 }
@@ -1622,7 +1622,7 @@ body {
 ========================= */
 
 .onboarding-household-list {
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .onboarding-household-list .card {
