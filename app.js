@@ -478,7 +478,7 @@ const actionsHtml = `
   <div class="dashboard-actions">
     ${referralWhatsappUrl ? `
       <a href="${escapeHtml(referralWhatsappUrl)}" class="dashboard-btn dashboard-btn-primary">
-        Invitar un amigo/a
+        Invitar un amigo
       </a>
     ` : ""}
 
