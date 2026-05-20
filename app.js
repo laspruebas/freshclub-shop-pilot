@@ -793,22 +793,27 @@ async function submitOrder() {
       throw new Error("Order created without order_id");
     }
 
+   reportLoadingTitleEl.textContent =
+      getNextDeliveryMessage();
+    
+    reportLoadingEl.classList.remove("hidden");
+    
     submitBtn.disabled = true;
-    submitBtn.textContent = "Preparando reporte...";
     
-    const deliveryDays =
-      JSON.stringify(
-        JSON.parse(
-          sessionStorage.getItem("delivery_schedule") || "[]"
-        ).map((s) => s.day)
-      );
+    const dashboardData =
+      await loadOrderDashboard(orderId);
     
-    window.location.href =
-      `./transitions/transition.html?type=confirmation&days=${encodeURIComponent(
-        deliveryDays
-      )}&next=${encodeURIComponent(
-        `/report.html?t=${encodeURIComponent(token)}`
-      )}`;
+    renderDashboardFromApi(
+      dashboardData,
+      orderId
+    );
+    
+    setTimeout(() => {
+    
+      reportLoadingEl.classList.add("hidden");
+    
+    }, 400);
+
     
   } catch (error) {
     console.error("Error creating order:", error);
