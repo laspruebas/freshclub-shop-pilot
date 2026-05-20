@@ -12,17 +12,11 @@ if (referralCode) {
 }
 
 const startInviteBtn = document.getElementById("startInviteBtn");
-const inviteRefLabel = document.getElementById("inviteRefLabel");
-
-if (inviteRefLabel) {
-  inviteRefLabel.textContent = referralCode
-    ? `Código de invitación: ${referralCode}`
-    : "";
-}
 
 startInviteBtn?.addEventListener("click", () => {
+
   const message = referralCode
-    ? `Hola, quiero sumarme a FRUTI con este código de invitación: ${referralCode}`
+    ? `Hola, quiero sumarme a FRUTI con el código ${referralCode}`
     : "Hola, quiero sumarme a FRUTI";
 
   window.location.href =
