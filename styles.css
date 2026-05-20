@@ -2157,6 +2157,61 @@ body {
 }
 
 /* =========================
+   LOADING PROGRESS
+========================= */
+
+.loading-progress {
+  position: relative;
+
+  width: 180px;
+  height: 4px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.14);
+
+  margin-bottom: 44px;
+}
+
+.report-loading .loading-progress {
+  background:
+    rgba(160,132,92,0.14);
+}
+
+.loading-progress-bar {
+  position: absolute;
+  inset: 0;
+
+  width: 40%;
+
+  border-radius: 999px;
+
+  background: #7AB86A;
+
+  animation:
+    indeterminate 1.5s ease-in-out infinite;
+}
+
+.report-loading .loading-progress-bar {
+  background: #A0845C;
+}
+
+@keyframes indeterminate {
+
+  0% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+
+/* =========================
    ONBOARDING FADE IN
 ========================= */
 @keyframes onboardingFadeIn {
