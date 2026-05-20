@@ -28,9 +28,6 @@ const statusEl = document.getElementById("status");
 const catalogEl = document.getElementById("household");
 const submitBtn = document.getElementById("submitBtn");
 
-const onboardingLoadingEl =
-  document.getElementById("onboardingLoading");
-
 const onboardingTitleEl = document.getElementById("onboardingTitle");
 
 const householdNameInput =
@@ -525,18 +522,6 @@ async function fetchDeliverySlots() {
   renderDeliverySlots(data.slots || []);
 }
 
-function showOnboardingLoading() {
-  if (onboardingLoadingEl) {
-    onboardingLoadingEl.classList.remove("hidden");
-  }
-}
-
-function wait(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 async function submitHouseholdMembers() {
 
 
@@ -588,15 +573,8 @@ if (
   console.log("MEMBERS:", members);
      
   try {
-  
-    showOnboardingLoading();
 
-    await new Promise(requestAnimationFrame);
-    
     submitBtn.disabled = true;
-  
-    const loadingStart = Date.now();
-  
     setStatus("");
 
     sessionStorage.setItem(
@@ -624,14 +602,6 @@ if (
     const data = await response.json();
 
     console.log("PEDIDO_URL:", data.pedido_url);
-    
-    const elapsed =
-      Date.now() - loadingStart;
-    
-    const remaining =
-      Math.max(0, 700 - elapsed);
-    
-    await wait(remaining);
     
     window.location.href = data.pedido_url;
     
