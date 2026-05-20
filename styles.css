@@ -2173,3 +2173,68 @@ body,
     transform: scale(1);
   }
 }
+
+/* =========================
+   REPORT LOADING
+========================= */
+
+.report-loading {
+  position: fixed;
+  inset: 0;
+
+  z-index: 10000;
+
+  background: #F5F0E8;
+  color: #2C2C2A;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px;
+
+  text-align: center;
+
+  opacity: 1;
+
+  transition:
+    opacity 400ms ease,
+    visibility 400ms ease;
+}
+
+.report-loading.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.report-loading-accent {
+  width: 56px;
+  height: 6px;
+
+  border-radius: 999px;
+
+  background: #A0845C;
+
+  margin-bottom: 48px;
+}
+
+.report-loading h1 {
+  margin: 0;
+
+  max-width: 760px;
+
+  font-size: 40px;
+  line-height: 1.08;
+  font-weight: 800;
+}
+
+.report-loading-footer {
+  margin-top: 56px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  opacity: 0.65;
+}
