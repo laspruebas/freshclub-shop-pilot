@@ -1457,6 +1457,8 @@ body {
   max-width: 100%;
 
   overflow-x: hidden;
+  overflow-y: auto;
+  
   box-sizing: border-box;
 
   min-height: calc(100dvh - 116px);
