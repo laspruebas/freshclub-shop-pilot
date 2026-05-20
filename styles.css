@@ -1483,7 +1483,6 @@ body {
   width: 100%;
   flex: 1;
 
-  overflow-y: auto;
   min-height: 0;
 }
 
@@ -1629,6 +1628,12 @@ body {
 
 .onboarding-household-list {
   margin-top: 12px;
+    
+  overflow-y: auto;
+
+  min-height: 0;
+
+  max-height: calc(100dvh - 360px);
 }
 
 .onboarding-household-list .card {
