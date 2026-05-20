@@ -590,13 +590,10 @@ if (
   try {
   
     showOnboardingLoading();
-  
-    requestAnimationFrame(() => {
-  
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Guardando...";
-  
-    });
+
+    await new Promise(requestAnimationFrame);
+    
+    submitBtn.disabled = true;
   
     const loadingStart = Date.now();
   
