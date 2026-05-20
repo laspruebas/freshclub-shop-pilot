@@ -1311,143 +1311,6 @@ body {
   color: #2D3436;
 }
 
-/* =========================
-   INVITE PAGE - FRUTI
-========================= */
-
-.invite-page {
-  background: #f4f7f2;
-  color: #2D3436;
-}
-
-.invite-page .app {
-  max-width: 480px;
-  background: #f8faf5;
-  min-height: 100vh;
-}
-
-.invite-header {
-  background: linear-gradient(180deg, #ffffff 0%, #f8faf5 100%);
-  border-bottom: 1px solid #e5eadf;
-  padding: 18px 18px 16px;
-}
-
-.invite-page .brand {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #4d7c32;
-  line-height: 1;
-  margin-bottom: 10px;
-}
-
-.invite-title {
-  margin: 0;
-  max-width: 390px;
-  font-size: 25px;
-  line-height: 1.12;
-  font-weight: 800;
-  color: #2D3436;
-}
-
-.invite-subtitle {
-  margin: 8px 0 0;
-  max-width: 390px;
-  font-size: 14px;
-  line-height: 1.4;
-  font-weight: 600;
-  color: #66735e;
-}
-
-.invite-main {
-  padding: 16px 14px 24px;
-}
-
-.invite-card {
-  background: #ffffff;
-  border: 1px solid #e3eadc;
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: 0 8px 22px rgba(38, 71, 24, 0.06);
-}
-
-.invite-eyebrow {
-  font-size: 13px;
-  font-weight: 800;
-  color: #4CAF50;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.invite-card h2 {
-  margin: 10px 0 8px;
-  font-size: 22px;
-  line-height: 1.15;
-  color: #2D3436;
-}
-
-.invite-card p {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.45;
-  color: #66735e;
-}
-
-.invite-benefits {
-  display: grid;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.invite-benefit {
-  border: 1px solid #edf1e8;
-  border-radius: 14px;
-  padding: 12px;
-  background: #fbfcf8;
-}
-
-.invite-benefit strong {
-  display: block;
-  font-size: 14px;
-  color: #2D3436;
-  margin-bottom: 4px;
-}
-
-.invite-benefit span {
-  display: block;
-  font-size: 13px;
-  line-height: 1.35;
-  color: #66735e;
-  font-weight: 600;
-}
-
-.invite-btn {
-  width: 100%;
-  min-height: 48px;
-  margin-top: 18px;
-  border: none;
-  border-radius: 12px;
-  background: #4CAF50;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.30);
-}
-
-.invite-btn:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.25);
-}
-
-.invite-ref {
-  margin-top: 12px !important;
-  font-size: 12px !important;
-  color: #8a9583 !important;
-  text-align: center;
-}
-
 
 /* =========================
    ONBOARDING V2
@@ -2265,4 +2128,165 @@ body {
   font-weight: 700;
 
   opacity: 0.65;
+}
+
+/* =========================
+   INVITE LANDING V2
+========================= */
+
+.invite-page {
+  margin: 0;
+  background: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.invite-layout {
+  max-width: 480px;
+  min-height: 100vh;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.invite-hero {
+  background: #1E3A2F;
+
+  padding:
+    44px
+    24px
+    40px;
+}
+
+.invite-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: #7AB86A;
+
+  margin-bottom: 16px;
+}
+
+.invite-title {
+  margin: 0;
+
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 500;
+
+  color: #F0F7EC;
+
+  margin-bottom: 14px;
+}
+
+.invite-subtitle {
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.65;
+  font-weight: 400;
+
+  color: rgba(240,247,236,0.6);
+}
+
+/* =========================
+   BODY
+========================= */
+
+.invite-body {
+  flex: 1;
+
+  background: #ffffff;
+
+  padding:
+    32px
+    24px
+    36px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.invite-impact {
+  margin-bottom: 36px;
+}
+
+.impact-line {
+  line-height: 1.35;
+}
+
+.impact-line-1 {
+  font-size: 22px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.impact-line-2 {
+  margin-top: 2px;
+
+  font-size: 22px;
+  font-weight: 500;
+  color: #4a7c3f;
+}
+
+.impact-line-3 {
+  margin-top: 2px;
+
+  font-size: 18px;
+  font-weight: 400;
+  color: #888888;
+}
+
+.invite-divider {
+  width: 32px;
+  height: 2px;
+
+  background: #7AB86A;
+
+  border-radius: 2px;
+
+  margin: 20px 0;
+}
+
+.invite-btn {
+  width: 100%;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #4a7c3f;
+  color: #ffffff;
+
+  padding: 17px;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  margin-top: auto;
+
+  cursor: pointer;
+}
+
+.invite-btn:active {
+  transform: translateY(1px);
+}
+
+.invite-footnote {
+  margin:
+    12px
+    0
+    0;
+
+  font-size: 12px;
+  color: #bbbbbb;
+
+  text-align: center;
 }
