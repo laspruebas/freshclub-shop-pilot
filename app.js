@@ -568,14 +568,6 @@ const actionsHtml = `
       text-align:left;
     ">
 
-      <div style="font-size:22px;font-weight:700;margin-bottom:8px;">
-        ${header.title}
-      </div>
-
-      <div style="margin-bottom:10px;color:#4b5563;">
-        ${header.subtitle}
-      </div>
-
       <div style="margin-top:20px;font-weight:700;font-size:17px;">
         ${message1.title}
       </div>
