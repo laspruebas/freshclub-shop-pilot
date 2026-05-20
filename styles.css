@@ -2051,8 +2051,8 @@ body {
 .onboarding-loading p {
   margin: 24px 0 0;
   max-width: 640px;
-  font-size: 17px;
-  line-height: 1.5;
+  font-size: 23px;
+  line-height: 1.45;
   opacity: 0.8;
 }
 
