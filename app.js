@@ -44,6 +44,7 @@ const manualSearchResultsEl = document.getElementById("manualSearchResults");
 
 const submitBtn = document.getElementById("submitBtn");
 const subtitleEl = document.getElementById("subtitle");
+const headerEl = document.getElementById("header");
 
 const pedidoLoadingEl =
   document.getElementById("pedidoLoading");
@@ -443,6 +444,9 @@ async function loadOrderDashboard(orderId) {
 }
 
 function renderDashboardFromApi(response, orderId) {
+  
+  headerEl.style.display = "none";
+  
   console.log("renderDashboardFromApi response", response);
 
   const dash = response.dash_v1;
