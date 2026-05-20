@@ -861,7 +861,7 @@ async function submitOrder() {
     
     submitBtn.disabled = true;
 
-    catalogEl.style.display = "none";
+    orderListEl.innerHTML = "";
     
     if (extrasBlockEl) {
       extrasBlockEl.style.display = "none";
