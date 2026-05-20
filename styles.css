@@ -812,38 +812,6 @@ body {
 }
 
 /* =========================
-   REPORTE - ENCABEZADO
-========================= */
-
-.report-page .brand {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #4d7c32;
-  line-height: 1;
-  margin-bottom: 10px;
-}
-
-.report-page .pedido-title {
-  margin: 0;
-  max-width: 390px;
-  font-size: 24px;
-  line-height: 1.12;
-  font-weight: 800;
-  color: #152312;
-}
-
-.report-page .subtitle {
-  margin: 8px 0 0;
-  max-width: 390px;
-  font-size: 14px;
-  line-height: 1.35;
-  font-weight: 600;
-  color: #66735e;
-}
-
-/* =========================
    DASHBOARD - ACTIONS
 ========================= */
 
