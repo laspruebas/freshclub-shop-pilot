@@ -2125,8 +2125,8 @@ body {
 .pedido-loading p {
   margin: 24px 0 0;
 
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: 23px;
+  line-height: 1.45;
 
   opacity: 0.8;
 }
