@@ -48,6 +48,12 @@ const subtitleEl = document.getElementById("subtitle");
 const pedidoLoadingEl =
   document.getElementById("pedidoLoading");
 
+const reportLoadingEl =
+  document.getElementById("reportLoading");
+
+const reportLoadingTitleEl =
+  document.getElementById("reportLoadingTitle");
+
 let orderState = [];
 let extraProducts = [];
 let manualSearchResults = [];
@@ -745,6 +751,57 @@ manualSearchResultsEl?.addEventListener("click", (event) => {
   renderManualSearchResults();
 });
 
+function getNextDeliveryMessage() {
+
+  const schedule =
+    JSON.parse(
+      sessionStorage.getItem("delivery_schedule") || "[]"
+    );
+
+  const days =
+    schedule.map((s) => s.day);
+
+  if (!days.length) {
+    return "Listo. Tu pedido ya está en camino.";
+  }
+
+  if (days.length === 1) {
+    return `Listo. Hasta el ${days[0]} que viene no pensás más en frutas y verduras.`;
+  }
+
+  const orderedDays = [
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes"
+  ];
+
+  const today =
+    new Date()
+      .toLocaleDateString("es-AR", {
+        weekday: "long"
+      })
+      .toLowerCase();
+
+  const currentIndex =
+    orderedDays.indexOf(today);
+
+  const future =
+    days
+      .map((d) => ({
+        day: d,
+        index: orderedDays.indexOf(d)
+      }))
+      .filter((d) => d.index > currentIndex)
+      .sort((a, b) => a.index - b.index);
+
+  const nextDay =
+    future[0]?.day || days[0];
+
+  return `Listo. Hasta el ${nextDay} no pensás más en frutas y verduras.`;
+}
+
 async function submitOrder() {
   if (!householdId) {
     setStatus("Falta household_id en la URL.", "error");
@@ -770,8 +827,12 @@ async function submitOrder() {
   };
 
   try {
+    reportLoadingTitleEl.textContent =
+      getNextDeliveryMessage();
+    
+    reportLoadingEl.classList.remove("hidden");
+    
     submitBtn.disabled = true;
-    submitBtn.textContent = "Enviando...";
 
     const response = await fetch(`${API_BASE}/pilot/orders`, {
       method: "POST",
