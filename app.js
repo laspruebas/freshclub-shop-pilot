@@ -538,9 +538,26 @@ const actionsHtml = `
 
   
   orderListEl.innerHTML = `
+
+    <header class="report-header">
+    
+      <div class="brand">
+        TU REPORTE FRUTI
+      </div>
+    
+      <h1 class="pedido-title">
+        ${header.title}
+      </h1>
+    
+      <p class="subtitle">
+        ${header.subtitle}
+      </p>
+    
+    </header>
+  
     <div class="empty" style="
       max-width:720px;
-      margin:24px auto;
+      margin:14px auto 24px;
       background:#fff;
       border:1px solid #e8e8e8;
       border-radius:16px;
