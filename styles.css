@@ -1452,7 +1452,13 @@ body {
 }
 
 .onboarding-step-panel {
+  width: 100%;
   min-width: 100%;
+  max-width: 100%;
+
+  overflow-x: hidden;
+  box-sizing: border-box;
+
   min-height: calc(100vh - 116px);
 
   display: flex;
