@@ -860,6 +860,18 @@ async function submitOrder() {
     reportLoadingEl.classList.remove("hidden");
     
     submitBtn.disabled = true;
+
+    catalogEl.style.display = "none";
+    
+    if (extrasBlockEl) {
+      extrasBlockEl.style.display = "none";
+    }
+    
+    if (manualSearchBlockEl) {
+      manualSearchBlockEl.style.display = "none";
+    }
+    
+    submitBtn.style.display = "none";
     
     const dashboardData =
       await loadOrderDashboard(orderId);
