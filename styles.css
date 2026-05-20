@@ -2207,6 +2207,14 @@ body {
   pointer-events: none;
 }
 
+.report-loading-brand {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+
+  margin-bottom: 48px;
+}
+
 .report-loading-accent {
   width: 56px;
   height: 6px;
