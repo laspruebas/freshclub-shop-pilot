@@ -1446,8 +1446,10 @@ body {
   display: flex;
   width: 100%;
 
+  height: calc(100dvh - 116px);
+
   margin-top: -4px;
-  
+
   transition: transform 300ms ease;
 }
 
