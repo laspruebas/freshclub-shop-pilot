@@ -1458,8 +1458,7 @@ body {
   min-width: 100%;
   max-width: 100%;
 
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   
   box-sizing: border-box;
 
@@ -1483,6 +1482,9 @@ body {
 .onboarding-content {
   width: 100%;
   flex: 1;
+
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .onboarding-eyebrow {
