@@ -1459,7 +1459,7 @@ body {
   overflow-x: hidden;
   box-sizing: border-box;
 
-  min-height: calc(100vh - 116px);
+  min-height: calc(100dvh - 116px);
 
   display: flex;
   flex-direction: column;
