@@ -462,11 +462,11 @@ const whatsappReturnUrl =
   response?.actions?.whatsapp_return_url || "https://wa.me/14155238886";
 
 const referralShareText = referralInviteUrl
-  ? `Sumate a FRUTI 🍎🥦
+  ? `🥦 Te invitan a comer mejor sin perder tiempo 🍎
 
-Te ayuda a armar un pedido de frutas y verduras pensado para tu hogar.
+Frutas y verduras frescas para tu familia cada semana, desde donde estés.
 
-Usá este link:
+Empezá acá 👇
 ${referralInviteUrl}`
   : "";
 
