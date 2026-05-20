@@ -2001,14 +2001,12 @@ body {
    ONBOARDING FIXED VIEWPORT
 ========================= */
 
-html,
-body,
 .onboarding-page {
   height: 100%;
   overflow: hidden;
 }
 
-.onboarding-app {
+.onboarding-page .onboarding-app {
   height: 100dvh;
   overflow: hidden;
 }
