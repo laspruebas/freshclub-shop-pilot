@@ -474,9 +474,9 @@ function renderDashboardFromApi(response, orderId) {
     .join("");
 
   const referralShareText = referralInviteUrl
-    ? `Hola, quiero invitarte a FRUTI, un nuevo hábito para tu hogar.
-    Un pedido y te olvidás de las frutas y verduras de la semana.
-    Empezá acá: 
+    ? `Hola, quiero invitarte a FRUTI, un nuevo hábito para tu hogar.\n\n"
+    Te resuelven la compra semanal de frutas y verduras frescas.\n\n"
+    Podes empezar acá 👇
     ${referralInviteUrl}`
     : "";
 
