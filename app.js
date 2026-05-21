@@ -772,7 +772,7 @@ function getNextDeliveryMessage() {
     schedule.map((s) => s.day);
 
   if (!days.length) {
-    return "Listo. Tu pedido ya está en camino.";
+    return "Listo. Ahora a olvidarte de las frutas y verduras.";
   }
 
   if (days.length === 1) {
