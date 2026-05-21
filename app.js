@@ -506,6 +506,8 @@ function renderDashboardFromApi(response, orderId) {
         ${message1.subtitle ? `
           <div class="post-report-muted">
             ${escapeHtml(message1.subtitle)}
+            <br><br>
+            La OMS recomienda al menos 5 porciones de frutas y verduras por día para una alimentación equilibrada.
           </div>
         ` : ""}
       </section>
