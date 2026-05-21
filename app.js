@@ -444,217 +444,161 @@ async function loadOrderDashboard(orderId) {
 }
 
 function renderDashboardFromApi(response, orderId) {
-  
   headerEl.style.display = "none";
-  
-  console.log("renderDashboardFromApi response", response);
 
-  const dash = response.dash_v1;
-  console.log("dash", dash);
+  const dash = response?.dash_v1 || {};
 
-  const header = dash.header;
-  const message1 = dash.message_1;
-  const message2 = dash.message_2;
-  const message3 = dash.message_3;
-  const moreInfo = dash.more_info;
-  const footer = dash.footer;
-  
+  const header = dash.header || {};
+  const message1 = dash.message_1 || {};
+  const message2 = dash.message_2 || {};
+  const message3 = dash.message_3 || {};
+  const footer = dash.footer || {};
 
-const referralInviteUrl = response?.actions?.referral?.invite_url || "";
-const historicalReportUrl = response?.actions?.historical_report_url || "";
-const whatsappReturnUrl =
-  response?.actions?.whatsapp_return_url || "https://wa.me/14155238886";
+  const actions = response?.actions || {};
 
-const referralShareText = referralInviteUrl
-  ? `🥦 Te invitan a comer mejor sin perder tiempo 🍎
+  const referralInviteUrl = actions?.referral?.invite_url || "";
+  const historicalReportUrl = actions?.historical_report_url || "";
+  const whatsappReturnUrl = actions?.whatsapp_return_url || "";
 
-Frutas y verduras frescas para tu familia cada semana, desde donde estés.
+  const categories = Array.isArray(message2.categories)
+    ? message2.categories
+    : [];
 
-Empezá acá 👇
-${referralInviteUrl}`
-  : "";
-
-const referralWhatsappUrl = referralShareText
-  ? `https://wa.me/?text=${encodeURIComponent(referralShareText)}`
-  : "";
-
-const actionsHtml = `
-  <div class="dashboard-actions">
-    ${referralWhatsappUrl ? `
-      <a href="${escapeHtml(referralWhatsappUrl)}" class="dashboard-btn dashboard-btn-primary">
-        Invitar un amigo
-      </a>
-    ` : ""}
-
-    ${historicalReportUrl ? `
-      <a href="${escapeHtml(historicalReportUrl)}" class="dashboard-btn dashboard-btn-secondary">
-        Ir a mi reporte
-      </a>
-    ` : ""}
-
-    <a href="${escapeHtml(whatsappReturnUrl)}" class="dashboard-link">
-      Volver a WhatsApp
-    </a>
-  </div>
-`;
-  
-  const categoriesHtml = message2.categories
+  const categoriesHtml = categories
     .map((cat) => `
-      <div style="margin-top:6px;font-size:16px;color:#1f2937;">
-        ${cat.emoji} ${cat.label}
+      <div class="post-report-category">
+        <span class="post-report-category-emoji">${escapeHtml(cat.emoji || "")}</span>
+        <span class="post-report-category-label">${escapeHtml(cat.label || "")}</span>
       </div>
     `)
     .join("");
 
-  const suggestedProductsHtml = moreInfo.suggested_products
-    .map((item) => `
-      <div style="margin-top:6px;font-size:16px;color:#1f2937;">
-        ${item.emoji} ${item.product}
-      </div>
-    `)
-    .join("");
+  const referralShareText = referralInviteUrl
+    ? `Hola, quiero invitarte a FRUTI. Frutas y verduras frescas para comer mejor sin perder tiempo. Empezá acá: ${referralInviteUrl}`
+    : "";
 
-  const detailsRowsHtml = `
-    <div style="margin-top:10px;font-size:15px;color:#374151;">
-      Categorías en tu compra: ${moreInfo.order_categories.join(", ")}
-    </div>
+  const referralWhatsappUrl = referralShareText
+    ? `https://wa.me/?text=${encodeURIComponent(referralShareText)}`
+    : "";
 
-    <div style="margin-top:10px;font-size:15px;color:#374151;">
-      Categorías de la semana: ${moreInfo.weekly_categories_count} / ${moreInfo.weekly_categories_target}
-    </div>
-
-    <div style="margin-top:10px;font-size:15px;color:#374151;">
-      Porciones de la semana: ${moreInfo.weekly_portions} / ${moreInfo.weekly_target_portions}
-    </div>
-
-    <div style="margin-top:10px;font-size:15px;color:#374151;">
-      Muy bien! Ya tenes para ${moreInfo.days_equivalent_label}
-    </div>
-
-    <div style="margin-top:14px;font-size:15px;font-weight:600;color:#111827;">
-      La próxima podes probar estos productos:
-    </div>
-
-    <div style="margin-top:6px;">
-      ${suggestedProductsHtml}
-    </div>
-  `;
-
-  
   orderListEl.innerHTML = `
+    <section class="post-report">
 
-    <header class="report-header">
-    
-      <div class="brand">
-        TU REPORTE FRUTI
-      </div>
-    
-      <h1 class="pedido-title">
-        ${header.title}
-      </h1>
-    
-      <p class="subtitle">
-        ${header.subtitle}
-      </p>
-    
-    </header>
-  
-    <div class="empty" style="
-      max-width:720px;
-      margin:14px auto 24px;
-      background:#fff;
-      border:1px solid #e8e8e8;
-      border-radius:16px;
-      padding:24px;
-      box-shadow:0 2px 10px rgba(0,0,0,0.04);
-      color:#1f2937;
-      line-height:1.45;
-      text-align:left;
-    ">
+      <section class="post-report-heading">
+        <div class="post-report-tag">TU REPORTE FRUTI</div>
 
-      <div style="margin-top:20px;font-weight:700;font-size:17px;">
-        ${message1.title}
-      </div>
+        <h1 class="post-report-title">
+          ${escapeHtml(header.title || "Tu semana saludable 🎉")}
+        </h1>
 
-      <div style="
-        margin-top:8px;
-        padding:14px 16px;
-        background:#f7faf7;
-        border:1px solid #dbead8;
-        border-radius:12px;
-        font-size:18px;
-        font-weight:700;
-      ">
-        ${message1.value}
-      </div>
-      
-        ${message1.subtitle ? `
-          <div style="
-            margin-top:8px;
-            font-size:16px;
-            font-weight:700;
-            color:#4b5563;
-          ">
-            ${message1.subtitle}
-          </div>
-        ` : ''}
-      
-      <div style="margin-top:24px;font-weight:700;font-size:17px;">
-        ${message2.title}
-      </div>
+        <p class="post-report-subtitle">
+          ${escapeHtml(header.subtitle || "")}
+        </p>
+      </section>
 
-      <div style="margin-top:8px;">
-        ${categoriesHtml}
-      </div>
+      <section class="post-report-card">
+        <div class="post-report-label">ESTA SEMANA CUBRÍS</div>
 
-      <div style="margin-top:24px;font-weight:700;font-size:17px;">
-        ${message3.title}
-      </div>
-
-      <div style="
-        margin-top:8px;
-        padding:14px 16px;
-        background:#f9fafb;
-        border:1px solid #e5e7eb;
-        border-radius:12px;
-        font-size:18px;
-        font-weight:700;
-      ">
-        ${message3.weekly_progress_label}
-      </div>
-
-      <div style="margin-top:10px;font-size:15px;color:#374151;">
-        ${message3.weekly_message}
-      </div>
-
-      <details style="
-        margin-top:24px;
-        border:1px solid #e5e7eb;
-        border-radius:12px;
-        padding:14px 16px;
-        background:#fcfcfc;
-      ">
-        <summary style="cursor:pointer;font-weight:700;font-size:16px;color:#111827;">
-          ${moreInfo.title}
-        </summary>
-
-        <div style="margin-top:12px;">
-          ${detailsRowsHtml}
+        <div class="post-report-main-value">
+          ${escapeHtml(message1.value || "")}
         </div>
-      </details>
 
-      <div style="
-        margin-top:22px;
-        color:#4b5563;
-        font-size:18px;
-        font-weight:700;
-      ">
-      ${footer.message}
-      </div>
+        ${message1.subtitle ? `
+          <div class="post-report-muted">
+            ${escapeHtml(message1.subtitle)}
+          </div>
+        ` : ""}
+      </section>
 
-      ${actionsHtml}
-      
-    </div>
+      <section class="post-report-card">
+        <div class="post-report-label">TU NIVEL FRUTI</div>
+
+        <div class="post-report-level-row">
+          <div class="post-report-level-icon">
+            ${escapeHtml(message3.weekly_status_type || "🌱")}
+          </div>
+
+          <div>
+            <div class="post-report-level-name">
+              ${escapeHtml(message3.title || "Tu semana viene bien")}
+            </div>
+
+            <div class="post-report-level-subtitle">
+              ${escapeHtml(message3.weekly_message || "")}
+            </div>
+          </div>
+        </div>
+
+        <div class="post-report-progress">
+          <div class="post-report-progress-fill"></div>
+        </div>
+
+        ${message3.weekly_progress_label ? `
+          <div class="post-report-next-level">
+            Estado semanal: ${escapeHtml(message3.weekly_progress_label)}
+          </div>
+        ` : ""}
+      </section>
+
+      <section class="post-report-card">
+        <div class="post-report-rainbow-head">
+          <div class="post-report-rainbow-icon">
+            🌈
+          </div>
+
+          <div>
+            <h2 class="post-report-card-title">
+              ${escapeHtml(message2.title || "Tu arcoíris nutricional")}
+            </h2>
+
+            <p class="post-report-card-subtitle">
+              Sumaste variedad en tu pedido de esta semana
+            </p>
+          </div>
+        </div>
+
+        <div class="post-report-categories">
+          ${categoriesHtml}
+        </div>
+
+        <p class="post-report-note">
+          La OMS recomienda al menos 5 porciones de frutas y verduras por día para una alimentación equilibrada.
+        </p>
+      </section>
+
+      ${footer.message || referralWhatsappUrl ? `
+        <section class="post-report-invite-card">
+          <div class="post-report-invite-label">REGALÁ SALUD</div>
+
+          ${footer.message ? `
+            <p class="post-report-invite-text">
+              ${escapeHtml(footer.message)}
+            </p>
+          ` : ""}
+
+          ${referralWhatsappUrl ? `
+            <a href="${escapeHtml(referralWhatsappUrl)}" class="post-report-invite-btn">
+              Invitar a un amigo
+            </a>
+          ` : ""}
+        </section>
+      ` : ""}
+
+      <section class="post-report-actions">
+        ${historicalReportUrl ? `
+          <a href="${escapeHtml(historicalReportUrl)}" class="post-report-action-primary">
+            Ir a mi reporte completo
+          </a>
+        ` : ""}
+
+        ${whatsappReturnUrl ? `
+          <a href="${escapeHtml(whatsappReturnUrl)}" class="post-report-action-secondary">
+            Volver a WhatsApp
+          </a>
+        ` : ""}
+      </section>
+
+    </section>
   `;
 }
 
