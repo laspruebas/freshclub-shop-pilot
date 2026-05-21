@@ -515,16 +515,20 @@ function renderDashboardFromApi(response, orderId) {
 
         <div class="post-report-level-row">
           <div class="post-report-level-icon">
-            ${escapeHtml(message3.weekly_status_type || "🌱")}
+            🌱
           </div>
 
           <div>
             <div class="post-report-level-name">
-              ${escapeHtml(message3.title || "Tu semana viene bien")}
+              ${escapeHtml(
+                (message3.weekly_status_type || "Bien")
+                  .replace("🟡", "")
+                  .trim()
+              )}
             </div>
 
             <div class="post-report-level-subtitle">
-              ${escapeHtml(message3.weekly_message || "")}
+              ${escapeHtml(message3.title || "")}
             </div>
           </div>
         </div>
