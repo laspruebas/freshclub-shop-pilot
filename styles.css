@@ -2438,8 +2438,8 @@ body {
 }
 
 .post-report-rainbow-icon {
-  width: 42px;
-  font-size: 28px;
+  width: 46px;
+  font-size: 32px;
   line-height: 1;
   text-align: center;
 }
@@ -2459,7 +2459,8 @@ body {
 
 .post-report-categories {
   display: grid;
-  gap: 9px;
+  gap: 14px;
+  margin-top: 14px;
 }
 
 .post-report-category {
@@ -2510,13 +2511,14 @@ body {
   width: 100%;
   border: none;
   border-radius: 10px;
-  background: #ffffff;
+  background: #F0F7EC;
   color: #1E3A2F;
   padding: 13px;
   font-size: 14px;
   font-weight: 500;
   text-align: center;
   text-decoration: none;
+  box-sizing: border-box;
 }
 
 .post-report-actions {
