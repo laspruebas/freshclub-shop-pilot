@@ -2,7 +2,7 @@
 // INVITE PAGE
 // =====================================================
 
-const WHATSAPP_RETURN_URL = "https://wa.me/14155238886";
+const WHATSAPP_RETURN_URL = "https://wa.me/5491154886995";
 
 const params = new URLSearchParams(window.location.search);
 const referralCode = params.get("ref");
