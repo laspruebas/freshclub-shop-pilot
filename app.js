@@ -474,7 +474,10 @@ function renderDashboardFromApi(response, orderId) {
     .join("");
 
   const referralShareText = referralInviteUrl
-    ? `Hola, quiero invitarte a FRUTI, un nuevo hábito para tu hogar.\n\n Un pedido y te olvidás de las frutas y verduras de la semana.\n\n Empezá acá: ${referralInviteUrl}`
+    ? `Hola, quiero invitarte a FRUTI, un nuevo hábito para tu hogar.
+    Un pedido y te olvidás de las frutas y verduras de la semana.
+    Empezá acá: 
+    ${referralInviteUrl}`
     : "";
 
   const referralWhatsappUrl = referralShareText
