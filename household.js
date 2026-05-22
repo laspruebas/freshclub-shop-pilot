@@ -7,7 +7,7 @@ const API_BASE = "https://fruti-api-y5uz.onrender.com";
 // Cambiar solo si back te pasa otra ruta
 const ONBOARDING_COMPLETE_ENDPOINT = `${API_BASE}/onboarding/complete`;
 
-const WHATSAPP_RETURN_URL = "https://wa.me/14155238886";
+const WHATSAPP_RETURN_URL = "https://wa.me/5491154886995";
 
 // =====================================================
 // STATE
