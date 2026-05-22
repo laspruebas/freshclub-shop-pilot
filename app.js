@@ -725,11 +725,11 @@ function getNextDeliveryMessage() {
     schedule.map((s) => s.day);
 
   if (!days.length) {
-    return "Listo. Ahora a olvidarte de las frutas y verduras.";
+    return "Ahora olvidate de las frutas y verduras.";
   }
 
   if (days.length === 1) {
-    return `Listo. Hasta el ${days[0]} que viene no pensás más en frutas y verduras.`;
+    return `Hasta el ${days[0]} que viene no pensás más en frutas y verduras.`;
   }
 
   const orderedDays = [
@@ -762,7 +762,7 @@ function getNextDeliveryMessage() {
   const nextDay =
     future[0]?.day || days[0];
 
-  return `Listo. Hasta el ${nextDay} no pensás más en frutas y verduras.`;
+  return `Hasta el ${nextDay} no pensás más en frutas y verduras.`;
 }
 
 async function submitOrder() {
