@@ -2168,6 +2168,7 @@ body {
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   background: #ffffff;
 }
@@ -2228,53 +2229,12 @@ body {
   background: #ffffff;
 
   padding:
-    32px
+    28px
     24px
     36px;
 
   display: flex;
   flex-direction: column;
-}
-
-.invite-impact {
-  margin-bottom: 36px;
-}
-
-.impact-line {
-  line-height: 1.35;
-}
-
-.impact-line-1 {
-  font-size: 24px;
-  font-weight: 500;
-  color: #1a1a1a;
-}
-
-.impact-line-2 {
-  margin-top: 2px;
-
-  font-size: 24px;
-  font-weight: 500;
-  color: #4a7c3f;
-}
-
-.impact-line-3 {
-  margin-top: 2px;
-
-  font-size: 20px;
-  font-weight: 400;
-  color: #888888;
-}
-
-.invite-divider {
-  width: 32px;
-  height: 2px;
-
-  background: #7AB86A;
-
-  border-radius: 2px;
-
-  margin: 20px 0;
 }
 
 .invite-btn {
@@ -2300,16 +2260,70 @@ body {
   transform: translateY(1px);
 }
 
-.invite-footnote {
-  margin:
-    12px
-    0
-    0;
+/* =========================
+   INVITE STEPS
+========================= */
 
-  font-size: 12px;
-  color: #bbbbbb;
+.invite-body {
+  padding: 28px 24px 36px;
+}
 
+.invite-steps-title {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #888888;
+
+  margin-bottom: 16px;
+}
+
+.invite-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  margin-bottom: 28px;
+}
+
+.invite-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.invite-step-icon {
+  width: 28px;
+  flex-shrink: 0;
+
+  margin-top: 1px;
+
+  font-size: 20px;
+  line-height: 1;
+}
+
+.invite-step-text {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #1a1a1a;
+}
+
+.invite-bridge {
   text-align: center;
+  margin-bottom: 16px;
+}
+
+.invite-bridge-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.invite-bridge-subtitle {
+  margin-top: 4px;
+
+  font-size: 14px;
+  font-weight: 400;
+  color: #888888;
 }
 
 /* =========================
