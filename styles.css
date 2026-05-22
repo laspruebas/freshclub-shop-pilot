@@ -2134,12 +2134,7 @@ body {
 
 .report-loading h1 {
   margin: 0;
-
   max-width: 760px;
-
-  font-size: 40px;
-  line-height: 1.08;
-  font-weight: 800;
 }
 
 .report-loading-footer {
@@ -2261,10 +2256,6 @@ body {
 /* =========================
    INVITE STEPS
 ========================= */
-
-.invite-body {
-  padding: 28px 24px 36px;
-}
 
 .invite-steps-title {
   font-size: 16px;
@@ -2560,4 +2551,31 @@ body {
 .post-report-action-secondary {
   font-size: 13px;
   color: #888888;
+}
+
+
+/* =========================
+   REPORT LOADING MESSAGE
+========================= */
+
+.report-loading-done {
+  display: block;
+
+  margin-bottom: 18px;
+
+  font-size: 64px;
+  line-height: 0.95;
+  font-weight: 700;
+
+  color: #1f1f1f;
+}
+
+.report-loading-message {
+  display: block;
+
+  font-size: 38px;
+  line-height: 1.08;
+  font-weight: 700;
+
+  color: #1f1f1f;
 }
