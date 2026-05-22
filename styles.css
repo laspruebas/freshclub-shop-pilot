@@ -2251,8 +2251,6 @@ body {
   font-size: 15px;
   font-weight: 500;
 
-  margin-top: auto;
-
   cursor: pointer;
 }
 
@@ -2309,7 +2307,7 @@ body {
 
 .invite-bridge {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .invite-bridge-title {
