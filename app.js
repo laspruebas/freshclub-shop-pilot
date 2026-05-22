@@ -790,8 +790,15 @@ async function submitOrder() {
   };
 
   try {
-    reportLoadingTitleEl.textContent =
-      getNextDeliveryMessage();
+    reportLoadingTitleEl.innerHTML = `
+      <span class="report-loading-done">
+        Listo.
+      </span>
+    
+      <span class="report-loading-message">
+        ${getNextDeliveryMessage()}
+      </span>
+    `;
     
     reportLoadingEl.classList.remove("hidden");
     
@@ -817,8 +824,15 @@ async function submitOrder() {
       throw new Error("Order created without order_id");
     }
 
-   reportLoadingTitleEl.textContent =
-      getNextDeliveryMessage();
+   reportLoadingTitleEl.innerHTML = `
+      <span class="report-loading-done">
+        Listo.
+      </span>
+    
+      <span class="report-loading-message">
+        ${getNextDeliveryMessage()}
+      </span>
+    `;
     
     reportLoadingEl.classList.remove("hidden");
     
