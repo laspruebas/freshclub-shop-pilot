@@ -2181,9 +2181,9 @@ body {
   background: #1E3A2F;
 
   padding:
-    44px
+    32px
     24px
-    40px;
+    28px;
 }
 
 .invite-tag {
@@ -2200,7 +2200,7 @@ body {
 .invite-title {
   margin: 0;
 
-  font-size: 34px;
+  font-size: 30px;
   line-height: 1.15;
   font-weight: 500;
 
@@ -2269,7 +2269,7 @@ body {
 }
 
 .invite-steps-title {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.06em;
   color: #888888;
@@ -2280,9 +2280,9 @@ body {
 .invite-steps {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 
-  margin-bottom: 28px;
+  margin-bottom: 18px;
 }
 
 .invite-step {
@@ -2302,7 +2302,7 @@ body {
 }
 
 .invite-step-text {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.45;
   color: #1a1a1a;
 }
