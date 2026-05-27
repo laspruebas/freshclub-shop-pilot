@@ -451,10 +451,11 @@ function renderDashboardFromApi(response, orderId) {
   
   // legacy fallback
   const header = dash.header || {};
-  
+  // legacy fallback — remove after dashboard_v2 full migration
   const message1 = dash.message_1 || {};
   const message2 = dash.message_2 || {};
   const message3 = dash.message_3 || {};
+  // legacy fallback — temporary compatibility
   const footer = dash.footer || {};
   
   // v2
@@ -485,19 +486,20 @@ function renderDashboardFromApi(response, orderId) {
     `)
     .join("");
 
-  const referralShareText = referralInviteUrl
-    ? `
-  Hola, quiero invitarte a FRUTI, un nuevo hábito para tu hogar.
-  
-  Te resuelven la compra semanal de frutas y verduras frescas.
-  
-  Podés empezar acá 👇
-    ${referralInviteUrl}`
-    : "";
+  const referralShareText =
+    share.message ||
+    (
+      referralInviteUrl
+        ? `
 
-  const referralWhatsappUrl = referralShareText
-    ? `https://wa.me/?text=${encodeURIComponent(referralShareText)}`
-    : "";
+Hola, quiero invitarte a FRUTI, un nuevo hábito para tu hogar.
+  
+Te resuelven la compra semanal de frutas y verduras frescas.
+  
+Podés empezar acá 👇
+${referralInviteUrl}`
+    : ""
+    );
 
   orderListEl.innerHTML = `
     <section class="post-report">
@@ -563,7 +565,7 @@ function renderDashboardFromApi(response, orderId) {
           <div class="post-report-progress-fill"></div>
         </div>
 
-        ${(level.weekly_adherence_percent || message3.weekly_progress_label) ? ``
+        ${(level.weekly_adherence_percent || message3.weekly_progress_label) ? `
           <div class="post-report-next-level">
             Estado semanal: ${
               level.weekly_adherence_percent
@@ -576,6 +578,8 @@ function renderDashboardFromApi(response, orderId) {
 
       <section class="post-report-card">
         <div class="post-report-rainbow-head">
+        
+        <!-- temporary placeholder icon -->
           <div class="post-report-rainbow-icon">
             🌈
           </div>
@@ -610,13 +614,20 @@ function renderDashboardFromApi(response, orderId) {
         </p>
       </section>
 
-      ${footer.message || referralWhatsappUrl ? `
+      ${(footer.message || nudges.suggested_products?.length || referralWhatsappUrl) ? `
         <section class="post-report-invite-card">
           <div class="post-report-invite-label">REGALÁ SALUD</div>
 
-          ${footer.message ? `
+          ${(footer.message || nudges.suggested_products?.length) ? `
             <p class="post-report-invite-text">
-              ${escapeHtml(footer.message)}
+              ${escapeHtml(
+                footer.message ||
+                (
+                  nudges.suggested_products?.length
+                    ? `Te recomendamos sumar: ${nudges.suggested_products.join(" · ")}`
+                    : ""
+                )
+              )}
             </p>
           ` : ""}
 
