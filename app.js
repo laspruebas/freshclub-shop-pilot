@@ -540,14 +540,14 @@ function renderDashboardFromApi(response, orderId) {
           <div>
             <div class="post-report-level-name">
               ${escapeHtml(
-                (level.status_label || message3.weekly_status_type || "Bien")
+                (level.status || "Bien")
                   .replace("🟡", "")
                   .trim()
               )}
             </div>
 
             <div class="post-report-level-subtitle">
-              ${escapeHtml(level.status || message3.title || "")}
+              ${escapeHtml(level.status_label || "")}
             </div>
           </div>
         </div>
@@ -556,12 +556,10 @@ function renderDashboardFromApi(response, orderId) {
           <div class="post-report-progress-fill"></div>
         </div>
 
-        ${(level.weekly_adherence_percent || message3.weekly_progress_label) ? `
+        ${(level.weekly_adherence_percent ) ? `
           <div class="post-report-next-level">
             Estado semanal: ${
-              level.weekly_adherence_percent
-                ? escapeHtml(`${level.weekly_adherence_percent}%`)
-                : escapeHtml(message3.weekly_progress_label)
+              escapeHtml(`${level.weekly_adherence_percent}%`)
             }
           </div>
         ` : ""}
