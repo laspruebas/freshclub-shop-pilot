@@ -451,10 +451,12 @@ function renderDashboardFromApi(response, orderId) {
   
   // legacy fallback
   const header = dash.header || {};
+  
   // legacy fallback — remove after dashboard_v2 full migration
   const message1 = dash.message_1 || {};
   const message2 = dash.message_2 || {};
   const message3 = dash.message_3 || {};
+  
   // legacy fallback — temporary compatibility
   const footer = dash.footer || {};
   
@@ -490,17 +492,20 @@ function renderDashboardFromApi(response, orderId) {
     share.message ||
     (
       referralInviteUrl
-        ? `
-
-Hola, quiero invitarte a FRUTI, un nuevo hábito para tu hogar.
+        ? `Hola, quiero invitarte a FRUTI, un nuevo hábito para tu hogar.
   
-Te resuelven la compra semanal de frutas y verduras frescas.
+  Te resuelven la compra semanal de frutas y verduras frescas.
   
-Podés empezar acá 👇
-${referralInviteUrl}`
-    : ""
+  Podés empezar acá 👇
+  ${referralInviteUrl}`
+        : ""
     );
-
+  
+  const referralWhatsappUrl =
+    referralShareText
+      ? `https://wa.me/?text=${encodeURIComponent(referralShareText)}`
+      : "";
+  
   orderListEl.innerHTML = `
     <section class="post-report">
 
