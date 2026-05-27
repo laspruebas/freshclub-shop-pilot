@@ -609,7 +609,11 @@ function renderDashboardFromApi(response, orderId) {
           ${nudges.suggested_products?.length ? `
             <p class="post-report-invite-text">
               ${escapeHtml(
-                `Te recomendamos sumar: ${nudges.suggested_products.join(" · ")}`
+                `Te recomendamos sumar: ${
+                  nudges.suggested_products
+                    .map(p => `${p.emoji} ${p.product}`)
+                    .join(" · ")
+                }`
               )}
             </p>
           ` : ""}
