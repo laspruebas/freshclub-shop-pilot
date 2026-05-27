@@ -452,10 +452,6 @@ function renderDashboardFromApi(response, orderId) {
   // legacy fallback
   const header = dash.header || {};
   
-  // legacy fallback — remove after dashboard_v2 full migration
-
-  const message2 = dash.message_2 || {};
-  
 
   const footer = dash.footer || {};
   
