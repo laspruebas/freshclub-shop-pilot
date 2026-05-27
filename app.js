@@ -513,18 +513,12 @@ function renderDashboardFromApi(response, orderId) {
         <div class="post-report-label">ESTA SEMANA CUBRÍS</div>
 
        <div class="post-report-main-value">
-          ${
-            summary.days_covered
-              ? escapeHtml(
-                  summary.main_label || ""
-                )
-              : escapeHtml(message1.value || "")
-          }
+          ${escapeHtml(summary.main_label || "")}
         </div>
 
-        ${(summary.subtitle || message1.subtitle) ? `
+        ${summary.subtitle ? `
           <div class="post-report-muted">
-            ${escapeHtml(summary.subtitle || message1.subtitle)}
+            ${escapeHtml(summary.subtitle)}
             <br><br>
             La OMS recomienda al menos 5 porciones diarias de frutas y verduras.
           </div>
