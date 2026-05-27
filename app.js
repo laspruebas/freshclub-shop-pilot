@@ -456,12 +456,16 @@ function renderDashboardFromApi(response, orderId) {
   const summary = dashboard.summary || {};
   const level = dashboard.level || {};
   const rainbow = dashboard.nutrition_rainbow || {};
-  const nudges = dashboard.nudges || {};
   const share = dashboard.share || {};
 
+  const progressPercent =
+    Math.max(
+      0,
+      Math.min(level.weekly_adherence_percent || 0, 100)
+    );
+  
   const actions = response?.actions || {};
 
-  const referralInviteUrl = actions?.referral?.invite_url || "";
   const historicalReportUrl = actions?.historical_report_url || "";
   const whatsappReturnUrl = actions?.whatsapp_return_url || "";
 
@@ -527,8 +531,8 @@ function renderDashboardFromApi(response, orderId) {
           <div>
             <div class="post-report-level-name">
               ${escapeHtml(
-                (level.status || "Bien")
-                  .replace("🟡", "")
+                (level.status || "")
+                  .replace(/[^\p{L}\p{N}\s]/gu, "")
                   .trim()
               )}
             </div>
@@ -540,7 +544,10 @@ function renderDashboardFromApi(response, orderId) {
         </div>
 
         <div class="post-report-progress">
-          <div class="post-report-progress-fill"></div>
+          <div
+            class="post-report-progress-fill"
+            style="width: ${progressPercent}%">
+          </div>
         </div>
 
         ${(level.weekly_adherence_percent ) ? `
@@ -562,8 +569,7 @@ function renderDashboardFromApi(response, orderId) {
           <div>
             <h2 class="post-report-card-title">
               ${escapeHtml(
-                rainbow.title ||
-                "Tu arcoíris nutricional"
+                rainbow.title || "Tu arcoíris nutricional"
               )}
             </h2>
 
