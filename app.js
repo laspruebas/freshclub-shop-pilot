@@ -470,9 +470,11 @@ function renderDashboardFromApi(response, orderId) {
   const historicalReportUrl = actions?.historical_report_url || "";
   const whatsappReturnUrl = actions?.whatsapp_return_url || "";
 
-  const categories = Array.isArray(message2.categories)
-    ? message2.categories
-    : [];
+  const categories = Array.isArray(rainbow.groups)
+    ? rainbow.groups
+    : Array.isArray(message2.categories)
+      ? message2.categories
+      : [];
 
   const categoriesHtml = categories
     .map((cat) => `
@@ -580,11 +582,21 @@ function renderDashboardFromApi(response, orderId) {
 
           <div>
             <h2 class="post-report-card-title">
-              ${escapeHtml(message2.title || "Tu arcoíris nutricional")}
+              ${escapeHtml(
+                rainbow.title ||
+                message2.title ||
+                "Tu arcoíris nutricional"
+              )}
             </h2>
 
             <p class="post-report-card-subtitle">
-              Sumaste variedad en tu pedido de esta semana
+              ${
+                rainbow.groups_covered && rainbow.groups_target
+                  ? escapeHtml(
+                      `${rainbow.groups_covered} de ${rainbow.groups_target} grupos nutricionales cubiertos`
+                    )
+                  : "Sumaste variedad en tu pedido de esta semana"
+              }
             </p>
           </div>
         </div>
