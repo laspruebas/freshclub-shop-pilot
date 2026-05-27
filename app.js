@@ -457,9 +457,6 @@ function renderDashboardFromApi(response, orderId) {
   const message2 = dash.message_2 || {};
   const message3 = dash.message_3 || {};
   
-  // legacy fallback — temporary compatibility
-  const footer = dash.footer || {};
-  
   // v2
   const summary = dashboardV2.summary || {};
   const level = dashboardV2.level || {};
@@ -607,19 +604,14 @@ function renderDashboardFromApi(response, orderId) {
         </p>
       </section>
 
-      ${(footer.message || nudges.suggested_products?.length || referralWhatsappUrl) ? `
+      ${(nudges.suggested_products?.length || referralWhatsappUrl) ? `
         <section class="post-report-invite-card">
           <div class="post-report-invite-label">REGALÁ SALUD</div>
 
-          ${(footer.message || nudges.suggested_products?.length) ? `
+          ${nudges.suggested_products?.length ? `
             <p class="post-report-invite-text">
               ${escapeHtml(
-                footer.message ||
-                (
-                  nudges.suggested_products?.length
-                    ? `Te recomendamos sumar: ${nudges.suggested_products.join(" · ")}`
-                    : ""
-                )
+                `Te recomendamos sumar: ${nudges.suggested_products.join(" · ")}`
               )}
             </p>
           ` : ""}
