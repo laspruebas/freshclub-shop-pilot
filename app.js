@@ -446,21 +446,18 @@ async function loadOrderDashboard(orderId) {
 function renderDashboardFromApi(response, orderId) {
   headerEl.style.display = "none";
 
-  const dash = response?.dash_v1 || {};
-  const dashboardV2 = response?.dashboard_v2 || {};
-  
-  // legacy fallback
-  const header = dash.header || {};
-  
+  const dashboard =
+  response?.dashboard_v2 || response?.dash_v1 || {};
 
-  const footer = dash.footer || {};
+  const header = dashboard.header || {};
+  const referral = dashboard.referral || {};
   
   // v2
-  const summary = dashboardV2.summary || {};
-  const level = dashboardV2.level || {};
-  const rainbow = dashboardV2.nutrition_rainbow || {};
-  const nudges = dashboardV2.nudges || {};
-  const share = dashboardV2.share || {};
+  const summary = dashboard.summary || {};
+  const level = dashboard.level || {};
+  const rainbow = dashboard.nutrition_rainbow || {};
+  const nudges = dashboard.nudges || {};
+  const share = dashboard.share || {};
 
   const actions = response?.actions || {};
 
@@ -591,13 +588,13 @@ function renderDashboardFromApi(response, orderId) {
         </p>
       </section>
 
-      ${(footer.message || referralWhatsappUrl) ? `
+      ${(referral.message || referralWhatsappUrl) ? `
         <section class="post-report-invite-card">
           <div class="post-report-invite-label">REGALÁ SALUD</div>
 
-          ${footer.message ? `
+          ${referral.message ? `
             <p class="post-report-invite-text">
-              ${escapeHtml(footer.message)}
+              ${escapeHtml(referral.message)}
             </p>
           ` : ""}
 
