@@ -570,7 +570,6 @@ function renderDashboardFromApi(response, orderId) {
             <h2 class="post-report-card-title">
               ${escapeHtml(
                 rainbow.title ||
-                message2.title ||
                 "Tu arcoíris nutricional"
               )}
             </h2>
