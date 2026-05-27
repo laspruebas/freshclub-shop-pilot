@@ -488,18 +488,7 @@ function renderDashboardFromApi(response, orderId) {
     `)
     .join("");
 
-  const referralShareText =
-    share.message ||
-    (
-      referralInviteUrl
-        ? `Hola, quiero invitarte a FRUTI, un nuevo hábito para tu hogar.
-  
-  Te resuelven la compra semanal de frutas y verduras frescas.
-  
-  Podés empezar acá 👇
-  ${referralInviteUrl}`
-        : ""
-    );
+  const referralShareText = share.message || "";
   
   const referralWhatsappUrl =
     referralShareText
