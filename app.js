@@ -447,12 +447,22 @@ function renderDashboardFromApi(response, orderId) {
   headerEl.style.display = "none";
 
   const dash = response?.dash_v1 || {};
-
+  const dashboardV2 = response?.dashboard_v2 || {};
+  
+  // legacy fallback
   const header = dash.header || {};
+  
   const message1 = dash.message_1 || {};
   const message2 = dash.message_2 || {};
   const message3 = dash.message_3 || {};
   const footer = dash.footer || {};
+  
+  // v2
+  const summary = dashboardV2.summary || {};
+  const level = dashboardV2.level || {};
+  const rainbow = dashboardV2.nutrition_rainbow || {};
+  const nudges = dashboardV2.nudges || {};
+  const share = dashboardV2.share || {};
 
   const actions = response?.actions || {};
 
@@ -505,13 +515,19 @@ function renderDashboardFromApi(response, orderId) {
       <section class="post-report-card">
         <div class="post-report-label">ESTA SEMANA CUBRÍS</div>
 
-        <div class="post-report-main-value">
-          ${escapeHtml(message1.value || "")}
+       <div class="post-report-main-value">
+          ${
+            summary.days_covered
+              ? escapeHtml(
+                  `${summary.days_covered} ${summary.main_label || ""}`
+                )
+              : escapeHtml(message1.value || "")
+          }
         </div>
 
-        ${message1.subtitle ? `
+        ${(summary.subtitle || message1.subtitle) ? `
           <div class="post-report-muted">
-            ${escapeHtml(message1.subtitle)}
+            ${escapeHtml(summary.subtitle || message1.subtitle)}
             <br><br>
             La OMS recomienda al menos 5 porciones diarias de frutas y verduras.
           </div>
@@ -529,14 +545,14 @@ function renderDashboardFromApi(response, orderId) {
           <div>
             <div class="post-report-level-name">
               ${escapeHtml(
-                (message3.weekly_status_type || "Bien")
+                (level.status_label || message3.weekly_status_type || "Bien")
                   .replace("🟡", "")
                   .trim()
               )}
             </div>
 
             <div class="post-report-level-subtitle">
-              ${escapeHtml(message3.title || "")}
+              ${escapeHtml(level.status || message3.title || "")}
             </div>
           </div>
         </div>
@@ -545,9 +561,13 @@ function renderDashboardFromApi(response, orderId) {
           <div class="post-report-progress-fill"></div>
         </div>
 
-        ${message3.weekly_progress_label ? `
+        ${(level.weekly_adherence_percent || message3.weekly_progress_label) ? ``
           <div class="post-report-next-level">
-            Estado semanal: ${escapeHtml(message3.weekly_progress_label)}
+            Estado semanal: ${
+              level.weekly_adherence_percent
+                ? escapeHtml(`${level.weekly_adherence_percent}%`)
+                : escapeHtml(message3.weekly_progress_label)
+            }
           </div>
         ` : ""}
       </section>
