@@ -578,8 +578,7 @@ ${referralInviteUrl}`
 
       <section class="post-report-card">
         <div class="post-report-rainbow-head">
-        
-        <!-- temporary placeholder icon -->
+          <!-- temporary placeholder icon -->
           <div class="post-report-rainbow-icon">
             🌈
           </div>
