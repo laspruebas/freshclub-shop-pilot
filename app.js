@@ -453,9 +453,9 @@ function renderDashboardFromApi(response, orderId) {
   const header = dash.header || {};
   
   // legacy fallback — remove after dashboard_v2 full migration
-  const message1 = dash.message_1 || {};
+
   const message2 = dash.message_2 || {};
-  const message3 = dash.message_3 || {};
+  
 
   const footer = dash.footer || {};
   
@@ -474,9 +474,7 @@ function renderDashboardFromApi(response, orderId) {
 
   const categories = Array.isArray(rainbow.groups)
     ? rainbow.groups
-    : Array.isArray(message2.categories)
-      ? message2.categories
-      : [];
+    : [];
 
   const categoriesHtml = categories
     .map((cat) => `
