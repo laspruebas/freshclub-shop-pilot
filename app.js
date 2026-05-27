@@ -456,6 +456,8 @@ function renderDashboardFromApi(response, orderId) {
   const message1 = dash.message_1 || {};
   const message2 = dash.message_2 || {};
   const message3 = dash.message_3 || {};
+
+  const footer = dash.footer || {};
   
   // v2
   const summary = dashboardV2.summary || {};
@@ -602,19 +604,13 @@ function renderDashboardFromApi(response, orderId) {
         </p>
       </section>
 
-      ${(nudges.suggested_products?.length || referralWhatsappUrl) ? `
+      ${(footer.message || referralWhatsappUrl) ? `
         <section class="post-report-invite-card">
           <div class="post-report-invite-label">REGALÁ SALUD</div>
 
-          ${nudges.suggested_products?.length ? `
+          ${footer.message ? `
             <p class="post-report-invite-text">
-              ${escapeHtml(
-                `Te recomendamos sumar: ${
-                  nudges.suggested_products
-                    .map(p => `${p.emoji} ${p.product}`)
-                    .join(" · ")
-                }`
-              )}
+              ${escapeHtml(footer.message)}
             </p>
           ` : ""}
 
