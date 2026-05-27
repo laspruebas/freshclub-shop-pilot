@@ -528,7 +528,7 @@ function renderDashboardFromApi(response, orderId) {
           ${
             summary.days_covered
               ? escapeHtml(
-                  `${summary.days_covered} ${summary.main_label || ""}`
+                  summary.main_label || ""
                 )
               : escapeHtml(message1.value || "")
           }
