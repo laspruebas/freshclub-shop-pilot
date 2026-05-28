@@ -563,8 +563,8 @@ body {
 .pedido-summary-label {
   margin-top: 3px;
 
-  font-size: 11px;
-
+  font-size: 15px;
+  font-weight: 600;
   color: #888888;
 }
 
@@ -576,8 +576,8 @@ body {
 }
 
 .pedido-summary-foot {
-  font-size: 12px;
-  color: #aaaaaa;
+  font-size: 15px;
+  color: #66735e;
 }
 
 .pedido-page .status {
