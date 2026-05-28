@@ -429,7 +429,7 @@ async function loadInitialOrder() {
 
     console.log("Initial order source:", source, orderState);
     
-    // renderPedidoSummary();
+    renderPedidoSummary();
     renderOrder();
     setStatus("");
 
