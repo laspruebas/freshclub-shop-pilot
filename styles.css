@@ -727,6 +727,28 @@ body {
   width: min(448px, 100%);
 }
 
+.footer-summary {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.footer-summary-main {
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #172016;
+}
+
+.footer-summary-main span {
+  color: #4d7c32;
+}
+
+.footer-summary-sub {
+  margin-top: 2px;
+  font-size: 11px;
+  color: #66735e;
+}
+
 .pedido-page .cta {
   width: 100%;
   min-height: 56px;
