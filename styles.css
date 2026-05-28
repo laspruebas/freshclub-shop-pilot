@@ -512,7 +512,7 @@ body {
 
 .pedido-summary-card {
   background: #ffffff;
-
+  box-shadow: 0 6px 18px rgba(38, 71, 24, 0.05);
   border:
     0.5px solid #e0e0d8;
 
@@ -520,7 +520,7 @@ body {
 
   padding: 16px;
 
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 
   text-align: center;
 }
