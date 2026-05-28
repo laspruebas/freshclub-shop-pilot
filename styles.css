@@ -552,10 +552,10 @@ body {
 }
 
 .pedido-summary-value {
-  font-size: 28px;
+  font-size: 40px;
   line-height: 1;
 
-  font-weight: 500;
+  font-weight: 700;
 
   color: #1a1a1a;
 }
