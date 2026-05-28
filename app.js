@@ -32,6 +32,8 @@ let householdId = null;
 
 const statusEl = document.getElementById("status");
 const orderListEl = document.getElementById("orderList");
+const pedidoSummaryEl =
+  document.getElementById("pedidoSummary");
 const extrasEl = document.getElementById("extras");
 const extrasBlockEl = document.getElementById("extrasBlock");
 
@@ -107,6 +109,63 @@ function handleImageError(img) {
 // =====================================================
 // RENDER
 // =====================================================
+
+function renderPedidoSummary() {
+
+  const householdSize = 5;
+
+  const totalQty =
+    orderState.reduce(
+      (acc, item) => acc + Number(item.qty || 0),
+      0
+    );
+
+  const estimatedDays =
+    Math.max(
+      1,
+      Math.round(totalQty / householdSize)
+    );
+
+  pedidoSummaryEl.innerHTML = `
+    <section class="pedido-summary-card">
+
+      <div class="pedido-summary-tag">
+        PEDIDO RECOMENDADO PARA TU HOGAR
+      </div>
+
+      <div class="pedido-summary-stats">
+
+        <div class="pedido-summary-stat">
+          <div class="pedido-summary-value">
+            ${householdSize}
+          </div>
+
+          <div class="pedido-summary-label">
+            personas
+          </div>
+        </div>
+
+        <div class="pedido-summary-divider"></div>
+
+        <div class="pedido-summary-stat">
+          <div class="pedido-summary-value">
+            ~${estimatedDays} días
+          </div>
+
+          <div class="pedido-summary-label">
+            de frutas y verduras
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pedido-summary-foot">
+        Podés ajustarlo antes de confirmar.
+      </div>
+
+    </section>
+  `;
+}
 
 function renderOrder() {
   if (!orderState.length) {
@@ -369,7 +428,8 @@ async function loadInitialOrder() {
       }));
 
     console.log("Initial order source:", source, orderState);
-
+    
+    renderPedidoSummary();
     renderOrder();
     setStatus("");
 
