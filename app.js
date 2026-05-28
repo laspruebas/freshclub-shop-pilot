@@ -505,7 +505,7 @@ async function loadOrderDashboard(orderId) {
 
 function renderDashboardFromApi(response, orderId) {
   headerEl.style.display = "none";
-
+  pedidoSummaryEl.innerHTML = "";
   const dashboard =
   response?.dashboard_v2 || response?.dash_v1 || {};
 
