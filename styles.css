@@ -2657,6 +2657,12 @@ body {
 
 .report-placeholder {
   padding: 24px 20px;
+
+  min-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .report-placeholder-title {
