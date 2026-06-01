@@ -2650,3 +2650,59 @@ body {
 
   color: #1f1f1f;
 }
+
+/* =========================
+   REPORT PLACEHOLDER
+========================= */
+
+.report-placeholder {
+  padding: 24px 20px;
+}
+
+.report-placeholder-title {
+  margin: 12px 0 16px;
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 800;
+  color: #152312;
+}
+
+.report-placeholder-subtitle {
+  margin: 0 0 24px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #66735e;
+}
+
+.report-placeholder-progress {
+  margin-bottom: 24px;
+}
+
+.report-placeholder-progress-label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #172016;
+}
+
+.report-placeholder-progress-track {
+  height: 10px;
+  background: #e5eadf;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.report-placeholder-progress-fill {
+  height: 100%;
+  background: #4a7c3f;
+  border-radius: 999px;
+}
+
+.report-link {
+  display: inline-flex;
+  justify-content: center;
+  color: #4b5f45;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
