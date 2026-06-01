@@ -114,6 +114,44 @@ async function loadHouseholdReport() {
 
 function renderReport(data) {
   const reports = data?.weekly_reports || [];
+  const weeksAvailable =
+  data?.weeks_available || 0;
+
+  if (weeksAvailable < 3) {
+
+  const missingWeeks =
+    Math.max(0, 3 - weeksAvailable);
+
+  contentEl.innerHTML = `
+    <section class="report-placeholder">
+
+      <div class="report-tag">
+        FRUTI
+      </div>
+
+      <h1 class="report-placeholder-title">
+        Tu reporte completo se activa pronto.
+      </h1>
+
+      <p class="report-placeholder-subtitle">
+        Ya tenés ${weeksAvailable} semana${weeksAvailable === 1 ? "" : "s"}.
+        Seguí así y en ${missingWeeks}
+        semana${missingWeeks === 1 ? "" : "s"}
+        vas a poder ver tu evolución completa.
+      </p>
+
+      <a
+        class="report-link"
+        href="https://wa.me/5491154886995"
+      >
+        Volver a mi resumen
+      </a>
+
+    </section>
+  `;
+
+  return;
+}
 
   if (!reports.length) {
     contentEl.innerHTML = `
