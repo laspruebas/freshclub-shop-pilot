@@ -140,23 +140,27 @@ function renderReport(data) {
 
     <p class="report-placeholder-subtitle">
       Ya tenés ${weeksAvailable} semana${weeksAvailable === 1 ? "" : "s"} registradas.
-      Cuando completes ${missingWeeks}
-      semana${missingWeeks === 1 ? "" : "s"} más,
-      vas a desbloquear tu reporte histórico completo.
+      Cuando completes ${missingWeeks} semana${missingWeeks === 1 ? "" : "s"} más, vas a poder ver cómo evoluciona la alimentación de tu hogar.
     </p>
 
     <div class="report-placeholder-progress">
-      <div class="report-placeholder-progress-label">
-        ${weeksAvailable} de 3 semanas completadas
-      </div>
 
-      <div class="report-placeholder-progress-track">
-        <div
-          class="report-placeholder-progress-fill"
-          style="width: ${(weeksAvailable / 3) * 100}%">
-        </div>
+    <div class="report-placeholder-progress-label">
+      Tu historial se está construyendo
+    </div>
+  
+    <div class="report-placeholder-progress-track">
+      <div
+        class="report-placeholder-progress-fill"
+        style="width: ${(weeksAvailable / 3) * 100}%">
       </div>
     </div>
+  
+    <div class="report-placeholder-progress-caption">
+      ${weeksAvailable} de 3 semanas completadas
+    </div>
+  
+  </div>
 
     <a
       class="report-link"
