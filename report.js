@@ -128,32 +128,45 @@ function renderReport(data) {
       Math.max(0, 3 - weeksAvailable);
 
   contentEl.innerHTML = `
-    <section class="report-placeholder">
+  <section class="report-placeholder">
 
-      <div class="report-tag">
-        FRUTI
+    <div class="report-tag">
+      FRUTI
+    </div>
+
+    <h1 class="report-placeholder-title">
+      Tu evolución semanal ya está en marcha.
+    </h1>
+
+    <p class="report-placeholder-subtitle">
+      Ya tenés ${weeksAvailable} semana${weeksAvailable === 1 ? "" : "s"} registradas.
+      Cuando completes ${missingWeeks}
+      semana${missingWeeks === 1 ? "" : "s"} más,
+      vas a desbloquear tu reporte histórico completo.
+    </p>
+
+    <div class="report-placeholder-progress">
+      <div class="report-placeholder-progress-label">
+        ${weeksAvailable} de 3 semanas completadas
       </div>
 
-      <h1 class="report-placeholder-title">
-        Tu reporte completo se activa pronto.
-      </h1>
+      <div class="report-placeholder-progress-track">
+        <div
+          class="report-placeholder-progress-fill"
+          style="width: ${(weeksAvailable / 3) * 100}%">
+        </div>
+      </div>
+    </div>
 
-      <p class="report-placeholder-subtitle">
-        Ya tenés ${weeksAvailable} semana${weeksAvailable === 1 ? "" : "s"}.
-        Seguí así y en ${missingWeeks}
-        semana${missingWeeks === 1 ? "" : "s"}
-        vas a poder ver tu evolución completa.
-      </p>
+    <a
+      class="report-link"
+      href="https://wa.me/5491154886995"
+    >
+      Volver a mi resumen
+    </a>
 
-      <a
-        class="report-link"
-        href="https://wa.me/5491154886995"
-      >
-        Volver a mi resumen
-      </a>
-
-    </section>
-  `;
+  </section>
+`;
 
   return;
 }
