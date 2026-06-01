@@ -118,9 +118,14 @@ function renderReport(data) {
   data?.weeks_available || 0;
 
   if (weeksAvailable < 3) {
-
-  const missingWeeks =
-    Math.max(0, 3 - weeksAvailable);
+    const reportHeader =
+      document.querySelector(".report-header");
+    
+    if (reportHeader) {
+      reportHeader.style.display = "none";
+    }
+    const missingWeeks =
+      Math.max(0, 3 - weeksAvailable);
 
   contentEl.innerHTML = `
     <section class="report-placeholder">
