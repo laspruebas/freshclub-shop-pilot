@@ -223,7 +223,7 @@ function renderReport(data) {
       return `
         <article
           class="report-week-card ${index === 0 ? "expanded" : "collapsed"}">
-          <div class="report-week-top">
+          <div class="report-week-top report-week-toggle">
             <div>
               <div class="report-week-label">
                 Semana del ${escapeHtml(formatWeekLabel(week.week_start))}
@@ -391,6 +391,46 @@ function renderReport(data) {
       </a>
     </section>
     `;
+
+document
+  .querySelectorAll(".report-week-toggle")
+  .forEach((el) => {
+
+    el.addEventListener("click", () => {
+
+      const card =
+        el.closest(".report-week-card");
+
+      if (!card) return;
+
+      const isExpanded =
+        card.classList.contains("expanded");
+
+      card.classList.remove(
+        "expanded",
+        "collapsed"
+      );
+
+      card.classList.add(
+        isExpanded
+          ? "collapsed"
+          : "expanded"
+      );
+
+      const arrow =
+        card.querySelector(".report-week-chevron");
+
+      if (arrow) {
+        arrow.textContent =
+          isExpanded
+            ? "▼"
+            : "▲";
+      }
+
+    });
+
+  });
+  
 }
 
 // =====================================================
