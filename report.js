@@ -244,18 +244,8 @@ function renderReport(data) {
             </div>
 
             <div class="report-metric">
-              <span>Porciones</span>
-              <strong>${escapeHtml(formatNumber(week.total_portions))}</strong>
-            </div>
-
-            <div class="report-metric">
-              <span>Diversidad</span>
-              <strong>${escapeHtml(week.diversity_score ?? 0)}</strong>
-            </div>
-
-            <div class="report-metric">
-              <span>Categorías</span>
-              <strong>${escapeHtml(week.total_categories_count ?? 0)}</strong>
+              <span>FRUTI Score</span>
+              <strong>${escapeHtml(Math.round(week.fruti_score ?? 0))}</strong>
             </div>
           </div>
 
