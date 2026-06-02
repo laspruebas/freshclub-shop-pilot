@@ -2720,3 +2720,80 @@ body {
   font-weight: 700;
   color: #66735e;
 }
+
+/* =========================
+   EVOLUCIÓN HISTÓRICA
+========================= */
+
+.report-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+
+  height: 80px;
+
+  margin-bottom: 12px;
+}
+
+.report-chart-column {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.report-chart-score {
+  font-size: 11px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.report-chart-score.latest {
+  color: #4a7c3f;
+  font-weight: 700;
+}
+
+.report-chart-bar-wrap {
+  width: 100%;
+  height: 70px;
+
+  display: flex;
+  align-items: flex-end;
+
+  background: #f0f0ea;
+  border-radius: 8px;
+
+  overflow: hidden;
+}
+
+.report-chart-bar {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+
+.report-chart-week {
+  font-size: 10px;
+  color: #aaa;
+  text-align: center;
+}
+
+.report-chart-message {
+  margin-bottom: 8px;
+
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  color: #4a7c3f;
+}
+
+.report-chart-explainer {
+  text-align: center;
+
+  font-size: 11px;
+
+  color: #aaa;
+}
