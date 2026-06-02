@@ -121,6 +121,18 @@ function renderReport(data) {
   const weeksAvailable =
     data?.weeks_available || 0;
 
+  if (reportTitleEl) {
+
+    if (weeksAvailable === 3) {
+      reportTitleEl.textContent =
+        "Tus primeras 3 semanas";
+    } else if (weeksAvailable > 3) {
+      reportTitleEl.textContent =
+        "Así viene mejorando tu hogar";
+    }
+  
+  }
+  
   if (weeksAvailable < 3) {
     const reportHeader =
       document.querySelector(".report-header");
