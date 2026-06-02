@@ -259,14 +259,6 @@ function renderReport(data) {
             </div>
           </div>
 
-          <div class="report-progress">
-            <div class="report-progress-head">
-              <span>Progreso semanal</span>
-              <strong>${escapeHtml(week.weekly_progress_percent ?? 0)}%</strong>
-            </div>
-            ${renderBar(week.weekly_progress_percent)}
-          </div>
-
           <div class="report-section-mini">
             <div class="report-section-title">Categorías cubiertas</div>
             <div class="report-chips">
