@@ -2807,3 +2807,19 @@ body {
 .report-week-card.expanded .report-week-content {
   display: block;
 }
+
+/* =========================
+   WEEK HEADER
+========================= */
+
+.report-week-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.report-week-chevron {
+  font-size: 12px;
+  color: #999;
+  line-height: 1;
+}
