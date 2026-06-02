@@ -358,7 +358,7 @@ function renderReport(data) {
     </section>
 
     <section class="report-section">
-      <h2>Timeline nutricional</h2>
+      <h2>Tus semanas</h2>
       <div class="report-timeline">
         ${timelineHtml}
       </div>
