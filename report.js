@@ -294,7 +294,7 @@ function renderReport(data) {
     lastScore - firstScore;
   
   const chartHtml = chartData
-    ., index) => {
+    .map((week, index) => {
   
       const score =
         Math.max(0, Math.min(100, Number(week.fruti_score || 0)));
