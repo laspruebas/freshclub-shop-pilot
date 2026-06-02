@@ -363,9 +363,6 @@ function renderReport(data) {
     
       </div>
     
-      <div class="report-chart-explainer">
-        Cuanto más alto, más variedad y cantidad comió tu familia esta semana.
-      </div>
     </section>
 
     <section class="report-section">
