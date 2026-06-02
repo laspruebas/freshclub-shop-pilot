@@ -275,32 +275,85 @@ function renderReport(data) {
     })
     .join("");
 
-  const chartHtml = reports
-    .slice()
-    .reverse()
-    .map((week) => {
-      const score = Math.max(0, Math.min(100, Number(week.fruti_score || 0)));
 
+
+  const chartData = reports
+    .slice()
+    .reverse();
+  
+  const firstScore =
+    Number(chartData[0]?.fruti_score || 0);
+  
+  const lastScore =
+    Number(chartData[chartData.length - 1]?.fruti_score || 0);
+  
+  const improvement =
+    lastScore - firstScore;
+  
+  const chartHtml = chartData
+    .map((week, index) => {
+  
+      const score =
+        Math.max(0, Math.min(100, Number(week.fruti_score || 0)));
+  
+      let barColor = "#c8ddc4";
+  
+      if (index === chartData.length - 2) {
+        barColor = "#7AB86A";
+      }
+  
+      if (index === chartData.length - 1) {
+        barColor = "#4a7c3f";
+      }
+  
       return `
-        <div class="report-chart-row">
-          <div class="report-chart-label">
-            ${escapeHtml(formatWeekLabel(week.week_start))}
+        <div class="report-chart-column">
+  
+          <div class="report-chart-score
+            ${index === chartData.length - 1 ? "latest" : ""}">
+            ${Math.round(score)}
           </div>
-          <div class="report-chart-track">
-            <div class="report-chart-fill" style="width:${score}%"></div>
+  
+          <div class="report-chart-bar-wrap">
+            <div
+              class="report-chart-bar"
+              style="
+                height:${score * 0.7}px;
+                background:${barColor};
+              ">
+            </div>
           </div>
-          <div class="report-chart-value">${escapeHtml(score)}</div>
+  
+          <div class="report-chart-week">
+            S${index + 1}
+          </div>
+  
         </div>
       `;
     })
     .join("");
-
+  
   contentEl.innerHTML = `
   
     <section class="report-section">
-      <h2>Evolución semanal</h2>
       <div class="report-chart">
         ${chartHtml}
+      </div>
+    
+      <div class="report-chart-message">
+    
+        ${
+          improvement >= 10
+            ? `↑ Mejoraste ${Math.round(improvement)} puntos en ${chartData.length} semanas`
+            : improvement > 0
+            ? `↑ Tu familia viene mejorando semana a semana.`
+            : `Tu hábito se mantiene. Seguí así.`
+        }
+    
+      </div>
+    
+      <div class="report-chart-explainer">
+        Cuanto más alto, más variedad y cantidad comió tu familia esta semana.
       </div>
     </section>
 
