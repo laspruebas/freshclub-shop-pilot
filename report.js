@@ -318,7 +318,7 @@ function renderReport(data) {
             <div
               class="report-chart-bar"
               style="
-                height:${score * 0.5}px;
+                height:${score * 0.7}px;
                 background:${barColor};
               ">
             </div>
