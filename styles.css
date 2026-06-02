@@ -960,7 +960,7 @@ body {
 }
 
 .report-main {
-  padding: 14px 14px 24px;
+  padding: 4px 14px 24px;
 }
 
 .report-empty {
@@ -1040,7 +1040,7 @@ body {
 
 .report-section {
   padding: 16px;
-  margin-top: 14px;
+  margin-top: 8px;
 }
 
 .report-section h2 {
