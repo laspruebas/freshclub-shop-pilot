@@ -44,7 +44,7 @@ function formatWeekLabel(dateString) {
 
   return date.toLocaleDateString("es-AR", {
     day: "2-digit",
-    month: "short",
+    month: "long",
     year: "numeric"
   });
 }
