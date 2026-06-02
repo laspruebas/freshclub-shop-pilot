@@ -306,31 +306,7 @@ function renderReport(data) {
     .join("");
 
   contentEl.innerHTML = `
-    <section class="report-summary-card">
-      <div class="report-summary-eyebrow">Última semana</div>
-
-      <div class="report-summary-main">
-        <div>
-          <h2>${escapeHtml(latest.fruti_level || "Reporte FRUTI")}</h2>
-          <p>
-            Alcanzaste un score FRUTI de 
-            <strong>${escapeHtml(latest.fruti_score ?? 0)}</strong>.
-          </p>
-        </div>
-
-        <div class="report-summary-score">
-          ${escapeHtml(latest.fruti_score ?? 0)}
-        </div>
-      </div>
-
-      ${renderBar(latest.weekly_progress_percent)}
-
-      <div class="report-summary-foot">
-        ${escapeHtml(formatNumber(latest.total_days_equivalent))} días equivalentes ·
-        ${escapeHtml(latest.total_categories_count ?? 0)} categorías cubiertas
-      </div>
-    </section>
-
+  
     <section class="report-section">
       <h2>Evolución semanal</h2>
       <div class="report-chart">
