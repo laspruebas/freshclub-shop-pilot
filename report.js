@@ -113,9 +113,13 @@ async function loadHouseholdReport() {
 // =====================================================
 
 function renderReport(data) {
+
+  const reportTitleEl =
+    document.getElementById("reportTitle");
+  
   const reports = data?.weekly_reports || [];
   const weeksAvailable =
-  data?.weeks_available || 0;
+    data?.weeks_available || 0;
 
   if (weeksAvailable < 3) {
     const reportHeader =
