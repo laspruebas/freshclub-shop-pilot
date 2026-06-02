@@ -2730,8 +2730,6 @@ body {
   align-items: flex-end;
   gap: 8px;
 
-  height: 140px;
-
   margin-bottom: 12px;
 }
 
@@ -2757,7 +2755,7 @@ body {
 
 .report-chart-bar-wrap {
   width: 100%;
-  height: 110px;
+  height: 70px;
 
   display: flex;
   align-items: flex-end;
