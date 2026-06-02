@@ -374,7 +374,7 @@ function renderReport(data) {
     
       <a
         class="report-link"
-        href="https://wa.me/14155238886"
+        href="https://wa.me/5491154886995"
       >
         Volver a WhatsApp
       </a>
