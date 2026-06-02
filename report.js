@@ -233,8 +233,16 @@ function renderReport(data) {
               </div>
             </div>
 
-            <div class="report-score">
-              ${escapeHtml(week.fruti_score ?? 0)}
+            <div class="report-week-right">
+
+              <div class="report-score">
+                ${escapeHtml(week.fruti_score ?? 0)}
+              </div>
+            
+              <div class="report-week-chevron">
+                ${index === 0 ? "▲" : "▼"}
+              </div>
+            
             </div>
           </div>
           
