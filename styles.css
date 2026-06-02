@@ -2795,3 +2795,15 @@ body {
 
   color: #aaa;
 }
+
+/* =========================
+   WEEK ACCORDION
+========================= */
+
+.report-week-card.collapsed .report-week-content {
+  display: none;
+}
+
+.report-week-card.expanded .report-week-content {
+  display: block;
+}
