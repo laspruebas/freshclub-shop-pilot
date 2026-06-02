@@ -203,7 +203,7 @@ function renderReport(data) {
   const latest = reports[0];
 
   const timelineHtml = reports
-    .map((week) => {
+    .map((week, index) => {
       const categoriesHtml = (week.dashboard_categories_week || [])
         .map((cat) => `
           <span class="report-chip">
@@ -221,7 +221,8 @@ function renderReport(data) {
         .join("");
 
       return `
-        <article class="report-week-card">
+        <article
+          class="report-week-card ${index === 0 ? "expanded" : "collapsed"}">
           <div class="report-week-top">
             <div>
               <div class="report-week-label">
@@ -236,7 +237,8 @@ function renderReport(data) {
               ${escapeHtml(week.fruti_score ?? 0)}
             </div>
           </div>
-
+          
+        <div class="report-week-content">
           <div class="report-metrics-grid">
             <div class="report-metric">
               <span>Días equivalentes</span>
@@ -270,6 +272,7 @@ function renderReport(data) {
               ${missingHtml || `<span class="report-muted">No hubo categorías faltantes</span>`}
             </div>
           </div>
+        </div>
         </article>
       `;
     })
@@ -291,7 +294,7 @@ function renderReport(data) {
     lastScore - firstScore;
   
   const chartHtml = chartData
-    .map((week, index) => {
+    ., index) => {
   
       const score =
         Math.max(0, Math.min(100, Number(week.fruti_score || 0)));
