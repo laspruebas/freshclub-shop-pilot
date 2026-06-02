@@ -267,7 +267,7 @@ function renderReport(data) {
           </div>
 
           <div class="report-section-mini">
-            <div class="report-section-title">Te faltó consumir</div>
+            <div class="report-section-title">Podés sumar</div>
             <div class="report-chips">
               ${missingHtml || `<span class="report-muted">No hubo categorías faltantes</span>`}
             </div>
