@@ -240,28 +240,49 @@ function renderExtras() {
     
     card.innerHTML = `
       <div class="product-row extra-row">
-        <img 
+        <img
           class="product-img"
-          src="${escapeHtml(item.image_url || '')}" 
+          src="${escapeHtml(product.image_url || '')}"
           alt=""
           loading="lazy"
-          data-product-id="${escapeHtml(item.product_id)}"
-          data-product-name="${escapeHtml(item.ux_display_name || item.product_name || '')}"
+          data-product-id="${escapeHtml(product.product_id)}"
+          data-product-name="${escapeHtml(
+            product.ux_display_name ||
+            product.name ||
+            product.product_name ||
+            ''
+          )}"
         />
     
         <div class="product-content">
           <div class="product-main">
-            <p class="card-title">${escapeHtml(item.ux_display_name || item.product_name || "")}</p>
-            ${item.ux_category_label ? `<div class="item-category">${escapeHtml(item.ux_category_label)}</div>` : ""}
+            <p class="card-title">
+              ${escapeHtml(
+                product.ux_display_name ||
+                product.name ||
+                product.product_name ||
+                ""
+              )}
+            </p>
+    
+            ${
+              (product.product_category || product.ux_category_label)
+                ? `<div class="item-category">${escapeHtml(
+                    product.product_category ||
+                    product.ux_category_label
+                  )}</div>`
+                : ""
+            }
           </div>
     
-          <button class="add-btn" data-add="${escapeHtml(item.product_id)}">
+          <button
+            class="add-btn"
+            data-add="${escapeHtml(product.product_id)}">
             + Agregar
           </button>
         </div>
       </div>
     `;
-
     const img = card.querySelector(".product-img");
     if (img) {
       img.addEventListener("error", () => handleImageError(img));
