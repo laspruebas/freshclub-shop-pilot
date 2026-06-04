@@ -228,9 +228,9 @@ function renderExtras() {
   extrasEl.innerHTML = "";
 
   extraProducts.forEach((item) => {
-  
+    const product = item.product || item;
     const alreadyInOrder = orderState.some(
-      (p) => p.product_id === item.product_id
+      (p) => p.product_id === product.product_id
     );
   
     if (alreadyInOrder) return;
@@ -390,6 +390,7 @@ async function loadInitialOrder() {
       const aiData = await aiResponse.json();
 
       items = aiData?.items || [];
+      extraProducts = aiData?.extras || [];
 
       if (!items.length) {
         throw new Error("AI initial order returned empty selection");
@@ -453,6 +454,7 @@ async function loadInitialOrder() {
     
     renderPedidoSummary();
     renderOrder();
+    renderExtras();
     setStatus("");
 
   } catch (error) {
@@ -989,10 +991,7 @@ async function initApp() {
     }
 
     setStatus(`Hogar detectado: ${householdId}`);
-    await Promise.all([
-      loadInitialOrder(),
-      loadExtras()
-    ]);
+    await loadInitialOrder();
     
     setTimeout(() => {
     
