@@ -374,7 +374,7 @@ async function loadInitialOrder() {
 
     try {
       const aiResponse = await fetch(
-        `${API_BASE}/ai/initial-order-selection/${householdId}`,
+        `${API_BASE}/ai/v3-selection/${householdId}`,
         {
           method: "POST",
           headers: {
@@ -389,7 +389,7 @@ async function loadInitialOrder() {
 
       const aiData = await aiResponse.json();
 
-      items = aiData?.selection?.selected_items || [];
+      items = aiData?.items || [];
 
       if (!items.length) {
         throw new Error("AI initial order returned empty selection");
@@ -412,20 +412,42 @@ async function loadInitialOrder() {
     }
 
     orderState = items
-      .slice()
-      .sort((a, b) => Number(a.display_order || 0) - Number(b.display_order || 0))
-      .map(item => ({
-        product_id: item.product_id,
-        name: item.ux_display_name || item.product_name,
-        qty: item.suggested_qty,
-        suggested_qty: item.suggested_qty,
-        unit: item.unit,
-        unit_label: item.unit_label,
-        category: item.ux_category_label,
-        emoji: item.ux_emoji,
-        image_url: item.image_url,
-        reason: item.reason
-      }));
+  .slice()
+  .map(item => ({
+
+    product_id:
+      item.product?.product_id,
+
+    name:
+      item.product?.ux_display_name ||
+      item.product?.name,
+
+    qty: 1,
+
+    suggested_qty: 1,
+
+    unit:
+      item.product?.unit,
+
+    unit_label:
+      item.product?.unit_label,
+
+    category:
+      item.product?.product_category,
+
+    image_url:
+      item.product?.image_url,
+
+    reason:
+      item.reason,
+
+    source:
+      item.source,
+
+    slot:
+      item.slot
+
+  }));
 
     console.log("Initial order source:", source, orderState);
     
