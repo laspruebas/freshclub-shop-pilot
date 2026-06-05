@@ -770,7 +770,14 @@ extrasEl.addEventListener("click", (event) => {
   const productId = btn.dataset.add;
   if (!productId) return;
 
-  const product = extraProducts.find(p => p.product_id === productId);
+  const selectedExtra = extraProducts.find((item) => {
+    const product = item.product || item;
+    return product.product_id === productId;
+  });
+  
+  if (!selectedExtra) return;
+  
+  const product = selectedExtra.product || selectedExtra;  
   if (!product) return;
 
   orderState.push({
