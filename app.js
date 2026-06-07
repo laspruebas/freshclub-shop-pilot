@@ -854,7 +854,7 @@ manualSearchResultsEl?.addEventListener("click", (event) => {
     unit: product.unit,
     unit_label: product.unit_label,
     category: product.ux_category_label,
-    emoji: product.ux_em
+    emoji: product.ux_em,
     image_url: product.image_url
   });
 
