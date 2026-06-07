@@ -484,25 +484,6 @@ async function loadInitialOrder() {
   }
 }
 
-async function loadExtras() {
-  try {
-    const res = await fetch(`${API_BASE}/initial-order/${householdId}/extras`);
-
-    if (!res.ok) {
-      throw new Error(`Extras HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    extraProducts = data.items;
-
-    renderExtras();
-
-  } catch (err) {
-    console.error("Error loading extras", err);
-  }
-}
-
 async function searchManualProducts(query) {
   const cleanQuery = String(query || "").trim();
 
