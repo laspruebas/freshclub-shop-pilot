@@ -782,13 +782,31 @@ extrasEl.addEventListener("click", (event) => {
 
   orderState.push({
     product_id: product.product_id,
-    name: product.ux_display_name || product.product_name,
+  
+    name:
+      product.ux_display_name ||
+      product.name ||
+      product.product_name,
+  
     qty: 1,
+  
+    suggested_qty: 1,
+  
     unit: product.unit,
+  
     unit_label: product.unit_label,
-    category: product.ux_category_label,
-    emoji: product.ux_emoji,
-    image_url: product.image_url
+  
+    category:
+      product.product_category ||
+      product.ux_category_label,
+  
+    image_url: product.image_url,
+  
+    reason: selectedExtra.reason,
+  
+    source: selectedExtra.source,
+  
+    slot: selectedExtra.slot
   });
 
   renderOrder();
@@ -836,7 +854,7 @@ manualSearchResultsEl?.addEventListener("click", (event) => {
     unit: product.unit,
     unit_label: product.unit_label,
     category: product.ux_category_label,
-    emoji: product.ux_emoji,
+    emoji: product.ux_em
     image_url: product.image_url
   });
 
