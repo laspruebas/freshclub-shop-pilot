@@ -167,15 +167,41 @@ function renderPedidoSummary() {
   `;
 }
 
+const GROUP_TITLES = {
+  base_week: "La base de la semana",
+  daily: "Para todos los días",
+  variety: "Más variedad para esta semana",
+  energy: "Energía natural"
+};
+
 function renderOrder() {
   if (!orderState.length) {
     orderListEl.innerHTML = `<div class="empty">No hay productos</div>`;
     return;
   }
 
-  orderListEl.innerHTML = "";
+orderListEl.innerHTML = "";
 
-  orderState.forEach((item, index) => {
+let currentGroup = null;
+
+orderState.forEach((item, index) => {
+
+  if (item.display_group !== currentGroup) {
+
+    currentGroup = item.display_group;
+
+    const groupTitle =
+      document.createElement("div");
+
+    groupTitle.className =
+      "pedido-group-title";
+
+    groupTitle.textContent =
+      GROUP_TITLES[item.display_group] ||
+      item.display_group;
+
+    orderListEl.appendChild(groupTitle);
+  }
     const card = document.createElement("div");
     card.className = "card";
 
@@ -479,6 +505,9 @@ async function loadInitialOrder() {
     
           slot:
             item.slot
+
+          display_group:
+            item.display_group
         };
     
       });
