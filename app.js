@@ -504,7 +504,7 @@ async function loadInitialOrder() {
             item.source,
     
           slot:
-            item.slot
+            item.slot,
 
           display_group:
             item.display_group
