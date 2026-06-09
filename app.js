@@ -437,36 +437,39 @@ async function loadInitialOrder() {
       .slice()
       .map(item => {
     
+        const product = item.product || item;
         const quantity = item.quantity || {};
     
         return {
-    
           product_id:
-            item.product?.product_id,
+            product.product_id,
     
           name:
-            item.product?.ux_display_name ||
-            item.product?.name,
+            product.ux_display_name ||
+            product.name ||
+            product.product_name ||
             "Producto",
+    
           qty:
-            quantity.suggested_qty ?? 1,
+            quantity.suggested_qty ?? product.suggested_qty ?? 1,
     
           suggested_qty:
-            quantity.suggested_qty ?? 1,
+            quantity.suggested_qty ?? product.suggested_qty ?? 1,
     
           unit:
             quantity.unit ||
-            item.product?.unit,
+            product.unit,
     
           unit_label:
             quantity.unit_label ||
-            item.product?.unit_label,
+            product.unit_label,
     
           category:
-            item.product?.product_category,
+            product.product_category ||
+            product.ux_category_label,
     
           image_url:
-            item.product?.image_url,
+            product.image_url,
     
           reason:
             item.reason,
@@ -476,28 +479,9 @@ async function loadInitialOrder() {
     
           slot:
             item.slot
-    
         };
     
       });
-
-    category:
-      item.product?.product_category,
-
-    image_url:
-      item.product?.image_url,
-
-    reason:
-      item.reason,
-
-    source:
-      item.source,
-
-    slot:
-      item.slot
-
-  }));
-
     console.log("Initial order source:", source, orderState);
     
     renderPedidoSummary();
@@ -862,7 +846,6 @@ manualSearchResultsEl?.addEventListener("click", (event) => {
     unit: product.unit,
     unit_label: product.unit_label,
     category: product.ux_category_label,
-    emoji: product.ux_em,
     image_url: product.image_url
   });
 
