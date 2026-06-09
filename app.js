@@ -434,25 +434,52 @@ async function loadInitialOrder() {
     }
 
     orderState = items
-  .slice()
-  .map(item => ({
-
-    product_id:
-      item.product?.product_id,
-
-    name:
-      item.product?.ux_display_name ||
-      item.product?.name,
-
-    qty: 1,
-
-    suggested_qty: 1,
-
-    unit:
-      item.product?.unit,
-
-    unit_label:
-      item.product?.unit_label,
+      .slice()
+      .map(item => {
+    
+        const quantity = item.quantity || {};
+    
+        return {
+    
+          product_id:
+            item.product?.product_id,
+    
+          name:
+            item.product?.ux_display_name ||
+            item.product?.name,
+            "Producto",
+          qty:
+            quantity.suggested_qty ?? 1,
+    
+          suggested_qty:
+            quantity.suggested_qty ?? 1,
+    
+          unit:
+            quantity.unit ||
+            item.product?.unit,
+    
+          unit_label:
+            quantity.unit_label ||
+            item.product?.unit_label,
+    
+          category:
+            item.product?.product_category,
+    
+          image_url:
+            item.product?.image_url,
+    
+          reason:
+            item.reason,
+    
+          source:
+            item.source,
+    
+          slot:
+            item.slot
+    
+        };
+    
+      });
 
     category:
       item.product?.product_category,
