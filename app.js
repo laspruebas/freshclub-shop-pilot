@@ -137,7 +137,7 @@ function renderPedidoSummary() {
 
         <div class="pedido-summary-stat">
           <div class="pedido-summary-value">
-            ${totalProducts}
+            ${total_selected_products}
           </div>
         
           <div class="pedido-summary-label">
