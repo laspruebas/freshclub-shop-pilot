@@ -214,39 +214,97 @@ adminProductsEl?.addEventListener(
     const editBtn =
       event.target.closest("[data-edit]");
 
-    if (editBtn) {
+   if (editBtn) {
 
-      const productId =
-        editBtn.dataset.edit;
-    
-      const product =
-        products.find(
-          p => p.product_id === productId
-        );
-    
-      if (!product) return;
-    
-      const newName = prompt(
-        "UX Display Name",
-        product.ux_display_name || ""
+    const productId =
+      editBtn.dataset.edit;
+  
+    const product =
+      products.find(
+        p => p.product_id === productId
       );
-    
-      if (
-        newName === null ||
-        newName === product.ux_display_name
-      ) {
-        return;
-      }
-    
-      await patchProduct(
-        productId,
-        {
-          ux_display_name: newName
-        }
-      );
-    
+  
+    if (!product) return;
+  
+    const payload = {};
+  
+    const uxDisplayName = prompt(
+      "UX Display Name",
+      product.ux_display_name || ""
+    );
+  
+    if (
+      uxDisplayName !== null &&
+      uxDisplayName !== product.ux_display_name
+    ) {
+      payload.ux_display_name =
+        uxDisplayName;
     }
-
+  
+    const foundationType = prompt(
+      "Foundation Type (mandatory / preferred)",
+      product.foundation_type || ""
+    );
+  
+    if (
+      foundationType !== null &&
+      foundationType !== product.foundation_type
+    ) {
+      payload.foundation_type =
+        foundationType || null;
+    }
+  
+    const foundationSlot = prompt(
+      "Foundation Slot (M1-M5 / P1-P4)",
+      product.foundation_slot || ""
+    );
+  
+    if (
+      foundationSlot !== null &&
+      foundationSlot !== product.foundation_slot
+    ) {
+      payload.foundation_slot =
+        foundationSlot || null;
+    }
+  
+    const edibleRatio = prompt(
+      "Edible Ratio (0-1)",
+      product.edible_ratio ?? ""
+    );
+  
+    if (
+      edibleRatio !== null &&
+      Number(edibleRatio) !== product.edible_ratio
+    ) {
+      payload.edible_ratio =
+        Number(edibleRatio);
+    }
+  
+    const unitWeight = prompt(
+      "Unit Weight Grams",
+      product.unit_weight_grams ?? ""
+    );
+  
+    if (
+      unitWeight !== null &&
+      Number(unitWeight) !== product.unit_weight_grams
+    ) {
+      payload.unit_weight_grams =
+        Number(unitWeight);
+    }
+  
+    if (
+      Object.keys(payload).length === 0
+    ) {
+      return;
+    }
+  
+    await patchProduct(
+      productId,
+      payload
+    );
+  
+  }
   }
 );
 
