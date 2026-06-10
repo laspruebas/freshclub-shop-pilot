@@ -222,5 +222,3 @@ adminProductsEl?.addEventListener(
 // ====================================
 
 loadProducts();
-  loadProducts(adminSearch.value.trim());
-});
