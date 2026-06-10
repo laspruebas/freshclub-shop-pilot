@@ -130,18 +130,18 @@ function renderPedidoSummary() {
     <section class="pedido-summary-card">
 
       <div class="pedido-summary-tag">
-        PEDIDO RECOMENDADO PARA TU HOGAR
+        TU SEMANA ESTÁ RESUELTA
       </div>
 
       <div class="pedido-summary-stats">
 
         <div class="pedido-summary-stat">
           <div class="pedido-summary-value">
-            ${householdSize}
+            ${totalProducts}
           </div>
-
+        
           <div class="pedido-summary-label">
-            personas
+            productos elegidos
           </div>
         </div>
 
@@ -160,7 +160,7 @@ function renderPedidoSummary() {
       </div>
 
       <div class="pedido-summary-foot">
-        Podés ajustarlo antes de confirmar.
+        No tuviste que pensar qué comprar.
       </div>
 
     </section>
