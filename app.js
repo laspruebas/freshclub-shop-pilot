@@ -111,7 +111,9 @@ function handleImageError(img) {
 // =====================================================
 
 function renderPedidoSummary() {
-
+  
+  const totalSelectedProducts = orderState.length;
+  
   const householdSize = 5;
 
   const totalQty =
@@ -137,7 +139,7 @@ function renderPedidoSummary() {
 
         <div class="pedido-summary-stat">
           <div class="pedido-summary-value">
-            ${total_selected_products}
+            ${totalSelectedProducts}
           </div>
         
           <div class="pedido-summary-label">
