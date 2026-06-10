@@ -961,7 +961,7 @@ async function submitOrder() {
   try {
     reportLoadingTitleEl.innerHTML = `
       <span class="report-loading-done">
-        Listo.
+        Listo!
       </span>
     
       <span class="report-loading-message">
