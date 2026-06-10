@@ -1,39 +1,226 @@
 const API_BASE = "https://fruti-api-y5uz.onrender.com";
 
+const adminProductsEl =
+  document.getElementById("adminProducts");
+
+const adminSearchEl =
+  document.getElementById("adminSearch");
+
 let products = [];
-let editingProduct = null;
+
+// ====================================
+// LOAD
+// ====================================
 
 async function loadProducts(q = "") {
-  const url = q
-    ? `${API_BASE}/admin/products?q=${encodeURIComponent(q)}`
-    : `${API_BASE}/admin/products`;
 
-  const res = await fetch(url);
-  const data = await res.json();
+  try {
 
-  products = data.items || [];
-  renderProducts();
+    const url = q
+      ? `${API_BASE}/admin/products?q=${encodeURIComponent(q)}`
+      : `${API_BASE}/admin/products`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    products = data.items || [];
+
+    renderProducts();
+
+  } catch (error) {
+
+    console.error(error);
+
+    adminProductsEl.innerHTML = `
+      <div>Error cargando productos</div>
+    `;
+  }
 }
+
+// ====================================
+// PATCH
+// ====================================
 
 async function patchProduct(productId, payload) {
-  const res = await fetch(`${API_BASE}/admin/products/${productId}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
 
-  const data = await res.json();
+  try {
 
-  products = products.map(p =>
-    p.product_id === productId ? data.product : p
-  );
+    const res = await fetch(
+      `${API_BASE}/admin/products/${productId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }
+    );
 
-  renderProducts();
+    const data = await res.json();
+
+    products = products.map((p) =>
+      p.product_id === productId
+        ? data.product
+        : p
+    );
+
+    renderProducts();
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Error actualizando producto");
+  }
 }
 
-patchProduct(productId, { status: "standby" })
-patchProduct(productId, { status: "active" })
+// ====================================
+// RENDER
+// ====================================
 
-adminSearch.addEventListener("input", () => {
+function renderProducts() {
+
+  adminProductsEl.innerHTML = "";
+
+  products.forEach((product) => {
+
+    const row =
+      document.createElement("div");
+
+    row.className = "admin-row";
+
+    row.innerHTML = `
+      <img
+        class="admin-image"
+        src="${product.image_url || ""}"
+        alt=""
+      />
+
+      <div>
+        <div class="admin-product-name">
+          ${product.ux_display_name || ""}
+        </div>
+
+        <div class="admin-product-variety">
+          ${product.name || ""} ${product.variety || ""}
+        </div>
+      </div>
+
+      <div>
+        <span class="admin-status ${product.status}">
+          ${product.status}
+        </span>
+      </div>
+
+      <div>
+        ${product.foundation_slot || "-"}
+      </div>
+
+      <div>
+        ${product.foundation_type || "-"}
+      </div>
+
+      <div class="admin-actions">
+
+        <button
+          class="admin-btn admin-btn-edit"
+          data-edit="${product.product_id}">
+          Editar
+        </button>
+
+        ${
+          product.status === "active"
+            ? `
+              <button
+                class="admin-btn admin-btn-standby"
+                data-standby="${product.product_id}">
+                Stand By
+              </button>
+            `
+            : `
+              <button
+                class="admin-btn admin-btn-active"
+                data-active="${product.product_id}">
+                Reactivar
+              </button>
+            `
+        }
+
+      </div>
+    `;
+
+    adminProductsEl.appendChild(row);
+
+  });
+}
+
+// ====================================
+// EVENTS
+// ====================================
+
+adminSearchEl?.addEventListener(
+  "input",
+  () => {
+
+    loadProducts(
+      adminSearchEl.value.trim()
+    );
+
+  }
+);
+
+adminProductsEl?.addEventListener(
+  "click",
+  async (event) => {
+
+    const standbyBtn =
+      event.target.closest("[data-standby]");
+
+    if (standbyBtn) {
+
+      await patchProduct(
+        standbyBtn.dataset.standby,
+        {
+          status: "standby"
+        }
+      );
+
+      return;
+    }
+
+    const activeBtn =
+      event.target.closest("[data-active]");
+
+    if (activeBtn) {
+
+      await patchProduct(
+        activeBtn.dataset.active,
+        {
+          status: "active"
+        }
+      );
+
+      return;
+    }
+
+    const editBtn =
+      event.target.closest("[data-edit]");
+
+    if (editBtn) {
+
+      alert(
+        "Edición MVP siguiente etapa"
+      );
+
+    }
+
+  }
+);
+
+// ====================================
+// INIT
+// ====================================
+
+loadProducts();
   loadProducts(adminSearch.value.trim());
 });
