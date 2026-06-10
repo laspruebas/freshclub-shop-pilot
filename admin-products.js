@@ -216,10 +216,35 @@ adminProductsEl?.addEventListener(
 
     if (editBtn) {
 
-      alert(
-        "Edición MVP siguiente etapa"
+      const productId =
+        editBtn.dataset.edit;
+    
+      const product =
+        products.find(
+          p => p.product_id === productId
+        );
+    
+      if (!product) return;
+    
+      const newName = prompt(
+        "UX Display Name",
+        product.ux_display_name || ""
       );
-
+    
+      if (
+        newName === null ||
+        newName === product.ux_display_name
+      ) {
+        return;
+      }
+    
+      await patchProduct(
+        productId,
+        {
+          ux_display_name: newName
+        }
+      );
+    
     }
 
   }
