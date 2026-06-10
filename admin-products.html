@@ -1,7 +1,38 @@
-<input id="adminSearch" placeholder="Buscar producto..." />
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<div id="adminStatus"></div>
+  <title>Admin Productos</title>
 
-<div id="adminProducts"></div>
+  <link rel="stylesheet" href="./admin-products.css" />
+</head>
 
-<script type="module" src="./admin-products.js"></script>
+<body>
+
+  <div class="admin-page">
+
+    <h1 class="admin-title">
+      Productos
+    </h1>
+
+    <input
+      id="adminSearch"
+      class="admin-search"
+      placeholder="Buscar producto..."
+    />
+
+    <div id="adminStatus"></div>
+
+    <div
+      id="adminProducts"
+      class="admin-table">
+    </div>
+
+  </div>
+
+  <script type="module" src="./admin-products.js"></script>
+
+</body>
+</html>
