@@ -90,65 +90,73 @@ function renderProducts() {
     row.className = "admin-row";
 
     row.innerHTML = `
-      <img
-        class="admin-image"
-        src="${product.image_url || ""}"
-        alt=""
-      />
+  <img
+    class="admin-image"
+    src="${product.image_url || ""}"
+    alt=""
+  />
 
-      <div>
-        <div class="admin-product-name">
-          ${product.ux_display_name || ""}
-        </div>
+  <div>
+    <div class="admin-product-name">
+      ${product.ux_display_name || ""}
+    </div>
 
-        <div class="admin-product-variety">
-          ${product.name || ""} ${product.variety || ""}
-        </div>
-      </div>
+    <div class="admin-product-variety">
+      ${product.name || ""}
+      ${product.variety || ""}
+    </div>
+  </div>
 
-      <div>
-        <span class="admin-status ${product.status}">
-          ${product.status}
-        </span>
-      </div>
+  <div>
+    <span class="admin-status ${product.status}">
+      ${product.status}
+    </span>
+  </div>
 
-      <div>
-        ${product.foundation_slot || "-"}
-      </div>
+  <div>
+    ${product.foundation_type || "-"}
+  </div>
 
-      <div>
-        ${product.foundation_type || "-"}
-      </div>
+  <div>
+    ${product.foundation_slot || "-"}
+  </div>
 
-      <div class="admin-actions">
+  <div>
+    ${product.diversity_eligible ? "Sí" : "No"}
+  </div>
 
-        <button
-          class="admin-btn admin-btn-edit"
-          data-edit="${product.product_id}">
-          Editar
-        </button>
+  <div>
+    ${product.is_initial_candidate ? "Sí" : "No"}
+  </div>
 
-        ${
-          product.status === "active"
-            ? `
-              <button
-                class="admin-btn admin-btn-standby"
-                data-standby="${product.product_id}">
-                Stand By
-              </button>
-            `
-            : `
-              <button
-                class="admin-btn admin-btn-active"
-                data-active="${product.product_id}">
-                Reactivar
-              </button>
-            `
-        }
+  <div class="admin-actions">
 
-      </div>
-    `;
+    <button
+      class="admin-btn admin-btn-edit"
+      data-edit="${product.product_id}">
+      Editar
+    </button>
 
+    ${
+      product.status === "active"
+        ? `
+          <button
+            class="admin-btn admin-btn-standby"
+            data-standby="${product.product_id}">
+            Stand By
+          </button>
+        `
+        : `
+          <button
+            class="admin-btn admin-btn-active"
+            data-active="${product.product_id}">
+            Reactivar
+          </button>
+        `
+    }
+
+  </div>
+`;
     adminProductsEl.appendChild(row);
 
   });
