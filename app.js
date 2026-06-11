@@ -113,20 +113,12 @@ function handleImageError(img) {
 function renderPedidoSummary() {
   
   const totalSelectedProducts = orderState.length;
-  
-  const householdSize = 5;
 
-  const totalQty =
-    orderState.reduce(
-      (acc, item) => acc + Number(item.qty || 0),
-      0
-    );
+  const coverage =
+  window.frutiCoverage || {};
 
-  const estimatedDays =
-    Math.max(
-      1,
-      Math.round(totalQty / householdSize)
-    );
+  const daysLabel =
+  coverage.days_label || "";
 
   pedidoSummaryEl.innerHTML = `
     <section class="pedido-summary-card">
@@ -438,6 +430,9 @@ async function loadInitialOrder() {
 
       const aiData = await aiResponse.json();
 
+      window.frutiCoverage =
+        aiData.coverage || null;
+      
       items = aiData?.items || [];
       extraProducts = aiData?.extras || [];
 
