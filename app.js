@@ -143,7 +143,7 @@ function renderPedidoSummary() {
 
         <div class="pedido-summary-stat">
           <div class="pedido-summary-value">
-            ~${estimatedDays} días
+            ${daysLabel}
           </div>
 
           <div class="pedido-summary-label">
