@@ -74,20 +74,6 @@ function setStatus(message, type = "") {
   }
 }
 
-function formatQty(qty) {
-  if (qty === 0) return "0";
-  if (qty < 1) return `${qty * 1000} g`;
-  return `${qty} kg`;
-}
-function roundToHalf(value) {
-  return Math.round(Number(value || 0) * 2) / 2;
-}
-
-function formatHalf(value) {
-  const rounded = roundToHalf(value);
-  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
-}
-
 function escapeHtml(text) {
   return String(text)
     .replaceAll("&", "&amp;")
