@@ -622,7 +622,6 @@ submitBtn.addEventListener("click", submitHouseholdMembers);
 
 async function initHouseholdPage() {
   try {
-      //householdId = "test";                // 👈 agregar
 
     const params = new URLSearchParams(window.location.search);
     const phone = params.get("phone");
