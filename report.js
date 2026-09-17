@@ -54,16 +54,6 @@ function formatNumber(value, digits = 1) {
   return Number.isInteger(num) ? String(num) : num.toFixed(digits);
 }
 
-function renderBar(percent) {
-  const safePercent = Math.max(0, Math.min(100, Number(percent || 0)));
-
-  return `
-    <div class="report-progress-bar">
-      <div class="report-progress-fill" style="width:${safePercent}%"></div>
-    </div>
-  `;
-}
-
 // =====================================================
 // API
 // =====================================================
