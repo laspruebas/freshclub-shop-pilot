@@ -18,6 +18,7 @@ import {
   manualProductToOrderItem,
   normalizeInitialOrderItems
 } from "./order/model.js";
+import { getNextDeliveryMessage } from "./order/delivery.js";
 
 // =====================================================
 // STATE
@@ -515,57 +516,6 @@ manualSearchResultsEl?.addEventListener("click", (event) => {
   renderExtras();
   renderManualSearchResults();
 });
-
-function getNextDeliveryMessage() {
-
-  const schedule =
-    JSON.parse(
-      sessionStorage.getItem("delivery_schedule") || "[]"
-    );
-
-  const days =
-    schedule.map((s) => s.day);
-
-  if (!days.length) {
-    return "Ahora olvidate de las frutas y verduras.";
-  }
-
-  if (days.length === 1) {
-    return `Hasta el ${days[0]} que viene no pensás más en frutas y verduras.`;
-  }
-
-  const orderedDays = [
-    "lunes",
-    "martes",
-    "miércoles",
-    "jueves",
-    "viernes"
-  ];
-
-  const today =
-    new Date()
-      .toLocaleDateString("es-AR", {
-        weekday: "long"
-      })
-      .toLowerCase();
-
-  const currentIndex =
-    orderedDays.indexOf(today);
-
-  const future =
-    days
-      .map((d) => ({
-        day: d,
-        index: orderedDays.indexOf(d)
-      }))
-      .filter((d) => d.index > currentIndex)
-      .sort((a, b) => a.index - b.index);
-
-  const nextDay =
-    future[0]?.day || days[0];
-
-  return `Hasta el ${nextDay} no pensás más en frutas y verduras.`;
-}
 
 async function submitOrder() {
   if (!householdId) {
