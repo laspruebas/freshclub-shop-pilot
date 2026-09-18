@@ -3,14 +3,8 @@
 // =====================================================
 
 import { validateSessionToken } from "./session.js";
-import {
-  fetchAiInitialOrder,
-  fetchInitialOrderFallback
-} from "./order/api.js";
-import {
-  extraToOrderItem,
-  normalizeInitialOrderItems
-} from "./order/model.js";
+import { extraToOrderItem } from "./order/model.js";
+import { loadInitialOrderData } from "./order/load.js";
 import {
   renderExtras as renderExtrasView,
   renderOrder as renderOrderView,
@@ -104,35 +98,17 @@ async function resolveSessionFromToken() {
 }
 async function loadInitialOrder() {
   try {
+    const initialOrder =
+      await loadInitialOrderData(householdId);
 
-    let items = [];
-
-    try {
-      const aiData = await fetchAiInitialOrder(householdId);
-
-      window.frutiCoverage =
-        aiData.coverage || null;
-      
-      items = aiData?.items || [];
-      extraProducts = aiData?.extras || [];
-
-      if (!items.length) {
-        throw new Error("AI initial order returned empty selection");
-      }
-
-    } catch (aiError) {
-      console.warn("AI initial order failed, using DB fallback:", aiError);
-      const fallbackData = await fetchInitialOrderFallback(householdId);
-      items = fallbackData.items || [];
-    }
-
-    orderState = normalizeInitialOrderItems(items);
+    orderState = initialOrder.orderState;
+    extraProducts = initialOrder.extraProducts;
+    window.frutiCoverage = initialOrder.coverage;
 
     renderPedidoSummary();
     renderOrder();
     renderExtras();
     setStatus("");
-
   } catch (error) {
     console.error(error);
     setStatus("Error cargando pedido", "error");
