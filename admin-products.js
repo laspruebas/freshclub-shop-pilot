@@ -127,34 +127,35 @@ adminProductsEl?.addEventListener(
     const editBtn =
       event.target.closest("[data-edit]");
 
-   if (editBtn) {
-    const productId =
-      editBtn.dataset.edit;
+    if (editBtn) {
+      const productId =
+        editBtn.dataset.edit;
 
-    const product =
-      products.find(
-        (item) =>
-          item.product_id === productId
+      const product =
+        products.find(
+          (item) =>
+            item.product_id === productId
+        );
+
+      if (!product) return;
+
+      const payload =
+        buildProductEditPayload(product);
+
+      if (!payload) return;
+
+      if (
+        Object.keys(payload).length === 0
+      ) {
+        return;
+      }
+
+      await patchProduct(
+        productId,
+        payload
       );
-
-    if (!product) return;
-
-    const payload =
-      buildProductEditPayload(product);
-
-    if (!payload) return;
-
-    if (
-      Object.keys(payload).length === 0
-    ) {
-      return;
     }
-
-    await patchProduct(
-      productId,
-      payload
-    );
-  }  }
+  }
 );
 
 // ====================================
