@@ -1,4 +1,5 @@
 import { API_BASE } from "./config.js";
+import { escapeHtml } from "./utils.js";
 
 const adminProductsEl =
   document.getElementById("adminProducts");
@@ -107,33 +108,33 @@ function renderProducts() {
     row.innerHTML = `
   <img
     class="admin-image"
-    src="${product.image_url || ""}"
+    src="${escapeHtml(product.image_url || "")}"
     alt=""
   />
 
   <div>
     <div class="admin-product-name">
-      ${product.ux_display_name || ""}
+      ${escapeHtml(product.ux_display_name || "")}
     </div>
 
     <div class="admin-product-variety">
-      ${product.name || ""}
-      ${product.variety || ""}
+      ${escapeHtml(product.name || "")}
+      ${escapeHtml(product.variety || "")}
     </div>
   </div>
 
   <div>
-    <span class="admin-status ${product.status}">
-      ${product.status}
+    <span class="admin-status ${escapeHtml(product.status || "")}">
+      ${escapeHtml(product.status || "")}
     </span>
   </div>
 
   <div>
-    ${product.foundation_type || "-"}
+    ${escapeHtml(product.foundation_type || "-")}
   </div>
 
   <div>
-    ${product.foundation_slot || "-"}
+    ${escapeHtml(product.foundation_slot || "-")}
   </div>
 
   <div>
@@ -148,7 +149,7 @@ function renderProducts() {
 
     <button
       class="admin-btn admin-btn-edit"
-      data-edit="${product.product_id}">
+      data-edit="${escapeHtml(product.product_id)}">
       Editar
     </button>
 
@@ -157,14 +158,14 @@ function renderProducts() {
         ? `
           <button
             class="admin-btn admin-btn-standby"
-            data-standby="${product.product_id}">
+            data-standby="${escapeHtml(product.product_id)}">
             Stand By
           </button>
         `
         : `
           <button
             class="admin-btn admin-btn-active"
-            data-active="${product.product_id}">
+            data-active="${escapeHtml(product.product_id)}">
             Reactivar
           </button>
         `
