@@ -1019,6 +1019,7 @@ async function submitOrder() {
     
   } catch (error) {
     console.error("Error creating order:", error);
+    reportLoadingEl?.classList.add("hidden");
     setStatus("No se pudo crear la orden.", "error");
     submitBtn.disabled = false;
   }
@@ -1050,6 +1051,7 @@ async function initApp() {
     
   } catch (error) {
     console.error("Error resolving session:", error);
+    pedidoLoadingEl?.classList.add("hidden");
     setStatus("No se pudo validar la sesión del pedido.", "error");
   }
 }
