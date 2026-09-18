@@ -1,0 +1,169 @@
+/* =========================
+   INVITE LANDING V2
+========================= */
+
+.invite-page {
+  margin: 0;
+  background: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.invite-layout {
+  max-width: 480px;
+  min-height: 100vh;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: #ffffff;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.invite-hero {
+  background: #1E3A2F;
+
+  padding:
+    32px
+    24px
+    28px;
+}
+
+.invite-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: #7AB86A;
+
+  margin-bottom: 16px;
+}
+
+.invite-title {
+  margin: 0;
+
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 500;
+
+  color: #F0F7EC;
+
+  margin-bottom: 14px;
+}
+
+.invite-subtitle {
+  margin: 0;
+
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+
+  color: rgba(240,247,236,0.6);
+}
+
+/* =========================
+   BODY
+========================= */
+
+.invite-body {
+  flex: 1;
+
+  background: #ffffff;
+
+  padding:
+    28px
+    24px
+    36px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.invite-btn {
+  width: 100%;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #4a7c3f;
+  color: #ffffff;
+
+  padding: 17px;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.invite-btn:active {
+  transform: translateY(1px);
+}
+
+/* =========================
+   INVITE STEPS
+========================= */
+
+.invite-steps-title {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #888888;
+
+  margin-bottom: 16px;
+}
+
+.invite-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+.invite-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.invite-step-icon {
+  width: 28px;
+  flex-shrink: 0;
+
+  margin-top: 1px;
+
+  font-size: 20px;
+  line-height: 1;
+}
+
+.invite-step-text {
+  font-size: 16px;
+  line-height: 1.45;
+  color: #1a1a1a;
+}
+
+.invite-bridge {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.invite-bridge-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.invite-bridge-subtitle {
+  margin-top: 4px;
+
+  font-size: 14px;
+  font-weight: 400;
+  color: #888888;
+}
