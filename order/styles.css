@@ -132,14 +132,6 @@
   color: #60715a;
 }
 
-.pedido-page .card-top {
-  display: grid;
-  grid-template-columns: 78px 1fr;
-  gap: 14px;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
 .pedido-page .card img,
 .pedido-page .product-img {
   width: 72px;
