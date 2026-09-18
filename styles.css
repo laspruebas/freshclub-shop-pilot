@@ -172,20 +172,6 @@ body {
   margin-top: 22px;
 }
 
-#catalog .card {
-  display: flex;
-  flex-direction: column;
-}
-
-#catalog .card-top {
-  margin-bottom: 8px;
-}
-
-#catalog [id^="controls-"] {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .add-btn {
   height: 36px;
   padding: 0 14px;
@@ -199,12 +185,6 @@ body {
 
 .add-btn:active {
   transform: scale(0.98);
-}
-
-#household .item-category {
-  margin-top: 4px;
-  font-size: 13px;
-  color: #666666;
 }
 
 .footer-stack {
