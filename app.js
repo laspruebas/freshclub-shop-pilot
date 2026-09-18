@@ -45,7 +45,6 @@ const manualSearchStatusEl = document.getElementById("manualSearchStatus");
 const manualSearchResultsEl = document.getElementById("manualSearchResults");
 
 const submitBtn = document.getElementById("submitBtn");
-const subtitleEl = document.getElementById("subtitle");
 const headerEl = document.getElementById("header");
 
 const pedidoLoadingEl =
@@ -397,7 +396,6 @@ async function loadInitialOrder() {
   try {
 
     let items = [];
-    let source = "ai";
 
     try {
       const aiResponse = await fetch(
@@ -428,8 +426,6 @@ async function loadInitialOrder() {
 
     } catch (aiError) {
       console.warn("AI initial order failed, using DB fallback:", aiError);
-      source = "db";
-
       const fallbackResponse = await fetch(
         `${API_BASE}/initial-order/${householdId}`
       );
@@ -494,7 +490,6 @@ async function loadInitialOrder() {
         };
     
       });
-    console.log("Initial order source:", source, orderState);
     
     renderPedidoSummary();
     renderOrder();
