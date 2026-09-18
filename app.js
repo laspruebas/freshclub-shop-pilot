@@ -7,23 +7,21 @@ import {
   createOrder,
   fetchAiInitialOrder,
   fetchInitialOrderFallback,
-  fetchOrderDashboard,
-  searchCatalogProducts
+  fetchOrderDashboard
 } from "./order/api.js";
 import { renderOrderDashboard } from "./order/dashboard.js";
 import {
   buildOrderItems,
   extraToOrderItem,
-  manualProductToOrderItem,
   normalizeInitialOrderItems
 } from "./order/model.js";
 import { getNextDeliveryMessage } from "./order/delivery.js";
 import {
   renderExtras as renderExtrasView,
-  renderManualSearchResults as renderManualSearchResultsView,
   renderOrder as renderOrderView,
   renderPedidoSummary as renderPedidoSummaryView
 } from "./order/render.js";
+import { initManualSearch } from "./order/search.js";
 
 // =====================================================
 // STATE
@@ -61,8 +59,6 @@ const reportLoadingTitleEl =
 
 let orderState = [];
 let extraProducts = [];
-let manualSearchResults = [];
-let manualSearchTimeout = null;
 
 // =====================================================
 // HELPERS
@@ -99,15 +95,6 @@ function renderExtras() {
   });
 }
 
-function renderManualSearchResults() {
-  renderManualSearchResultsView({
-    manualSearchResults,
-    orderState,
-    manualSearchInputEl,
-    manualSearchStatusEl,
-    manualSearchResultsEl
-  });
-}
 
 // =====================================================
 // API
@@ -153,33 +140,6 @@ async function loadInitialOrder() {
   } catch (error) {
     console.error(error);
     setStatus("Error cargando pedido", "error");
-  }
-}
-
-async function searchManualProducts(query) {
-  const cleanQuery = String(query || "").trim();
-
-  if (!householdId || cleanQuery.length < 2) {
-    manualSearchResults = [];
-    renderManualSearchResults();
-    return;
-  }
-
-  try {
-    manualSearchStatusEl.textContent = "Buscando...";
-
-    const data = await searchCatalogProducts(householdId, cleanQuery);
-
-    manualSearchResults = data.items || [];
-
-    renderManualSearchResults();
-    manualSearchStatusEl.textContent = "";
-
-  } catch (error) {
-    console.error("Error searching manual products:", error);
-    manualSearchResults = [];
-    renderManualSearchResults();
-    manualSearchStatusEl.textContent = "No se pudo buscar productos.";
   }
 }
 
@@ -234,47 +194,19 @@ extrasEl.addEventListener("click", (event) => {
   renderExtras();
 });
 
-manualSearchToggleEl?.addEventListener("click", () => {
-  const isHidden = manualSearchPanelEl.hasAttribute("hidden");
-
-  if (isHidden) {
-    manualSearchPanelEl.removeAttribute("hidden");
-    manualSearchToggleEl.textContent = "Ocultar búsqueda";
-    manualSearchInputEl.focus();
-  } else {
-    manualSearchPanelEl.setAttribute("hidden", "");
-    manualSearchToggleEl.textContent = "¿Buscás algo más?";
-  }
-});
-
-manualSearchInputEl?.addEventListener("input", (event) => {
-  const query = event.target.value;
-
-  clearTimeout(manualSearchTimeout);
-
-  manualSearchTimeout = setTimeout(() => {
-    searchManualProducts(query);
-  }, 300);
-});
-
-manualSearchResultsEl?.addEventListener("click", (event) => {
-  const btn = event.target.closest("button");
-  if (!btn) return;
-
-  const productId = btn.dataset.manualAdd;
-  if (!productId) return;
-
-  const product = manualSearchResults.find((p) => p.product_id === productId);
-  if (!product) return;
-
-  const orderItem = manualProductToOrderItem(product);
-  if (!orderItem) return;
-
-  orderState.push(orderItem);
-
-  renderOrder();
-  renderExtras();
-  renderManualSearchResults();
+initManualSearch({
+  getHouseholdId: () => householdId,
+  getOrderState: () => orderState,
+  addOrderItem: (item) => {
+    orderState.push(item);
+  },
+  renderOrder,
+  renderExtras,
+  manualSearchToggleEl,
+  manualSearchPanelEl,
+  manualSearchInputEl,
+  manualSearchStatusEl,
+  manualSearchResultsEl
 });
 
 async function submitOrder() {
