@@ -80,6 +80,7 @@ body {
   justify-content: space-between;
   align-items: start;
   gap: 12px;
+  margin-bottom: 4px;
 }
 
 .card-title {
@@ -91,6 +92,7 @@ body {
 .qty-row {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
   margin-top: 14px;
 }
@@ -157,7 +159,7 @@ body {
 }
 
 .whatsapp-button {
-  display: inline-block;
+  display: block;
   width: 100%;
   box-sizing: border-box;
   background: #25D366;
@@ -167,13 +169,7 @@ body {
   text-decoration: none;
   font-weight: 700;
   text-align: center;
-}
-
-.qty-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
+  margin-top: 22px;
 }
 
 #catalog .card {
@@ -205,11 +201,7 @@ body {
   transform: scale(0.98);
 }
 
-#household .card-top {
-  margin-bottom: 4px;
-}
-
-.item-category {
+#household .item-category {
   margin-top: 4px;
   font-size: 13px;
   color: #666666;
@@ -257,13 +249,6 @@ body {
 
 .origen-card li {
   margin-bottom: 8px;
-}
-
-.whatsapp-button {
-  display: block;
-  text-align: center;
-  margin-top: 22px;
-  text-decoration: none;
 }
 
 /* =========================
@@ -400,27 +385,6 @@ body {
   color: #60715a;
 }
 
-.pedido-page .catalog {
-  display: grid;
-  gap: 12px;
-}
-
-.pedido-page .card {
-  position: relative;
-  border: 1px solid #e3eadc;
-  border-radius: 22px;
-  padding: 14px;
-  background: #ffffff;
-  box-shadow: 0 10px 26px rgba(38, 71, 24, 0.07);
-  overflow: hidden;
-}
-
-.pedido-page .card::before,
-.pedido-page .card::after {
-  display: none !important;
-  content: none !important;
-}
-
 .pedido-page .card-top {
   display: grid;
   grid-template-columns: 78px 1fr;
@@ -439,20 +403,6 @@ body {
   padding: 8px;
 }
 
-.pedido-page .card-title {
-  font-size: 18px;
-  line-height: 1.15;
-  font-weight: 800;
-  color: #101810;
-  margin: 0 0 6px;
-}
-
-.pedido-page .item-category {
-  font-size: 14px;
-  line-height: 1.25;
-  color: #65735f;
-}
-
 .pedido-page .qty-row,
 .pedido-page #catalog [id^="controls-"] {
   display: flex;
@@ -462,29 +412,8 @@ body {
   margin-top: 6px;
 }
 
-.pedido-page .qty-btn {
-  width: 38px;
-  height: 38px;
-  border: 1px solid #d9e2d2;
-  border-radius: 14px;
-  background: #f9fbf6;
-  color: #172016;
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1;
-  cursor: pointer;
-}
-
 .pedido-page .qty-btn:active {
   transform: scale(0.96);
-}
-
-.pedido-page .qty-value {
-  min-width: 30px;
-  text-align: center;
-  font-size: 17px;
-  font-weight: 800;
-  color: #101810;
 }
 
 .pedido-page .extras-block {
@@ -558,6 +487,7 @@ body {
 }
 
 .pedido-page .card {
+  position: relative;
   border: 1px solid #e3eadc !important;
   border-left: 1px solid #e3eadc !important;
   border-radius: 18px;
@@ -889,16 +819,6 @@ body {
   background: #16a34a;
   color: #ffffff;
   box-shadow: 0 8px 18px rgba(22, 163, 74, 0.22);
-}
-
-.report-link {
-  display: inline-flex;
-  justify-content: center;
-  margin-top: 4px;
-  color: #4b5f45;
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
 }
 
 /* =========================
@@ -2306,6 +2226,7 @@ body {
 .report-link {
   display: inline-flex;
   justify-content: center;
+  margin-top: 4px;
   color: #4b5f45;
   font-size: 15px;
   font-weight: 700;
