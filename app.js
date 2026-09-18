@@ -3,6 +3,7 @@
 // =====================================================
 
 import { API_BASE } from "./config.js";
+import { validateSessionToken } from "./session.js";
 
 // === COLORS ===
 // Orden alineado con UX: frutas → verduras base → complemento
@@ -365,33 +366,11 @@ function renderManualSearchResults() {
 // =====================================================
 
 async function resolveSessionFromToken() {
-  if (householdId || !token) {
-    return;
-  }
+  if (householdId) return;
 
-  const response = await fetch(
-    `${API_BASE}/fruti/session-validate?t=${encodeURIComponent(token)}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(`Session validate HTTP ${response.status}`);
-  }
-
-  const data = await response.json();
-  
-  if (!data?.household_id) {
-    throw new Error("Session token did not return household_id");
-  }
-
+  const data = await validateSessionToken(token);
   householdId = data.household_id;
 }
-
 async function loadInitialOrder() {
   try {
 
