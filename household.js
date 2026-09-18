@@ -543,8 +543,9 @@ if (
   
   const params = new URLSearchParams(window.location.search);
   const phone = params.get("phone");
-  
-  const referral_code = sessionStorage.getItem("referral_code");
+  const referral_code =
+    params.get("ref") ||
+    sessionStorage.getItem("referral_code");
   
   if (!phone) {
     setStatus("Falta teléfono en la URL.", "error");
