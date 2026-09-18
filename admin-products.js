@@ -1,5 +1,9 @@
-import { API_BASE } from "./config.js";
-import { escapeHtml } from "./utils.js";
+import {
+  fetchAdminProducts,
+  updateAdminProduct
+} from "./admin/api.js";
+import { buildProductEditPayload } from "./admin/editor.js";
+import { renderAdminProducts } from "./admin/render.js";
 
 const adminProductsEl =
   document.getElementById("adminProducts");
@@ -14,27 +18,15 @@ let products = [];
 // ====================================
 
 async function loadProducts(q = "") {
-
   try {
+    const data =
+      await fetchAdminProducts(q);
 
-    const url = q
-      ? `${API_BASE}/admin/products?q=${encodeURIComponent(q)}`
-      : `${API_BASE}/admin/products`;
-
-    const res = await fetch(url);
-
-    if (!res.ok) {
-      throw new Error(`Admin products HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    products = data.items || [];
+    products =
+      data.items || [];
 
     renderProducts();
-
   } catch (error) {
-
     console.error(error);
 
     adminProductsEl.innerHTML = `
@@ -48,45 +40,27 @@ async function loadProducts(q = "") {
 // ====================================
 
 async function patchProduct(productId, payload) {
-
   try {
+    const data =
+      await updateAdminProduct(
+        productId,
+        payload
+      );
 
-    const res = await fetch(
-      `${API_BASE}/admin/products/${productId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      }
-    );
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => null);
-      const detail =
-        errorData?.detail?.message ||
-        errorData?.detail ||
-        `HTTP ${res.status}`;
-
-      throw new Error(String(detail));
-    }
-
-    const data = await res.json();
-
-    products = products.map((p) =>
-      p.product_id === productId
-        ? data.product
-        : p
-    );
+    products =
+      products.map((product) =>
+        product.product_id === productId
+          ? data.product
+          : product
+      );
 
     renderProducts();
-
   } catch (error) {
-
     console.error(error);
 
-    alert(`Error actualizando producto: ${error.message || error}`);
+    alert(
+      `Error actualizando producto: ${error.message || error}`
+    );
   }
 }
 
@@ -95,86 +69,9 @@ async function patchProduct(productId, payload) {
 // ====================================
 
 function renderProducts() {
-
-  adminProductsEl.innerHTML = "";
-
-  products.forEach((product) => {
-
-    const row =
-      document.createElement("div");
-
-    row.className = "admin-row";
-
-    row.innerHTML = `
-  <img
-    class="admin-image"
-    src="${escapeHtml(product.image_url || "")}"
-    alt=""
-  />
-
-  <div>
-    <div class="admin-product-name">
-      ${escapeHtml(product.ux_display_name || "")}
-    </div>
-
-    <div class="admin-product-variety">
-      ${escapeHtml(product.name || "")}
-      ${escapeHtml(product.variety || "")}
-    </div>
-  </div>
-
-  <div>
-    <span class="admin-status ${escapeHtml(product.status || "")}">
-      ${escapeHtml(product.status || "")}
-    </span>
-  </div>
-
-  <div>
-    ${escapeHtml(product.foundation_type || "-")}
-  </div>
-
-  <div>
-    ${escapeHtml(product.foundation_slot || "-")}
-  </div>
-
-  <div>
-    ${product.diversity_eligible ? "Sí" : "No"}
-  </div>
-
-  <div>
-    ${product.is_initial_candidate ? "Sí" : "No"}
-  </div>
-
-  <div class="admin-actions">
-
-    <button
-      class="admin-btn admin-btn-edit"
-      data-edit="${escapeHtml(product.product_id)}">
-      Editar
-    </button>
-
-    ${
-      product.status === "active"
-        ? `
-          <button
-            class="admin-btn admin-btn-standby"
-            data-standby="${escapeHtml(product.product_id)}">
-            Stand By
-          </button>
-        `
-        : `
-          <button
-            class="admin-btn admin-btn-active"
-            data-active="${escapeHtml(product.product_id)}">
-            Reactivar
-          </button>
-        `
-    }
-
-  </div>
-`;
-    adminProductsEl.appendChild(row);
-
+  renderAdminProducts({
+    products,
+    adminProductsEl
   });
 }
 
@@ -231,107 +128,33 @@ adminProductsEl?.addEventListener(
       event.target.closest("[data-edit]");
 
    if (editBtn) {
-
     const productId =
       editBtn.dataset.edit;
-  
+
     const product =
       products.find(
-        p => p.product_id === productId
+        (item) =>
+          item.product_id === productId
       );
-  
+
     if (!product) return;
-  
-    const payload = {};
-  
-    const uxDisplayName = prompt(
-      "UX Display Name",
-      product.ux_display_name || ""
-    );
-  
-    if (
-      uxDisplayName !== null &&
-      uxDisplayName !== product.ux_display_name
-    ) {
-      payload.ux_display_name =
-        uxDisplayName;
-    }
-  
-    const foundationType = prompt(
-      "Foundation Type (mandatory / preferred)",
-      product.foundation_type || ""
-    );
-  
-    if (
-      foundationType !== null &&
-      foundationType !== product.foundation_type
-    ) {
-      payload.foundation_type =
-        foundationType || null;
-    }
-  
-    const foundationSlot = prompt(
-      "Foundation Slot (M1-M5 / P1-P4)",
-      product.foundation_slot || ""
-    );
-  
-    if (
-      foundationSlot !== null &&
-      foundationSlot !== product.foundation_slot
-    ) {
-      payload.foundation_slot =
-        foundationSlot || null;
-    }
-  
-    const edibleRatio = prompt(
-      "Edible Ratio (0-1)",
-      product.edible_ratio ?? ""
-    );
-  
-    if (edibleRatio !== null) {
-      const edibleRatioNumber = Number(edibleRatio);
 
-      if (!Number.isFinite(edibleRatioNumber)) {
-        alert("Edible Ratio debe ser un número válido.");
-        return;
-      }
+    const payload =
+      buildProductEditPayload(product);
 
-      if (edibleRatioNumber !== product.edible_ratio) {
-        payload.edible_ratio = edibleRatioNumber;
-      }
-    }
-  
-    const unitWeight = prompt(
-      "Unit Weight Grams",
-      product.unit_weight_grams ?? ""
-    );
-  
-    if (unitWeight !== null) {
-      const unitWeightNumber = Number(unitWeight);
+    if (!payload) return;
 
-      if (!Number.isFinite(unitWeightNumber)) {
-        alert("Unit Weight Grams debe ser un número válido.");
-        return;
-      }
-
-      if (unitWeightNumber !== product.unit_weight_grams) {
-        payload.unit_weight_grams = unitWeightNumber;
-      }
-    }
-  
     if (
       Object.keys(payload).length === 0
     ) {
       return;
     }
-  
+
     await patchProduct(
       productId,
       payload
     );
-  
-  }
-  }
+  }  }
 );
 
 // ====================================
