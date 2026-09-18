@@ -12,6 +12,12 @@ import {
   searchCatalogProducts
 } from "./order/api.js";
 import { renderOrderDashboard } from "./order/dashboard.js";
+import {
+  buildOrderItems,
+  extraToOrderItem,
+  manualProductToOrderItem,
+  normalizeInitialOrderItems
+} from "./order/model.js";
 
 // =====================================================
 // STATE
@@ -376,59 +382,8 @@ async function loadInitialOrder() {
       items = fallbackData.items || [];
     }
 
-    orderState = items
-      .slice()
-      .map(item => {
-    
-        const product = item.product || item;
-        const quantity = item.quantity || {};
-    
-        return {
-          product_id:
-            product.product_id,
-    
-          name:
-            product.ux_display_name ||
-            product.name ||
-            product.product_name ||
-            "Producto",
-    
-          qty:
-            quantity.suggested_qty ?? product.suggested_qty ?? 1,
-    
-          suggested_qty:
-            quantity.suggested_qty ?? product.suggested_qty ?? 1,
-    
-          unit:
-            quantity.unit ||
-            product.unit,
-    
-          unit_label:
-            quantity.unit_label ||
-            product.unit_label,
-    
-          category:
-            product.product_category ||
-            product.ux_category_label,
-    
-          image_url:
-            product.image_url,
-    
-          reason:
-            item.reason,
-    
-          source:
-            item.source,
-    
-          slot:
-            item.slot,
+    orderState = normalizeInitialOrderItems(items);
 
-          display_group:
-            item.display_group
-        };
-    
-      });
-    
     renderPedidoSummary();
     renderOrder();
     renderExtras();
@@ -509,37 +464,10 @@ extrasEl.addEventListener("click", (event) => {
   
   if (!selectedExtra) return;
   
-  const product = selectedExtra.product || selectedExtra;  
-  if (!product) return;
+  const orderItem = extraToOrderItem(selectedExtra);
+  if (!orderItem) return;
 
-  orderState.push({
-    product_id: product.product_id,
-  
-    name:
-      product.ux_display_name ||
-      product.name ||
-      product.product_name,
-  
-    qty: 1,
-  
-    suggested_qty: 1,
-  
-    unit: product.unit,
-  
-    unit_label: product.unit_label,
-  
-    category:
-      product.product_category ||
-      product.ux_category_label,
-  
-    image_url: product.image_url,
-  
-    reason: selectedExtra.reason,
-  
-    source: selectedExtra.source,
-  
-    slot: selectedExtra.slot
-  });
+  orderState.push(orderItem);
 
   renderOrder();
   renderExtras();
@@ -578,16 +506,10 @@ manualSearchResultsEl?.addEventListener("click", (event) => {
   const product = manualSearchResults.find((p) => p.product_id === productId);
   if (!product) return;
 
-  orderState.push({
-    product_id: product.product_id,
-    name: product.ux_display_name || product.product_name,
-    qty: product.suggested_qty || 1,
-    suggested_qty: product.suggested_qty || 1,
-    unit: product.unit,
-    unit_label: product.unit_label,
-    category: product.ux_category_label,
-    image_url: product.image_url
-  });
+  const orderItem = manualProductToOrderItem(product);
+  if (!orderItem) return;
+
+  orderState.push(orderItem);
 
   renderOrder();
   renderExtras();
@@ -651,12 +573,7 @@ async function submitOrder() {
     return;
   }
 
-  const items = orderState
-    .filter(item => item.qty > 0)
-    .map(item => ({
-      product_id: item.product_id,
-      qty: item.qty
-    }));
+  const items = buildOrderItems(orderState);
 
   if (items.length === 0) {
     setStatus("Elegí al menos un producto.", "error");
