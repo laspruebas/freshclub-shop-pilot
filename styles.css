@@ -173,72 +173,6 @@ body {
   margin-bottom: 16px;
 }
 
-.fruti-card {
-  border: 1px dashed #d9d9d9;
-  border-radius: 16px;
-  padding: 24px 20px;
-  background: #fafafa;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.fruti-card-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0 0 16px 0;
-  color: #222;
-}
-
-.fruti-main,
-.fruti-weekly,
-.fruti-diversity,
-.fruti-level,
-.fruti-score,
-.fruti-diversity-detail,
-.fruti-progress-label,
-.fruti-weekly-progress {
-  margin: 8px 0;
-  color: #333;
-  line-height: 1.4;
-}
-
-.fruti-main {
-  font-size: 18px;
-}
-
-.fruti-weekly {
-  font-size: 17px;
-}
-
-.fruti-diversity {
-  font-size: 16px;
-}
-
-.fruti-weekly-block {
-  margin-top: 20px;
-  text-align: left;
-}
-
-.fruti-weekly-title {
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #222;
-}
-
-.fruti-progress-bar {
-  margin-top: 12px;
-  height: 10px;
-  background: #e9e9e9;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.fruti-progress-fill {
-  height: 10px;
-  background: #1f1f1f;
-  border-radius: 999px;
-}
-
 .whatsapp-cta {
   margin-top: 16px;
 }
@@ -973,69 +907,12 @@ body {
   font-weight: 700;
 }
 
-.report-summary-card,
 .report-week-card,
 .report-section {
   background: #ffffff;
   border: 1px solid #e3eadc;
   border-radius: 20px;
   box-shadow: 0 8px 22px rgba(38, 71, 24, 0.06);
-}
-
-.report-summary-card {
-  padding: 16px;
-  margin-bottom: 14px;
-}
-
-.report-summary-eyebrow {
-  font-size: 13px;
-  font-weight: 800;
-  color: #5b7f3a;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.report-summary-main {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  align-items: center;
-}
-
-.report-summary-main h2 {
-  margin: 0;
-  font-size: 22px;
-  line-height: 1.15;
-  color: #101810;
-}
-
-.report-summary-main p {
-  margin: 6px 0 0;
-  font-size: 14px;
-  line-height: 1.35;
-  color: #66735e;
-}
-
-.report-summary-score {
-  width: 64px;
-  height: 64px;
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #edf7e8;
-  color: #277a28;
-  font-size: 24px;
-  font-weight: 900;
-  flex-shrink: 0;
-}
-
-.report-summary-foot {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #66735e;
-  font-weight: 700;
 }
 
 .report-section {
@@ -1048,46 +925,6 @@ body {
   font-size: 19px;
   line-height: 1.2;
   color: #152312;
-}
-
-.report-chart {
-  display: grid;
-  gap: 10px;
-}
-
-.report-chart-row {
-  display: grid;
-  grid-template-columns: 72px 1fr 34px;
-  gap: 8px;
-  align-items: center;
-}
-
-.report-chart-label {
-  font-size: 12px;
-  color: #66735e;
-  font-weight: 700;
-}
-
-.report-chart-track,
-.report-progress-bar {
-  height: 10px;
-  background: #edf1e8;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.report-chart-fill,
-.report-progress-fill {
-  height: 100%;
-  background: #16a34a;
-  border-radius: 999px;
-}
-
-.report-chart-value {
-  font-size: 13px;
-  font-weight: 800;
-  color: #172016;
-  text-align: right;
 }
 
 .report-timeline {
@@ -1159,19 +996,6 @@ body {
   margin-top: 4px;
   font-size: 17px;
   color: #101810;
-}
-
-.report-progress {
-  margin-top: 14px;
-}
-
-.report-progress-head {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: #66735e;
-  font-weight: 800;
-  margin-bottom: 6px;
 }
 
 .report-section-mini {
@@ -1319,9 +1143,7 @@ body {
 /* Verde único FRUTI */
 .pedido-page .cta,
 .pedido-page .dashboard-btn-primary,
-.report-btn-primary,
-.report-chart-fill,
-.report-progress-fill {
+.report-btn-primary {
   background: #4CAF50;
 }
 
@@ -1352,7 +1174,6 @@ body {
 
 /* Cards con friendly round */
 .pedido-page .card,
-.report-summary-card,
 .report-week-card,
 .report-section {
   border-radius: 18px;
@@ -1369,14 +1190,12 @@ body {
 .pedido-page .card-title,
 .report-title,
 .report-section h2,
-.report-summary-main h2,
 .report-week-label {
   color: #2D3436;
 }
 
 /* También bajamos agresividad en cantidades y scores */
 .pedido-page .qty-value,
-.report-chart-value,
 .report-metric strong {
   color: #2D3436;
 }
