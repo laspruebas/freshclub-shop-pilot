@@ -3,44 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Origen · Fruti</title>
-
+  <title>Origen · FRUTI</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
   <main class="container origen-page">
-
     <header class="header">
+      <div class="brand">FRUTI</div>
       <h1>Origen</h1>
-      <p>Conocé de dónde vienen los productos de tu pedido.</p>
+      <p id="origenIntro">Trazabilidad del lote.</p>
     </header>
 
+    <section id="origenStatus" class="status"></section>
+
     <section class="origen-card">
-      <h2>Finca seleccionada</h2>
-
-      <p>
-        Estos productos provienen de productores seleccionados por Fruti,
-        priorizando frescura, calidad y buenas prácticas de producción.
-      </p>
-
-      <div class="origen-info">
-        <p><strong>Zona:</strong> Buenos Aires / cinturón hortícola</p>
-        <p><strong>Tipo de producción:</strong> frutas y verduras frescas</p>
-        <p><strong>Criterios:</strong> calidad, trazabilidad y disponibilidad</p>
-      </div>
+      <h2 id="origenProduct">Producto</h2>
+      <div id="origenLotInfo" class="origen-info"></div>
     </section>
 
     <section class="origen-card">
-      <h2>Qué mira Fruti</h2>
+      <h2>Recorrido</h2>
+      <div id="origenTimeline"></div>
+    </section>
 
-      <ul>
-        <li>Productos frescos y de estación</li>
-        <li>Mejor selección para el hogar</li>
-        <li>Información clara para el consumidor</li>
-        <li>Origen visible de los alimentos</li>
-      </ul>
+    <section class="origen-card">
+      <h2>Qué significa esta información</h2>
+      <p>
+        Este lote fue registrado dentro de la trazabilidad FRUTI.
+        El recorrido muestra los movimientos informados por los actores
+        que participaron de la cadena.
+      </p>
     </section>
 
     <a
@@ -49,7 +42,8 @@
     >
       Volver a WhatsApp
     </a>
-
   </main>
+
+  <script type="module" src="./origen.js"></script>
 </body>
 </html>
