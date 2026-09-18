@@ -2,27 +2,15 @@
 // CONFIG
 // =====================================================
 
-import { API_BASE } from "./config.js";
 import { validateSessionToken } from "./session.js";
 import { escapeHtml } from "./utils.js";
-
-// === COLORS ===
-// Orden alineado con UX: frutas → verduras base → complemento
-export const PRODUCT_COLORS = {
-  // 🍎 FRUTAS
-  Banana: "#facc15",
-  Manzana: "#ef4444",
-  Naranja: "#fb923c",
-
-  // 🥕 VERDURAS BASE
-  Papa: "#eab308",
-  Tomate: "#ef4444",
-  Zanahoria: "#f97316",
-
-  // 🧅 COMPLEMENTO / SABOR
-  Cebolla: "#a855f7",
-  Pimiento: "#ef4444"
-};
+import {
+  createOrder,
+  fetchAiInitialOrder,
+  fetchInitialOrderFallback,
+  fetchOrderDashboard,
+  searchCatalogProducts
+} from "./order/api.js";
 
 // =====================================================
 // STATE
@@ -369,21 +357,7 @@ async function loadInitialOrder() {
     let items = [];
 
     try {
-      const aiResponse = await fetch(
-        `${API_BASE}/ai/v3-selection/${householdId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-
-      if (!aiResponse.ok) {
-        throw new Error(`AI initial order HTTP ${aiResponse.status}`);
-      }
-
-      const aiData = await aiResponse.json();
+      const aiData = await fetchAiInitialOrder(householdId);
 
       window.frutiCoverage =
         aiData.coverage || null;
@@ -397,15 +371,7 @@ async function loadInitialOrder() {
 
     } catch (aiError) {
       console.warn("AI initial order failed, using DB fallback:", aiError);
-      const fallbackResponse = await fetch(
-        `${API_BASE}/initial-order/${householdId}`
-      );
-
-      if (!fallbackResponse.ok) {
-        throw new Error(`Initial order fallback HTTP ${fallbackResponse.status}`);
-      }
-
-      const fallbackData = await fallbackResponse.json();
+      const fallbackData = await fetchInitialOrderFallback(householdId);
       items = fallbackData.items || [];
     }
 
@@ -485,15 +451,7 @@ async function searchManualProducts(query) {
   try {
     manualSearchStatusEl.textContent = "Buscando...";
 
-    const response = await fetch(
-      `${API_BASE}/initial-order/${householdId}/catalog-search?q=${encodeURIComponent(cleanQuery)}`
-    );
-
-    if (!response.ok) {
-      throw new Error(`Manual search HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
+    const data = await searchCatalogProducts(householdId, cleanQuery);
 
     manualSearchResults = data.items || [];
 
@@ -506,16 +464,6 @@ async function searchManualProducts(query) {
     renderManualSearchResults();
     manualSearchStatusEl.textContent = "No se pudo buscar productos.";
   }
-}
-
-async function loadOrderDashboard(orderId) {
-  const response = await fetch(`${API_BASE}/pilot/orders/${orderId}/dashboard`);
-
-  if (!response.ok) {
-    throw new Error(`Dashboard HTTP ${response.status}`);
-  }
-
-  return await response.json();
 }
 
 function renderDashboardFromApi(response, orderId) {
@@ -922,19 +870,7 @@ async function submitOrder() {
     
     submitBtn.disabled = true;
 
-    const response = await fetch(`${API_BASE}/pilot/orders`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-      throw new Error(`Order HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
+    const data = await createOrder(payload);
 
     const orderId = data?.order_id || "";
 
@@ -969,7 +905,7 @@ async function submitOrder() {
     submitBtn.style.display = "none";
     
     const dashboardData =
-      await loadOrderDashboard(orderId);
+      await fetchOrderDashboard(orderId);
     
     renderDashboardFromApi(
       dashboardData,
