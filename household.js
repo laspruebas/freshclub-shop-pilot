@@ -39,6 +39,9 @@ const deliverySlotsEl =
 const deliverySummaryEl =
   document.getElementById("deliverySummary");
 
+const onboardingLoadingEl =
+  document.getElementById("onboardingLoading");
+
 const onboardingSlider =
   document.getElementById("onboardingSlider");
 
@@ -576,6 +579,7 @@ if (
 
     submitBtn.disabled = true;
     setStatus("");
+    onboardingLoadingEl?.classList.remove("hidden");
 
     sessionStorage.setItem(
       "delivery_schedule",
@@ -609,6 +613,7 @@ if (
 
   } catch (error) {
     console.error("Error saving household members:", error);
+    onboardingLoadingEl?.classList.add("hidden");
     setStatus("No se pudieron guardar los datos del hogar.", "error");
     submitBtn.disabled = false;
   }
