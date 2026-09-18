@@ -4,6 +4,7 @@
 
 import { API_BASE } from "./config.js";
 import { validateSessionToken } from "./session.js";
+import { escapeHtml } from "./utils.js";
 
 // === COLORS ===
 // Orden alineado con UX: frutas → verduras base → complemento
@@ -72,15 +73,6 @@ function setStatus(message, type = "") {
   if (type) {
     statusEl.classList.add(type);
   }
-}
-
-function escapeHtml(text) {
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
 }
 
 function handleImageError(img) {
