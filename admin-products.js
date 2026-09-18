@@ -21,6 +21,11 @@ async function loadProducts(q = "") {
       : `${API_BASE}/admin/products`;
 
     const res = await fetch(url);
+
+    if (!res.ok) {
+      throw new Error(`Admin products HTTP ${res.status}`);
+    }
+
     const data = await res.json();
 
     products = data.items || [];
@@ -56,6 +61,16 @@ async function patchProduct(productId, payload) {
       }
     );
 
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+      const detail =
+        errorData?.detail?.message ||
+        errorData?.detail ||
+        `HTTP ${res.status}`;
+
+      throw new Error(String(detail));
+    }
+
     const data = await res.json();
 
     products = products.map((p) =>
@@ -70,7 +85,7 @@ async function patchProduct(productId, payload) {
 
     console.error(error);
 
-    alert("Error actualizando producto");
+    alert(`Error actualizando producto: ${error.message || error}`);
   }
 }
 
@@ -272,12 +287,17 @@ adminProductsEl?.addEventListener(
       product.edible_ratio ?? ""
     );
   
-    if (
-      edibleRatio !== null &&
-      Number(edibleRatio) !== product.edible_ratio
-    ) {
-      payload.edible_ratio =
-        Number(edibleRatio);
+    if (edibleRatio !== null) {
+      const edibleRatioNumber = Number(edibleRatio);
+
+      if (!Number.isFinite(edibleRatioNumber)) {
+        alert("Edible Ratio debe ser un número válido.");
+        return;
+      }
+
+      if (edibleRatioNumber !== product.edible_ratio) {
+        payload.edible_ratio = edibleRatioNumber;
+      }
     }
   
     const unitWeight = prompt(
@@ -285,12 +305,17 @@ adminProductsEl?.addEventListener(
       product.unit_weight_grams ?? ""
     );
   
-    if (
-      unitWeight !== null &&
-      Number(unitWeight) !== product.unit_weight_grams
-    ) {
-      payload.unit_weight_grams =
-        Number(unitWeight);
+    if (unitWeight !== null) {
+      const unitWeightNumber = Number(unitWeight);
+
+      if (!Number.isFinite(unitWeightNumber)) {
+        alert("Unit Weight Grams debe ser un número válido.");
+        return;
+      }
+
+      if (unitWeightNumber !== product.unit_weight_grams) {
+        payload.unit_weight_grams = unitWeightNumber;
+      }
     }
   
     if (
