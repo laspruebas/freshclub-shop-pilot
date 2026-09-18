@@ -1,4 +1,4 @@
-const API_BASE = "https://fruti-api-y5uz.onrender.com";
+import { API_BASE } from "./config.js";
 
 const adminProductsEl =
   document.getElementById("adminProducts");
