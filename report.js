@@ -424,8 +424,6 @@ async function initReport() {
 
     const report = await loadHouseholdReport();
 
-    console.log("HOUSEHOLD REPORT", report);
-
     renderReport(report);
 
     setStatus("");
