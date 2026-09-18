@@ -16,6 +16,7 @@ export function initManualSearch({
 }) {
   let results = [];
   let timeoutId = null;
+  let searchRequestId = 0;
 
   function renderResults() {
     renderManualSearchResults({
@@ -30,6 +31,7 @@ export function initManualSearch({
   async function search(query) {
     const householdId = getHouseholdId();
     const cleanQuery = String(query || "").trim();
+    const requestId = ++searchRequestId;
 
     if (!householdId || cleanQuery.length < 2) {
       results = [];
@@ -46,11 +48,19 @@ export function initManualSearch({
           cleanQuery
         );
 
+      if (requestId !== searchRequestId) {
+        return;
+      }
+
       results = data.items || [];
 
       renderResults();
       manualSearchStatusEl.textContent = "";
     } catch (error) {
+      if (requestId !== searchRequestId) {
+        return;
+      }
+
       console.error("Error searching manual products:", error);
       results = [];
       renderResults();
