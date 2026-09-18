@@ -3,6 +3,7 @@
 // =====================================================
 
 import { API_BASE } from "./config.js";
+import { validateSessionToken } from "./session.js";
 
 // =====================================================
 // STATE
@@ -456,28 +457,9 @@ function validateWizard() {
 async function resolveSessionFromToken() {
   if (householdId || !token) return;
 
-  const response = await fetch(
-    `${API_BASE}/fruti/session-validate?t=${encodeURIComponent(token)}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(`Session validate HTTP ${response.status}`);
-  }
-
-  const data = await response.json();
-
-  if (!data?.household_id) {
-    throw new Error("Session token did not return household_id");
-  }
+  const data = await validateSessionToken(token);
 
   householdId = data.household_id;
-
   waName = data.wa_name || "";
   householdName = data.household_name || "";
 
@@ -486,13 +468,13 @@ async function resolveSessionFromToken() {
       ? `Hola ${waName}, contanos quiénes viven en tu hogar`
       : "Contanos quiénes viven en tu hogar";
   }
-  
+
   if (householdNameInput && householdName) {
     householdNameInput.value = householdName;
-  } 
+  }
+
   validateWizard();
 }
-
 async function fetchDeliverySlots() {
   const response = await fetch(
     `${API_BASE}/delivery-slots`,
