@@ -12,6 +12,7 @@ const adminSearchEl =
   document.getElementById("adminSearch");
 
 let products = [];
+let adminSearchTimeout = null;
 
 // ====================================
 // LOAD
@@ -82,11 +83,13 @@ function renderProducts() {
 adminSearchEl?.addEventListener(
   "input",
   () => {
+    clearTimeout(adminSearchTimeout);
 
-    loadProducts(
-      adminSearchEl.value.trim()
-    );
-
+    adminSearchTimeout = setTimeout(() => {
+      loadProducts(
+        adminSearchEl.value.trim()
+      );
+    }, 300);
   }
 );
 
