@@ -4,14 +4,10 @@
 
 import { validateSessionToken } from "./session.js";
 import {
-  completeOnboarding,
   fetchDeliverySlots as fetchDeliverySlotsApi
 } from "./onboarding/api.js";
 import {
   AGE_GROUPS,
-  buildDeliverySchedule,
-  buildDeliverySlotsPayload,
-  buildMembersPayload,
   getTotalMembers
 } from "./onboarding/model.js";
 import {
@@ -20,6 +16,7 @@ import {
   renderDeliverySlots as renderDeliverySlotsView,
   renderDeliverySummary as renderDeliverySummaryView
 } from "./onboarding/render.js";
+import { submitOnboardingFlow } from "./onboarding/submit.js";
 
 // =====================================================
 // STATE
@@ -270,85 +267,22 @@ async function fetchDeliverySlots() {
   const data = await fetchDeliverySlotsApi();
   renderDeliverySlots(data.slots || []);
 }
-async function submitHouseholdMembers() {
-
-
-  const members = buildMembersPayload(household);
-
-  const household_name =
-    householdName ||
-    `${waName || "Mi"} hogar`;
-    
-  const delivery_slots =
-    buildDeliverySlotsPayload(selectedDeliverySlots);
-  
-  if (members.length === 0) {
-    setStatus("Elegí al menos una persona.", "error");
-    return;
-  }
-
-if (
-  delivery_slots.length < 1 ||
-  delivery_slots.length > 2
-) {
-  setStatus(
-    "Elegí entre 1 y 2 horarios de entrega.",
-    "error"
-  );
-  return;
-}
-  
-  const params = new URLSearchParams(window.location.search);
-  const phone = params.get("phone");
-  const referral_code =
-    params.get("ref") ||
-    sessionStorage.getItem("referral_code");
-  
-  if (!phone) {
-    setStatus("Falta teléfono en la URL.", "error");
-    return;
-  }
-  
-  const payload = {
-    phone,
-    household_name,
-    members,
-    delivery_slots,
-    ...(referral_code ? { referral_code } : {})
-  };
-
-  try {
-
-    submitBtn.disabled = true;
-    setStatus("");
-    onboardingLoadingEl?.classList.remove("hidden");
-
-    sessionStorage.setItem(
-      "delivery_schedule",
-      JSON.stringify(
-        buildDeliverySchedule(selectedDeliverySlots)
-      )
-    );
-    
-    const data = await completeOnboarding(payload);
-
-    window.location.href = data.pedido_url;
-    
-    return;
-
-  } catch (error) {
-    console.error("Error saving household members:", error);
-    onboardingLoadingEl?.classList.add("hidden");
-    setStatus("No se pudieron guardar los datos del hogar.", "error");
-    submitBtn.disabled = false;
-  }
-}
 
 // =====================================================
 // INIT
 // =====================================================
 
-submitBtn.addEventListener("click", submitHouseholdMembers);
+submitBtn.addEventListener("click", () => {
+  submitOnboardingFlow({
+    household,
+    householdName,
+    waName,
+    selectedDeliverySlots,
+    setStatus,
+    submitBtn,
+    onboardingLoadingEl
+  });
+});
 
 async function initHouseholdPage() {
   try {
