@@ -339,10 +339,6 @@
 }
 
 .pedido-page .add-btn:active,
-.pedido-page .qty-btn:active {
-  transform: scale(0.96);
-}
-
 /* =========================
    DASHBOARD - ACTIONS
 ========================= */
