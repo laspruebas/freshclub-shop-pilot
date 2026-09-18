@@ -7,8 +7,7 @@ import {
   fetchDeliverySlots as fetchDeliverySlotsApi
 } from "./onboarding/api.js";
 import {
-  AGE_GROUPS,
-  getTotalMembers
+  AGE_GROUPS
 } from "./onboarding/model.js";
 import {
   renderAgeGroupControls,
@@ -17,6 +16,11 @@ import {
   renderDeliverySummary as renderDeliverySummaryView
 } from "./onboarding/render.js";
 import { submitOnboardingFlow } from "./onboarding/submit.js";
+import {
+  selectDeliverySlot,
+  showWizardStep,
+  updateWizardControls
+} from "./onboarding/wizard.js";
 
 // =====================================================
 // STATE
@@ -36,9 +40,6 @@ const catalogEl = document.getElementById("household");
 const submitBtn = document.getElementById("submitBtn");
 
 const onboardingTitleEl = document.getElementById("onboardingTitle");
-
-const householdNameInput =
-  document.getElementById("householdNameInput");
 
 const deliverySlotsEl =
   document.getElementById("deliverySlots");
@@ -169,74 +170,35 @@ function renderDeliverySummary() {
   });
 }
 function toggleDeliverySlot(dayCode, windowCode) {
-  const slot = deliverySlots.find(
-    (s) =>
-      s.delivery_day_code === dayCode &&
-      s.delivery_window_code === windowCode
-  );
-
-  if (!slot) return;
-
-  const existingIndex = selectedDeliverySlots.findIndex(
-    (s) =>
-      s.delivery_day_code === dayCode &&
-      s.delivery_window_code === windowCode
-  );
-
-  if (existingIndex >= 0) {
-    selectedDeliverySlots.splice(existingIndex, 1);
-  } else {
-    if (selectedDeliverySlots.length >= 2) {
-      return;
-    }
-
-    selectedDeliverySlots.push(slot);
-  }
+  selectedDeliverySlots =
+    selectDeliverySlot({
+      deliverySlots,
+      selectedDeliverySlots,
+      dayCode,
+      windowCode
+    });
 
   renderDeliverySlots(deliverySlots);
   validateWizard();
 }
-
 function goToStep(step) {
-  onboardingSlider.style.transform =
-    `translateX(-${step * 100}%)`;
-
-  stepIndicators.forEach((indicator, index) => {
-    indicator.classList.toggle(
-      "active",
-      index <= step
-    );
+  showWizardStep({
+    step,
+    onboardingSlider,
+    stepIndicators
   });
 
   validateWizard();
 }
-
 function validateWizard() {
-
-  const totalMembers =
-    getTotalMembers(household);
-
-  const totalSlots =
-    selectedDeliverySlots.length;
-
-  if (householdNextBtn) {
-    householdNextBtn.disabled =
-      totalMembers < 1;
-
-    householdNextBtn.textContent =
-      totalMembers > 0
-        ? `Siguiente (${totalMembers})`
-        : "Siguiente";
-  }
-
-  if (submitBtn) {
-    submitBtn.disabled =
-      totalSlots < 1 || totalSlots > 2;
-
-    submitBtn.textContent = "Confirmar"
-
-  }
+  updateWizardControls({
+    household,
+    selectedDeliverySlots,
+    householdNextBtn,
+    submitBtn
+  });
 }
+
 
 // =====================================================
 // API
@@ -255,10 +217,6 @@ async function resolveSessionFromToken() {
     onboardingTitleEl.textContent = waName
       ? `Hola ${waName}, contanos quiénes viven en tu hogar`
       : "Contanos quiénes viven en tu hogar";
-  }
-
-  if (householdNameInput && householdName) {
-    householdNameInput.value = householdName;
   }
 
   validateWizard();
