@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FRUTI | Trazabilidad</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="trace-page">
+  <div class="trace-app">
+    <header class="trace-header">
+      <div class="brand">FRUTI</div>
+      <h1>Trazabilidad</h1>
+      <p>Seguimiento de lotes, movimientos y stock.</p>
+
+      <label class="trace-field trace-actor-field">
+        <span>Trabajando como</span>
+        <select id="actorSelect"></select>
+      </label>
+    </header>
+
+    <main class="trace-main">
+      <section id="status" class="trace-status"></section>
+
+      <section class="trace-metrics">
+        <article class="metric-card">
+          <strong id="activeLots">0</strong>
+          <span>Lotes con stock</span>
+        </article>
+        <article class="metric-card">
+          <strong id="productsWithStock">0</strong>
+          <span>Productos</span>
+        </article>
+        <article class="metric-card">
+          <strong id="totalStock">0 kg</strong>
+          <span>Stock total</span>
+        </article>
+      </section>
+
+      <section class="trace-actions">
+        <button id="newLotBtn" class="trace-btn trace-btn-primary">+ Nuevo lote</button>
+        <button id="transferBtn" class="trace-btn">Transferir</button>
+        <button id="refreshBtn" class="trace-btn">Actualizar</button>
+      </section>
+
+      <section class="trace-section">
+        <div class="trace-section-title">
+          <div>
+            <h2>Lotes</h2>
+            <p>Stock e historial del actor seleccionado.</p>
+          </div>
+          <input id="lotSearch" type="search" placeholder="Buscar lote o producto..." />
+        </div>
+        <div id="lotsList" class="trace-list"></div>
+      </section>
+
+      <section class="trace-section">
+        <div class="trace-section-title">
+          <div>
+            <h2>Últimos movimientos</h2>
+            <p>Entradas, salidas y transferencias recientes.</p>
+          </div>
+        </div>
+        <div id="movementsList" class="trace-list"></div>
+      </section>
+
+      <section class="trace-section">
+        <div class="trace-section-title">
+          <div>
+            <h2>Catálogo con stock</h2>
+            <p>Productos comercializados por este actor y respaldados por stock trazable.</p>
+          </div>
+        </div>
+        <div id="catalogList" class="trace-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="newLotDialog" class="trace-dialog">
+    <form id="newLotForm" method="dialog">
+      <div class="dialog-head">
+        <div>
+          <h2>Nuevo lote</h2>
+          <p>El alta crea también el stock inicial.</p>
+        </div>
+        <button type="button" class="icon-btn" data-close="newLotDialog">×</button>
+      </div>
+
+      <label class="trace-field">
+        <span>Código del lote</span>
+        <input id="lotCode" required placeholder="LOT-2026-001" />
+      </label>
+
+      <label class="trace-field">
+        <span>Producto</span>
+        <select id="productSelect" required></select>
+      </label>
+
+      <label class="trace-field">
+        <span>Fecha de cosecha</span>
+        <input id="harvestDate" type="date" />
+      </label>
+
+      <label class="trace-field">
+        <span>Método de producción</span>
+        <input id="productionMethod" placeholder="Convencional / orgánico / otro" />
+      </label>
+
+      <label class="trace-field">
+        <span>Cantidad inicial (kg)</span>
+        <input id="initialQuantity" type="number" min="0.001" step="0.001" required />
+      </label>
+
+      <button class="trace-btn trace-btn-primary trace-btn-full" type="submit">
+        Crear lote
+      </button>
+    </form>
+  </dialog>
+
+  <dialog id="transferDialog" class="trace-dialog">
+    <form id="transferForm" method="dialog">
+      <div class="dialog-head">
+        <div>
+          <h2>Transferir stock</h2>
+          <p>Podés enviar el lote libremente a cualquier otro actor.</p>
+        </div>
+        <button type="button" class="icon-btn" data-close="transferDialog">×</button>
+      </div>
+
+      <label class="trace-field">
+        <span>Lote</span>
+        <select id="transferLotSelect" required></select>
+      </label>
+
+      <label class="trace-field">
+        <span>Destino</span>
+        <select id="destinationActorSelect" required></select>
+      </label>
+
+      <label class="trace-field">
+        <span>Cantidad (kg)</span>
+        <input id="transferQuantity" type="number" min="0.001" step="0.001" required />
+      </label>
+
+      <label class="trace-field">
+        <span>Nota</span>
+        <input id="transferNotes" placeholder="Opcional" />
+      </label>
+
+      <button class="trace-btn trace-btn-primary trace-btn-full" type="submit">
+        Confirmar transferencia
+      </button>
+    </form>
+  </dialog>
+
+  <dialog id="lotDetailDialog" class="trace-dialog trace-dialog-wide">
+    <div class="dialog-head">
+      <div>
+        <h2 id="detailTitle">Lote</h2>
+        <p id="detailSubtitle"></p>
+      </div>
+      <button type="button" class="icon-btn" data-close="lotDetailDialog">×</button>
+    </div>
+    <div id="lotDetailContent"></div>
+  </dialog>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
