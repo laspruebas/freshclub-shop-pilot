@@ -4,11 +4,6 @@
 
 const API_BASE = "https://fruti-api-y5uz.onrender.com";
 
-// Cambiar solo si back te pasa otra ruta
-const ONBOARDING_COMPLETE_ENDPOINT = `${API_BASE}/onboarding/complete`;
-
-const WHATSAPP_RETURN_URL = "https://wa.me/5491154886995";
-
 // =====================================================
 // STATE
 // =====================================================
@@ -22,8 +17,6 @@ let waName = "";
 let householdName = "";
 let deliverySlots = [];
 let selectedDeliverySlots = [];
-let currentStep = 0;
-
 const statusEl = document.getElementById("status");
 const catalogEl = document.getElementById("household");
 const submitBtn = document.getElementById("submitBtn");
@@ -50,9 +43,6 @@ const stepIndicators =
 
 const householdNextBtn =
   document.getElementById("householdNextBtn");
-
-const householdBackBtn =
-  document.getElementById("householdBackBtn");
 
 const deliveryBackBtn =
   document.getElementById("deliveryBackBtn");
@@ -419,8 +409,6 @@ function toggleDeliverySlot(dayCode, windowCode) {
 }
 
 function goToStep(step) {
-  currentStep = step;
-
   onboardingSlider.style.transform =
     `translateX(-${step * 100}%)`;
 
@@ -571,10 +559,6 @@ if (
     ...(referral_code ? { referral_code } : {})
   };
 
-  console.log("ONBOARDING URL:", window.location.href);
-  console.log("PHONE:", phone);
-  console.log("MEMBERS:", members);
-     
   try {
 
     submitBtn.disabled = true;
@@ -605,8 +589,6 @@ if (
 
     const data = await response.json();
 
-    console.log("PEDIDO_URL:", data.pedido_url);
-    
     window.location.href = data.pedido_url;
     
     return;
