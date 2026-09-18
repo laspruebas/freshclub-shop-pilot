@@ -2,7 +2,7 @@
 // CONFIG
 // =====================================================
 
-const API_BASE = "https://fruti-api-y5uz.onrender.com";
+import { API_BASE } from "./config.js";
 
 // === COLORS ===
 // Orden alineado con UX: frutas → verduras base → complemento
