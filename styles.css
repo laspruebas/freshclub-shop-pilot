@@ -55,10 +55,6 @@ body {
   color: #666666;
 }
 
-.status.ok {
-  color: #1b7f3b;
-}
-
 .status.error {
   color: #b42318;
 }
