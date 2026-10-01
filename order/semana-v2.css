@@ -1,0 +1,137 @@
+.semana-fruti-card {
+  text-align: left;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.semana-fruti-card .pedido-summary-tag {
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.semana-fruti-title {
+  margin: 0;
+  color: #152312;
+  font-size: 23px;
+  line-height: 1.12;
+  font-weight: 800;
+}
+
+.semana-fruti-intro {
+  margin: 8px 0 18px;
+  color: #66735e;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.semana-fruti-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.semana-fruti-stat {
+  min-width: 0;
+  padding: 12px 8px;
+  border-radius: 14px;
+  background: #f4f7f2;
+  text-align: center;
+}
+
+.semana-fruti-stat strong {
+  display: block;
+  color: #1d4f27;
+  font-size: 20px;
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.semana-fruti-stat span {
+  display: block;
+  margin-top: 5px;
+  color: #66735e;
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.semana-fruti-card .pedido-summary-foot {
+  padding-top: 14px;
+  border-top: 1px solid #e5eadf;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.pedido-page .pedido-group-title {
+  margin: 20px 2px 2px;
+  color: #20351c;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.pedido-page .fruti-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.pedido-page .fruti-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eef5e9;
+  color: #416c35;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.pedido-page .fruti-reason {
+  margin-top: 10px;
+  padding: 10px 11px;
+  border-radius: 12px;
+  background: #fafbf7;
+  border: 1px solid #e8ede3;
+}
+
+.pedido-page .fruti-reason-label {
+  display: block;
+  margin-bottom: 3px;
+  color: #527348;
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.pedido-page .fruti-reason p {
+  margin: 0;
+  color: #4d5949;
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+@media (max-width: 390px) {
+  .semana-fruti-stats {
+    gap: 6px;
+  }
+
+  .semana-fruti-stat {
+    padding: 10px 5px;
+  }
+
+  .semana-fruti-stat strong {
+    font-size: 18px;
+  }
+
+  .semana-fruti-stat span {
+    font-size: 10px;
+  }
+}
