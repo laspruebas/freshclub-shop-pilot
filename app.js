@@ -23,8 +23,7 @@ let householdId = null;
 
 const statusEl = document.getElementById("status");
 const orderListEl = document.getElementById("orderList");
-const pedidoSummaryEl =
-  document.getElementById("pedidoSummary");
+const pedidoSummaryEl = document.getElementById("pedidoSummary");
 const extrasEl = document.getElementById("extras");
 const extrasBlockEl = document.getElementById("extrasBlock");
 
@@ -37,15 +36,9 @@ const manualSearchResultsEl = document.getElementById("manualSearchResults");
 
 const submitBtn = document.getElementById("submitBtn");
 const headerEl = document.getElementById("header");
-
-const pedidoLoadingEl =
-  document.getElementById("pedidoLoading");
-
-const reportLoadingEl =
-  document.getElementById("reportLoading");
-
-const reportLoadingTitleEl =
-  document.getElementById("reportLoadingTitle");
+const pedidoLoadingEl = document.getElementById("pedidoLoading");
+const reportLoadingEl = document.getElementById("reportLoading");
+const reportLoadingTitleEl = document.getElementById("reportLoadingTitle");
 
 let orderState = [];
 let extraProducts = [];
@@ -57,9 +50,7 @@ let extraProducts = [];
 function setStatus(message, type = "") {
   statusEl.textContent = message || "";
   statusEl.className = "status";
-  if (type) {
-    statusEl.classList.add(type);
-  }
+  if (type) statusEl.classList.add(type);
 }
 
 function renderPedidoSummary() {
@@ -71,20 +62,18 @@ function renderPedidoSummary() {
 }
 
 function renderOrder() {
-  renderOrderView({
-    orderState,
-    orderListEl
-  });
+  renderOrderView({ orderState, orderListEl });
 }
 
 function renderExtras() {
-  renderExtrasView({
-    extraProducts,
-    orderState,
-    extrasEl
-  });
+  renderExtrasView({ extraProducts, orderState, extrasEl });
 }
 
+function renderEditableOrder() {
+  renderPedidoSummary();
+  renderOrder();
+  renderExtras();
+}
 
 // =====================================================
 // API
@@ -92,22 +81,19 @@ function renderExtras() {
 
 async function resolveSessionFromToken() {
   if (householdId) return;
-
   const data = await validateSessionToken(token);
   householdId = data.household_id;
 }
+
 async function loadInitialOrder() {
   try {
-    const initialOrder =
-      await loadInitialOrderData(householdId);
+    const initialOrder = await loadInitialOrderData(householdId);
 
     orderState = initialOrder.orderState;
     extraProducts = initialOrder.extraProducts;
     window.frutiCoverage = initialOrder.coverage;
 
-    renderPedidoSummary();
-    renderOrder();
-    renderExtras();
+    renderEditableOrder();
     setStatus("");
   } catch (error) {
     console.error(error);
@@ -121,7 +107,6 @@ orderListEl.addEventListener("click", (event) => {
 
   const index = Number(btn.dataset.index);
   const action = btn.dataset.action;
-
   if (isNaN(index)) return;
 
   if (action === "plus") {
@@ -130,17 +115,16 @@ orderListEl.addEventListener("click", (event) => {
 
   if (action === "minus") {
     const nextQty = orderState[index].qty - 1;
-  
+
     if (nextQty <= 0) {
       const confirmDelete = confirm("¿Eliminar este producto del pedido?");
-      if (confirmDelete) {
-        orderState.splice(index, 1);
-      }
+      if (confirmDelete) orderState.splice(index, 1);
     } else {
       orderState[index].qty = nextQty;
     }
-  }  
-  renderOrder();
+  }
+
+  renderEditableOrder();
 });
 
 extrasEl.addEventListener("click", (event) => {
@@ -154,16 +138,14 @@ extrasEl.addEventListener("click", (event) => {
     const product = item.product || item;
     return product.product_id === productId;
   });
-  
+
   if (!selectedExtra) return;
-  
+
   const orderItem = extraToOrderItem(selectedExtra);
   if (!orderItem) return;
 
   orderState.push(orderItem);
-
-  renderOrder();
-  renderExtras();
+  renderEditableOrder();
 });
 
 initManualSearch({
@@ -172,7 +154,10 @@ initManualSearch({
   addOrderItem: (item) => {
     orderState.push(item);
   },
-  renderOrder,
+  renderOrder: () => {
+    renderPedidoSummary();
+    renderOrder();
+  },
   renderExtras,
   manualSearchToggleEl,
   manualSearchPanelEl,
@@ -180,7 +165,6 @@ initManualSearch({
   manualSearchStatusEl,
   manualSearchResultsEl
 });
-
 
 // =====================================================
 // INIT
@@ -213,13 +197,10 @@ async function initApp() {
 
     setStatus(`Hogar detectado: ${householdId}`);
     await loadInitialOrder();
-    
+
     setTimeout(() => {
-    
       pedidoLoadingEl?.classList.add("hidden");
-    
     }, 300);
-    
   } catch (error) {
     console.error("Error resolving session:", error);
     pedidoLoadingEl?.classList.add("hidden");
