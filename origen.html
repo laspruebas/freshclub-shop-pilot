@@ -6,7 +6,6 @@
   <title>Origen · FRUTI</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
-
 <body>
   <main class="container origen-page">
     <header class="header">
@@ -14,36 +13,15 @@
       <h1>Origen</h1>
       <p id="origenIntro">Trazabilidad del lote.</p>
     </header>
-
     <section id="origenStatus" class="status"></section>
-
-    <section class="origen-card">
-      <h2 id="origenProduct">Producto</h2>
-      <div id="origenLotInfo" class="origen-info"></div>
-    </section>
-
-    <section class="origen-card">
-      <h2>Recorrido</h2>
-      <div id="origenTimeline"></div>
-    </section>
-
+    <section class="origen-card"><h2 id="origenProduct">Producto</h2><div id="origenLotInfo" class="origen-info"></div></section>
+    <section class="origen-card"><h2>Recorrido</h2><div id="origenTimeline"></div></section>
     <section class="origen-card">
       <h2>Qué significa esta información</h2>
-      <p>
-        Este lote fue registrado dentro de la trazabilidad FRUTI.
-        El recorrido muestra los movimientos informados por los actores
-        que participaron de la cadena.
-      </p>
+      <p>Este lote fue registrado dentro de la trazabilidad FRUTI. El recorrido muestra los movimientos informados por los actores que participaron de la cadena.</p>
     </section>
-
-    <a
-      class="primary-button whatsapp-button"
-      href="https://wa.me/5491154886995"
-    >
-      Volver a WhatsApp
-    </a>
+    <button id="backToBasket" class="primary-button fruti-back-button" type="button">Volver a mi canasta</button>
   </main>
-
   <script type="module" src="./origen.js"></script>
 </body>
 </html>
