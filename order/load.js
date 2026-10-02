@@ -8,35 +8,30 @@ export async function loadInitialOrderData(householdId) {
   let items = [];
   let extras = [];
   let coverage = null;
+  let reasoningSummary = "";
 
   try {
-    const aiData =
-      await fetchAiInitialOrder(householdId);
+    const aiData = await fetchAiInitialOrder(householdId);
 
     coverage = aiData.coverage || null;
+    reasoningSummary = aiData.reasoning_summary || aiData?.selection?.reasoning_summary || "";
     items = aiData?.items || [];
     extras = aiData?.extras || [];
 
     if (!items.length) {
-      throw new Error(
-        "AI initial order returned empty selection"
-      );
+      throw new Error("AI initial order returned empty selection");
     }
   } catch (aiError) {
-    console.warn(
-      "AI initial order failed, using DB fallback:",
-      aiError
-    );
+    console.warn("AI initial order failed, using DB fallback:", aiError);
 
-    const fallbackData =
-      await fetchInitialOrderFallback(householdId);
-
+    const fallbackData = await fetchInitialOrderFallback(householdId);
     items = fallbackData.items || [];
   }
 
   return {
     orderState: normalizeInitialOrderItems(items),
     extraProducts: extras,
-    coverage
+    coverage,
+    reasoningSummary
   };
 }
